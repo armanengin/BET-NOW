@@ -57,15 +57,7 @@
             <a class="nav-link" href="#">Editors</a>
         </li>
         </ul>
-        <div class="login-container" id="login-box" style="display: block;" >
-            <form action="login.php" method="post">
-            <input type="text" placeholder="Username" name="username">
-            <input type="text" placeholder="Password" name="password">
-            <button class="btn btn-primary btn-sm" type="submit">Login</button>
-            <button class="btn btn-primary btn-sm" onclick="location.href='signup.php'" type="button">Signup</button>
-            </form>
-        </div>
-        <div class="user-info" id="user-info" style="display: none;">
+        <div class="user-info" id="user-info">
           <li>My Account</li>
         </div>
     </nav>

@@ -1,65 +1,3 @@
-<?php
-include("config.php");
-$showAlert = false; 
-$showError = false; 
-$exists=false;
-    
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-      
-    // Include file which makes the
-    // Database Connection.
-    
-    $username = $_POST["username"]; 
-    $password = $_POST["password"]; 
-    $cpassword = $_POST["password-check"];
-    $firstName = $_POST["firstName"];
-    $lastName = $_POST["lastName"];
-    $identificationNum = $_POST["identification-num"];
-    $birthdayDate = $_POST["birthdayDate"];
-    $emailAddress = $_POST["emailAddress"];
-    $phoneNumber = $_POST["phoneNumber"];
-
-    $sql = "Select * from person where username='$username'";
-    
-    $result = mysqli_query($db, $sql);
-    
-    $num = mysqli_num_rows($result); 
-    
-    // This sql query is use to check if
-    // the username is already present 
-    // or not in our Database
-    if($num == 0) {
-        if(($password == $cpassword) && $exists==false) {
-                
-            // Password Hashing is used here. 
-            $sql = "INSERT INTO person ( first_name,
-              last_name, username, identification_num, birthday, email, phone_num, password)  
-              VALUES ('$firstName', '$lastName', '$username', '$identificationNum', '$birthdayDate', '$emailAddress', '$phoneNumber',
-              '$password')";
-
-
-            $result = $db->query($sql);
-            if ($result) {
-                $showAlert = true; 
-                header("location: index.php");
-
-            }
-            else
-              echo '<script>alert("Signup is unsuccessful")</script>';
-          } 
-        else { 
-            $showError = "Passwords do not match"; 
-        }      
-    }// end if 
-    
-   if($num>0) 
-   {
-      $exists="Username not available"; 
-   } 
-    
-}//end if   
-    
-?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -70,7 +8,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <title>Signup Page</title>
+    <title>My Profile</title>
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -92,20 +30,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="col-12 col-lg-9 col-xl-7">
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-            <form action="signup.php" method="post">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">My Profile</h3>
+            <form>
               <div class="row">
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="firstName" name="firstName" class="form-control form-control-lg" />
+                    <input type="text" id="firstName" class="form-control form-control-lg" />
                     <label class="form-label" for="firstName">First Name</label>
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="lastName" name="lastName"class="form-control form-control-lg" />
+                    <input type="text" id="lastName" class="form-control form-control-lg" />
                     <label class="form-label" for="lastName">Last Name</label>
                   </div>
 
@@ -116,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="text" id="username" name="username" class="form-control form-control-lg" />
+                    <input type="text" id="username" class="form-control form-control-lg" />
                     <label class="form-label" for="username">Username</label>
                   </div>
 
@@ -124,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="text" id="identification-num" name="identification-num" class="form-control form-control-lg" />
+                    <input type="text" id="identification-num" class="form-control form-control-lg" />
                     <label class="form-label" for="identification-num">TC identification Number</label>
                   </div>
 
@@ -137,7 +75,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input
                       type="date"
                       class="form-control form-control-lg"
-                      id="birthdayDate" name="birthdayDate"
+                      id="birthdayDate"
                     />
                     <label for="birthdayDate" class="form-label">Birthday</label>
                   </div>
@@ -188,7 +126,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="email" id="emailAddress" name="emailAddress" class="form-control form-control-lg" />
+                    <input type="email" id="emailAddress" class="form-control form-control-lg" />
                     <label class="form-label" for="emailAddress">Email</label>
                   </div>
 
@@ -196,7 +134,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control form-control-lg" />
+                    <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
                     <label class="form-label" for="phoneNumber">Phone Number</label>
                   </div>
 
@@ -207,7 +145,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="password" id="password" name="password" class="form-control form-control-lg" />
+                    <input type="password" id="password" class="form-control form-control-lg" />
                     <label class="form-label" for="password">Password</label>
                   </div>
 
@@ -215,7 +153,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="password" id="password-check" name="password-check" class="form-control form-control-lg" />
+                    <input type="password" id="password-check" class="form-control form-control-lg" />
                     <label class="form-label" for="password-check">Confirm Password</label>
                   </div>
 
