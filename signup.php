@@ -32,7 +32,6 @@
           <div class="card-body p-4 p-md-5">
             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
             <form>
-
               <div class="row">
                 <div class="col-md-6 mb-4">
 
@@ -40,7 +39,6 @@
                     <input type="text" id="firstName" class="form-control form-control-lg" />
                     <label class="form-label" for="firstName">First Name</label>
                   </div>
-
                 </div>
                 <div class="col-md-6 mb-4">
 
@@ -53,11 +51,29 @@
               </div>
 
               <div class="row">
+                <div class="col-md-6 mb-4 pb-2">
+
+                  <div class="form-outline">
+                    <input type="text" id="username" class="form-control form-control-lg" />
+                    <label class="form-label" for="username">Username</label>
+                  </div>
+
+                </div>
+                <div class="col-md-6 mb-4 pb-2">
+
+                  <div class="form-outline">
+                    <input type="text" id="identification-num" class="form-control form-control-lg" />
+                    <label class="form-label" for="identification-num">TC identification Number</label>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-6 mb-4 d-flex align-items-center">
 
                   <div class="form-outline datepicker w-100">
                     <input
-                      type="text"
+                      type="date"
                       class="form-control form-control-lg"
                       id="birthdayDate"
                     />
@@ -125,6 +141,24 @@
                 </div>
               </div>
 
+              <div class="row">
+                <div class="col-md-6 mb-4 pb-2">
+
+                  <div class="form-outline">
+                    <input type="password" id="password" class="form-control form-control-lg" />
+                    <label class="form-label" for="password">Password</label>
+                  </div>
+
+                </div>
+                <div class="col-md-6 mb-4 pb-2">
+
+                  <div class="form-outline">
+                    <input type="password" id="password-check" class="form-control form-control-lg" />
+                    <label class="form-label" for="password-check">Confirm Password</label>
+                  </div>
+
+                </div>
+              </div>
               <div class="mt-4 pt-2">
                 <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
               </div>
