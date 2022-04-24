@@ -162,7 +162,8 @@
             </form>
             <form method='post'>
                     <input class="btn btn-primary" type="submit" name='disable' value="Edit" style='<?php echo $display_edit ?>'>
-                    </form>
+            </form>
+            <a href="delete_acc.php" onclick="return confirm('Are you sure?')">Delete My Account</a>
           </div>
         </div>
       </div>
