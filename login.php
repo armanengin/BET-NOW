@@ -20,9 +20,11 @@
         if($count == 1) {
             $_SESSION['login_user'] = $myusername;
             $_SESSION['login_pass'] = $mypassword;
-            header("location: index_logged.php");
+            $_SESSION['login_flag'] = true;
+            header("location: index.php");
         }
         else {
+           $_SESSION['login_flag'] = false;
             $error = "Your Login Name or Password is invalid";
             echo '<script>alert("Your Login Name or Password is invalid")</script>';
             header("location: index.php");

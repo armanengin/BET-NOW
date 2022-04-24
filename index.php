@@ -1,5 +1,12 @@
 <?php
-  include("session.php"); 
+  session_start();
+  if (isset($_SESSION['login_flag']) && $_SESSION['login_flag'] == true) {
+    $show_acc = 'display: block';
+    $show_log = 'display: none';
+} else {
+  $show_acc = 'display: none';
+  $show_log = 'display: block';
+}
 ?>
 <!doctype html>
 
@@ -57,7 +64,7 @@
             <a class="nav-link" href="#">Editors</a>
         </li>
         </ul>
-        <div class="login-container" id="login-box" style="display: block;" >
+        <div class="login-container" name="login-box" id="login-box" style='<?php echo $show_log ?>'>
             <form action="login.php" method="post">
             <input type="text" placeholder="Username" name="username">
             <input type="text" placeholder="Password" name="password">
@@ -65,9 +72,10 @@
             <button class="btn btn-primary btn-sm" onclick="location.href='signup.php'" type="button">Signup</button>
             </form>
         </div>
-        <div class="user-info" id="user-info" style="display: none;">
-          <li>My Account</li>
-        </div>
+        <div class="user-info" name="account-box" id="user-info" style='<?php echo $show_acc ?>'>
+        <a class="btn btn-info" href="profile.php" role="button">My Account</a>
+          <a class="btn btn-danger" href="logout.php" role="button">Logout</a>
+      </div>
     </nav>
 
 

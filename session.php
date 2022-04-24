@@ -8,4 +8,3 @@ $result = $db->query($query);
 $row = $result->fetch_array(MYSQLI_ASSOC);
 $login_session = $row['username'];
 $login_pass = $row['password'];
-

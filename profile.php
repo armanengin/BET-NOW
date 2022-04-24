@@ -1,3 +1,24 @@
+<?php
+  include('config.php');
+  session_start();
+  $username = $_SESSION['login_user'];
+  $sql = "SELECT first_name, last_name, username, identification_num, birthday, email, phone_num, password from person WHERE username = '$username'";
+  $result = $db->query($sql);
+  $num_row = $result->num_rows; 
+
+  if( $num_row === 1){
+      $row = $result->fetch_assoc();
+      $first_name = $row['first_name'];
+      $last_name = $row['last_name'];
+      $username = $row['username'];
+      $identification_num = $row['identification_num'];
+      $birthday = $row['birthday'];
+      $email = $row['email'];
+      $phone_num = $row['phone_num'];
+      $password = $row['password'];
+  }
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -36,14 +57,18 @@
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="firstName" class="form-control form-control-lg" />
+                    <div class="row">
+                    <input type="text" id="firstName" class="form-control form-control-lg" value='<?php echo $first_name ?>'disabled/>
                     <label class="form-label" for="firstName">First Name</label>
+                    <button onclick='activate_first_name()'>edit</button>
+                    </div>
                   </div>
                 </div>
+
                 <div class="col-md-6 mb-4">
 
                   <div class="form-outline">
-                    <input type="text" id="lastName" class="form-control form-control-lg" />
+                    <input type="text" id="lastName" class="form-control form-control-lg" value='<?php echo $last_name ?>' disabled />
                     <label class="form-label" for="lastName">Last Name</label>
                   </div>
 
@@ -54,7 +79,7 @@
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="text" id="username" class="form-control form-control-lg" />
+                    <input type="text" id="username" class="form-control form-control-lg" value='<?php echo $username ?>' disabled />
                     <label class="form-label" for="username">Username</label>
                   </div>
 
@@ -62,7 +87,7 @@
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="text" id="identification-num" class="form-control form-control-lg" />
+                    <input type="text" id="identification-num" class="form-control form-control-lg" value='<?php echo $identification_num ?>' disabled  />
                     <label class="form-label" for="identification-num">TC identification Number</label>
                   </div>
 
@@ -75,58 +100,19 @@
                     <input
                       type="date"
                       class="form-control form-control-lg"
-                      id="birthdayDate"
+                      id="birthdayDate" value='<?php echo $birthday ?>' disabled 
                     />
                     <label for="birthdayDate" class="form-label">Birthday</label>
                   </div>
 
                 </div>
-                <div class="col-md-6 mb-4">
 
-                  <h6 class="mb-2 pb-1">Gender: </h6>
-
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="femaleGender"
-                      value="option1"
-                      checked
-                    />
-                    <label class="form-check-label" for="femaleGender">Female</label>
-                  </div>
-
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="maleGender"
-                      value="option2"
-                    />
-                    <label class="form-check-label" for="maleGender">Male</label>
-                  </div>
-
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="inlineRadioOptions"
-                      id="otherGender"
-                      value="option3"
-                    />
-                    <label class="form-check-label" for="otherGender">Other</label>
-                  </div>
-
-                </div>
-              </div>
 
               <div class="row">
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="email" id="emailAddress" class="form-control form-control-lg" />
+                    <input type="email" id="emailAddress" class="form-control form-control-lg"  value='<?php echo $email ?>' disabled />
                     <label class="form-label" for="emailAddress">Email</label>
                   </div>
 
@@ -134,7 +120,7 @@
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
+                    <input type="tel" id="phoneNumber" class="form-control form-control-lg" value='<?php echo $phone_num ?>' disabled  />
                     <label class="form-label" for="phoneNumber">Phone Number</label>
                   </div>
 
@@ -145,22 +131,11 @@
                 <div class="col-md-6 mb-4 pb-2">
 
                   <div class="form-outline">
-                    <input type="password" id="password" class="form-control form-control-lg" />
+                    <input type="password" id="password" class="form-control form-control-lg"   value='<?php echo $password ?>' disabled   />
                     <label class="form-label" for="password">Password</label>
                   </div>
 
                 </div>
-                <div class="col-md-6 mb-4 pb-2">
-
-                  <div class="form-outline">
-                    <input type="password" id="password-check" class="form-control form-control-lg" />
-                    <label class="form-label" for="password-check">Confirm Password</label>
-                  </div>
-
-                </div>
-              </div>
-              <div class="mt-4 pt-2">
-                <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
               </div>
 
             </form>
