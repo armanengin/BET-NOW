@@ -41,6 +41,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = $db->query($sql);
             if ($result) {
                 $showAlert = true; 
+                session_start();
+                $_SESSION['login_user'] = $username;
+                $_SESSION['login_pass'] = $password;
+                $_SESSION['login_flag'] = true;
                 header("location: index.php");
 
             }
