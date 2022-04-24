@@ -60,7 +60,7 @@
         <div class="login-container" id="login-box" style="display: block;" >
             <form action="login.php" method="post">
             <input type="text" placeholder="Username" name="username">
-            <input type="text" placeholder="Password" name="password">
+            <input type="password" placeholder="Password" name="password">
             <button class="btn btn-primary btn-sm" type="submit">Login</button>
             <button class="btn btn-primary btn-sm" onclick="location.href='signup.php'" type="button">Signup</button>
             </form>
@@ -190,16 +190,18 @@
         </button>
       </h5>
     </div>
-    <div id="collapseDate" class="collapse" aria-labelledby="headingDate" data-parent="#accordion">
-
-        <div class="card-body">
-        <input type="date" id="date_id" name="date_name"
-        value="2018-07-22"
-        min="2018-01-01" max="2018-12-31">
-        </div>
-    </div>
+    <div id="collapseDate" class="collapse" aria-labelledby="headingDtate" data-parent="#accordion">
+    <div class="form-outline datepicker w-100">
+                    <input
+                      type="date"
+                      class="form-control form-control-lg"
+                      id="date-index" name="date"
+                    />
+                    <label for="date-index" class="form-label">Date</label>
+                  </div>
     <a href="/filter.php" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Apply</a>
     </div>
+  </div>
   </nav>
   <!-- Sidebar -->
 </header>
