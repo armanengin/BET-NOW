@@ -67,7 +67,7 @@
         <div class="login-container" name="login-box" id="login-box" style='<?php echo $show_log ?>'>
             <form action="login.php" method="post">
             <input type="text" placeholder="Username" name="username">
-            <input type="text" placeholder="Password" name="password">
+            <input type="password" placeholder="Password" name="password">
             <button class="btn btn-primary btn-sm" type="submit">Login</button>
             <button class="btn btn-primary btn-sm" onclick="location.href='signup.php'" type="button">Signup</button>
             </form>
@@ -79,7 +79,7 @@
     </nav>
 
 
-    !--Main Navigation-->
+    <!--Main Navigation-->
 <header>
   <!-- Sidebar -->
   <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-dark">
@@ -198,19 +198,382 @@
         </button>
       </h5>
     </div>
-    <div id="collapseDate" class="collapse" aria-labelledby="headingDate" data-parent="#accordion">
-
-        <div class="card-body">
-        <input type="date" id="date_id" name="date_name"
-        value="2018-07-22"
-        min="2018-01-01" max="2018-12-31">
-        </div>
+    <div id="collapseDate" class="collapse" aria-labelledby="headingDtate" data-parent="#accordion">
+    <div class="form-outline datepicker w-100">
+                    <input
+                      type="date"
+                      class="form-control form-control-lg"
+                      id="date-index" name="date"
+                    />
     </div>
-    <a href="/filter.php" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Apply</a>
+    <div>
     </div>
+    
+  </div>
+  
+  </div>
+  <a href="/filter.php" class="btn btn-primary btn-lg active" role="button" aria-pressed="true" style="width:100%">Apply</a>
   </nav>
   <!-- Sidebar -->
 </header>
+
+  <!-- Match Table-->
+  <main>
+    <div class="container-fluid" style="border:dashed; color:white;">
+      <div class="row">
+        <a href="#" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true" id="today-matches">Today's Matches</a>
+      </div>
+      <div class="row" id="outer-row">
+        <label for="league-label" style="color:white;">
+          Premier League
+        </label>
+        <div class="col-12">
+          <div class="row" style="background:red;" id="inner-row"> 
+              <div class="col-2">
+                  <div class="row" > 
+                    <div class="col-4 d-flex justify-content-center">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin:15px;">
+                        &#9734;
+                        </a>
+                    </div>
+                    <div class="col-8 d-flex justify-content-center">
+                      <p style="font-size:15px;">
+                        Today: <script> document.write(new Date().toLocaleDateString()); </script>
+                      </p> 
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4 d-flex justify-content-center" >
+                     <h6 style="font-size:10px;">
+                        mbn:1
+                     </h6>
+                    </div>
+                    <div class="col-8" style="font-size:10px; padding:0;">
+                        <h6 style="font-size:10px;" id="home-team">Liverpool</h6>
+                        <h6 style="font-size:10px;" id="away-team"> Manchester City</h6>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-2 ">
+                <div class="row d-flex justify-content-center">
+                     Match Result
+                </div>
+                <div class="row" >
+                   <div class="col-4">
+                     <div class="row" style="margin-left:42.5%">
+                        1
+                     </div>
+                     <div class="row">
+                     <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                        0.38
+                     </a>
+                     </div>
+                  </div>
+
+                  <div class="col-4">
+                     <div class="row" style="margin-left:42.5%">
+                        X
+                     </div>
+                     <div class="row">
+                     <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin-left:1px">
+                        1.76
+                     </a>
+                     </div>
+                  </div>
+
+                  <div class="col-4">
+                     <div class="row" style="margin-left:42.5%">
+                        2
+                     </div>
+                     <div class="row">
+                     <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                        2.00
+                     </a>
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2">
+                  <div class="row d-flex justify-content-center">
+                        2.5 under/over
+                  </div>
+                  <div class="row ">
+                     <div class="col-6">
+                        <div class="row" style="margin-left:5px;">
+                           2.5 U
+                        </div>
+                        <div class="row">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" style="margin-left:25%;">
+                          1.73
+                        </a>
+                        </div>
+                     </div>
+                     <div class="col-6">
+                        <div class="row";>
+                           2.5 O
+                        </div>
+                        <div class="row">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                           1.55
+                        </a>
+                        </div>
+                  </div>
+                  </div>
+              </div>
+              <div class="col-2">
+                  <div class="row d-flex justify-content-center">
+                        Handicap Result
+                  </div>
+                  <div class="row" >
+                     <div class="col-4">
+                        <div class="row" style="margin-left:42.5%">
+                           1
+                        </div>
+                        <div class="row">
+                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                           0.38
+                        </a>
+                        </div>
+                     </div>
+
+                     <div class="col-4">
+                        <div class="row" style="margin-left:42.5%">
+                           X
+                        </div>
+                        <div class="row">
+                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin-left:1px">
+                           1.76
+                        </a>
+                        </div>
+                     </div>
+
+                     <div class="col-4">
+                        <div class="row" style="margin-left:42.5%">
+                           2
+                        </div>
+                        <div class="row">
+                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                           2.00
+                        </a>
+                        </div>
+                     </div>
+                  </div>
+              </div>
+              <div class="col-2">
+                  <div class="row d-flex justify-content-center">
+                        Mutual Goal
+                  </div>
+                  <div class="row ">
+                     <div class="col-6">
+                        <div class="row" style="margin-left:18px;">
+                           +
+                        </div>
+                        <div class="row">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" style="margin-left:25%;">
+                          1.73
+                        </a>
+                        </div>
+                     </div>
+                     <div class="col-6">
+                        <div class="row" style="margin-left:5px;">
+                          -
+                        </div>
+                        <div class="row">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                           1.55
+                        </a>
+                        </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-1" style="border:solid;" >
+              
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="container-fluid" style="border:solid; color:yellow;">
+      <div class="row">
+        <a href="#" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true" id="tomorrow-matches">Tomorrow's Matches</a>
+      </div>
+      <div class="row" id="outer-row">
+        <label for="league-label" style="color:white;">
+          Premier League
+        </label>
+        <div class="col-12">
+          <div class="row" style="background:red;" id="inner-row"> 
+              <div class="col-2">
+                  <div class="row" > 
+                    <div class="col-4 d-flex justify-content-center">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin:15px;">
+                        &#9734;
+                        </a>
+                    </div>
+                    <div class="col-8 d-flex justify-content-center">
+                      <p style="font-size:15px;">
+                        Today: <script> document.write(new Date().toLocaleDateString()); </script>
+                      </p> 
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-4 d-flex justify-content-center" >
+                     <h6 style="font-size:10px;">
+                        mbn:1
+                     </h6>
+                    </div>
+                    <div class="col-8" style="font-size:10px; padding:0;">
+                        <h6 style="font-size:10px;" id="home-team">Everton</h6>
+                        <h6 style="font-size:10px;" id="away-team"> Chelsea</h6>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-2 ">
+                <div class="row d-flex justify-content-center">
+                     Match Result
+                </div>
+                <div class="row" >
+                   <div class="col-4">
+                     <div class="row" style="margin-left:42.5%">
+                        1
+                     </div>
+                     <div class="row">
+                     <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                        0.38
+                     </a>
+                     </div>
+                  </div>
+
+                  <div class="col-4">
+                     <div class="row" style="margin-left:42.5%">
+                        X
+                     </div>
+                     <div class="row">
+                     <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin-left:1px">
+                        1.76
+                     </a>
+                     </div>
+                  </div>
+
+                  <div class="col-4">
+                     <div class="row" style="margin-left:42.5%">
+                        2
+                     </div>
+                     <div class="row">
+                     <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                        2.00
+                     </a>
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2">
+                  <div class="row d-flex justify-content-center">
+                        2.5 under/over
+                  </div>
+                  <div class="row ">
+                     <div class="col-6">
+                        <div class="row" style="margin-left:5px;">
+                           2.5 U
+                        </div>
+                        <div class="row">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" style="margin-left:25%;">
+                          1.73
+                        </a>
+                        </div>
+                     </div>
+                     <div class="col-6">
+                        <div class="row";>
+                           2.5 O
+                        </div>
+                        <div class="row">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                           1.55
+                        </a>
+                        </div>
+                  </div>
+                  </div>
+              </div>
+              <div class="col-2">
+                  <div class="row d-flex justify-content-center">
+                        Handicap Result
+                  </div>
+                  <div class="row" >
+                     <div class="col-4">
+                        <div class="row" style="margin-left:42.5%">
+                           1
+                        </div>
+                        <div class="row">
+                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                           0.38
+                        </a>
+                        </div>
+                     </div>
+
+                     <div class="col-4">
+                        <div class="row" style="margin-left:42.5%">
+                           X
+                        </div>
+                        <div class="row">
+                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin-left:1px">
+                           1.76
+                        </a>
+                        </div>
+                     </div>
+
+                     <div class="col-4">
+                        <div class="row" style="margin-left:42.5%">
+                           2
+                        </div>
+                        <div class="row">
+                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                           2.00
+                        </a>
+                        </div>
+                     </div>
+                  </div>
+              </div>
+              <div class="col-2">
+                  <div class="row d-flex justify-content-center">
+                        Mutual Goal
+                  </div>
+                  <div class="row ">
+                     <div class="col-6">
+                        <div class="row" style="margin-left:18px;">
+                           +
+                        </div>
+                        <div class="row">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" style="margin-left:25%;">
+                          1.73
+                        </a>
+                        </div>
+                     </div>
+                     <div class="col-6">
+                        <div class="row" style="margin-left:5px;">
+                          -
+                        </div>
+                        <div class="row">
+                        <a href="#" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                           1.55
+                        </a>
+                        </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-2" style="border:solid;" >
+              
+          </div>
+        </div>
+      </div>
+    
+  </main>
 
 </html>
 <style>
@@ -219,26 +582,42 @@
     }
 @media (min-width: 991.98px) {
   main {
-    padding-left: 240px;
+    padding-left: 15%;
+    padding-right: 15%;
   }
 }
 
+  #outer-row{
+    border-style:solid;
+    color:white;
+  }
+
+  #inner-row{
+    border-style:solid;
+    border-color:aqua;
+  }
+  .h-80 {
+    height: 80%;
+}
+
+.h-20 {
+    height: 20%;
+}
 /* Sidebar */
 .sidebar {
   position: fixed;
-  top: 54px;
+  top: 8%;
   bottom: 0;
   left: 0;
-  padding: 30px 0 0; /* Height of navbar */
+  padding: 10px 0 0; /* Height of navbar */
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 5%), 0 2px 10px 0 rgb(0 0 0 / 5%);
-  width: 240px;
   z-index: 600;
   margin: 0;
 }
 
-@media (max-width: 991.98px) {
+@media (min-width: 0px) {
   .sidebar {
-    width: 100%;
+    width: 15%;
   }
 }
 .sidebar .active {
