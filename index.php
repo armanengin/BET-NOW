@@ -238,7 +238,8 @@
 
   <!-- Match Table-->
   <main>
-    <div class='container-fluid' style="border:dashed; color:white;">
+    <div class="container-fluid" >
+
       <div class="row">
         <a href="#" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true" id="today-matches">Today's Matches</a>
       </div>
@@ -417,9 +418,6 @@
 
 
 
-
-
-
     <div class="container-fluid" style="border:solid; color:yellow;">
       <div class="row">
         <a href="#" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true" id="tomorrow-matches">Tomorrow's Matches</a>
@@ -588,26 +586,167 @@
               </div>
           </div>
           <div class="col-2" style="border:solid;" >
-              
+              selam
           </div>
         </div>
       </div>
-    
   </main>
+
+  <!-- Betslip -->
+  <header id="betslip-header">
+    <div class="container-fluid bg-dark">
+      <div class="row d-flex justify-content-center" style="width=100%;">
+      <label for="my-coupon" style="position:relative; font-weigth:bold; color:green; font-family: Arial, Helvetica, sans-serif;">
+          My Coupon
+      </label>
+      </div>
+      <hr style="margin:0">
+      <div class="row">
+        <div class="col-6 d-flex justify-content-center">
+          <button type="button" class="btn btn-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+            </svg>
+              Delete 
+          </button>
+        </div>
+        <div class="col-6 d-flex justify-content-center" >
+          <button type="button" class="btn btn-success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+          <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+          </svg>
+              Save 
+          </button>
+        </div>
+      </div>
+
+      <div class="row" style="position:relative; width=100%;" >
+        <div class="card" style="width:100%; background-color:aqua; margin:3px;">
+          <div class="section" style="border-style:solid;">
+            <p style="text-align:left; padding-bottom:7px; margin:0;">
+              <span style="float:right"> 
+                          <button type="button" class="btn btn-warning btn-sm">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                          </svg>
+                    </button>
+              </span>
+              <script> document.write(new Date().toLocaleDateString()); </script>
+            </p>
+            <hr style="margin:0">
+            <p style="text-align:left;">
+              <span style="float:right">1</span>
+                Home Team
+            </p>
+            <p style="text-align:left;">
+              <span style="float:right">2</span>
+                Away Team
+            </p>
+            <hr style="margin:0">
+            <p style="text-align:left; margin:0;">
+              <span style="float:right"> 
+              Match Result: 1.17
+              </span>
+              MBN: 1
+            </p>
+          </div>
+        </div>
+
+        <div class="card" style="width:100%; background-color:aqua; margin:3px;">
+          <div class="section" style="border-style:solid;">
+            <p style="text-align:left; padding-bottom:7px; margin:0;">
+              <span style="float:right"> 
+                          <button type="button" class="btn btn-warning btn-sm">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                          <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                          </svg>
+                    </button>
+              </span>
+              <script> document.write(new Date().toLocaleDateString()); </script>
+            </p>
+            <hr style="margin:0">
+            <p style="text-align:left;">
+              <span style="float:right">1</span>
+                Home Team
+            </p>
+            <p style="text-align:left;">
+              <span style="float:right">2</span>
+                Away Team
+            </p>
+            <hr style="margin:0">
+            <p style="text-align:left; margin:0;">
+              <span style="float:right"> 
+              Match Result: 1.17
+              </span>
+              MBN: 1
+            </p>
+          </div>
+        </div>
+
+
+
+        <div class="card" style="width:100%; background-color:yellow; margin:3px;">
+          <div class="section">
+            <p style="text-align:left;">
+              <span style="float:right"> 
+                4.17
+              </span>
+              Total Odd: 
+            </p>
+
+            <hr style="margin:0">
+
+            <div class="form-group row">
+              <label for="deposit-amount-label" class="col-6 col-form-label">Deposit:</label>
+              <div class="col-6">
+                <input type="text" class="form-control" id="id-deposit-amount" placeholder="TL">
+              </div>
+            </div>
+
+            <hr style="margin:0">
+
+            <p style="text-align:left;">
+              <span style="float:right"> 
+               150 TL
+              </span>
+              Total Income: 
+            </p>
+          </div>
+        </div>
+        <a href="#" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="width:100%;  margin:3px;">Make Bet</a>
+     
+
+      </div>
+    </div>
+</header>
+  
 
 </html>
 <style>
     body {
       background-color: rgb(47, 43, 123);
     }
-@media (min-width: 991.98px) {
-  main {
-    padding-left: 15%;
-    padding-right: 15%;
-  }
-}
+    @media (min-width: 991.98px) {
+      main {
+        position:absolute;
+        width:100%;
+        padding-left: 15%;
+        padding-right: 15%;
+      }
+    }
+    #betslip-header{
+      position:absolute;
+      border-style: solid;
+      border-color:#F08080;
+      margin-left: 85%;
+      width:15%;
+    }
 
   #outer-row{
+    
     border-style:solid;
     color:white;
   }
@@ -625,7 +764,7 @@
 }
 /* Sidebar */
 .sidebar {
-  position: fixed;
+  position: absolute;
   top: 8%;
   bottom: 0;
   left: 0;
@@ -635,14 +774,16 @@
   margin: 0;
 }
 
-@media (min-width: 0px) {
+@media (min-width: 998px) {
   .sidebar {
     width: 15%;
+  
   }
 }
 .sidebar .active {
   border-radius: 5px;
   box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+
 }
 
 .sidebar-sticky {
