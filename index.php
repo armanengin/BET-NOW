@@ -7,11 +7,21 @@
   $show_acc = 'display: none';
   $show_log = 'display: block';
 }
+  if( isset($_POST['acc-box'])){
+    $display_acc_div = 'display: block';
+  }
+  else{
+    $display_acc_div = 'display: none';
+  }
+  $div = "<div>
+  denizke
+</div>";
 ?>
 <!doctype html>
 
 <html lang="en">
   <head>
+ 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -73,8 +83,17 @@
             </form>
         </div>
         <div class="user-info" name="account-box" id="user-info" style='<?php echo $show_acc ?>'>
-        <a class="btn btn-info" href="profile.php" role="button">My Account</a>
-          <a class="btn btn-danger" href="logout.php" role="button">Logout</a>
+        <a class="btn btn-success" href="friends.php" role="button">Friends</a>
+        <div class='col' style='<?php echo $display_acc_div ?>'>
+        <a class="btn btn-info" href="profile.php" role="button">My Profile</a>
+        <a class="btn btn-info" href="deposit_credit.php" role="button">Deposit Credit</a>
+        <a class="btn btn-info" href="withdraw_credit.php" role="button">Withdraw Credit</a>
+        <a class="btn btn-danger" href="logout.php" role="button">Logout</a>
+        </div>
+        <form method='post'>
+          <input class="btn btn-primary" type="submit" name="acc-box" value="My Account">
+      </form>
+
       </div>
     </nav>
 
@@ -220,9 +239,11 @@
   <!-- Match Table-->
   <main>
     <div class="container-fluid" >
+
       <div class="row">
         <a href="#" class="btn btn-success btn-lg btn-block" role="button" aria-pressed="true" id="today-matches">Today's Matches</a>
       </div>
+
       <div class="row" id="outer-row">
         <label for="league-label" style="color:white;">
           Premier League
