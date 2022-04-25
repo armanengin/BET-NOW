@@ -2,12 +2,13 @@
   include('config.php');
   session_start();
   $username = $_SESSION['login_user'];
-  $sql = "SELECT first_name, last_name, username, identification_num, birthday, email, phone_num, password from person WHERE username = '$username'";
+  $sql = "SELECT id, first_name, last_name, username, identification_num, birthday, email, phone_num, password from person WHERE username = '$username'";
   $result = $db->query($sql);
   $num_row = $result->num_rows; 
 
   if( $num_row === 1){
       $row = $result->fetch_assoc();
+      $id = $row['id'];
       $first_name = $row['first_name'];
       $last_name = $row['last_name'];
       $username = $row['username'];
@@ -17,6 +18,17 @@
       $phone_num = $row['phone_num'];
       $password = $row['password'];
       $password_check = $password;
+      $sql = "SELECT user_id, balance from user WHERE user_id = '$id'";
+      $result = $db->query($sql);
+      if( $result !== false && $result->num_rows === 1){
+        $row = $result->fetch_assoc();
+        $balance = $row['balance'];
+        $disable_user = 'display: block';
+      }
+      else{
+        $balance = 0;
+        $disable_user = 'display: none';
+      }
   }
   if ( isset($_POST['disable'])){
     $disable = 'enabled';
@@ -106,7 +118,6 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-6 mb-4 d-flex align-items-center">
 
                   <div class="form-outline datepicker w-100">
                     <input
@@ -116,10 +127,15 @@
                     />
                     <label for="birthdayDate" class="form-label">Birthday</label>
                   </div>
-
+                <div class="form-outline">
+                  <input type="text"
+                  class="form-control form-control-lg"
+                  id="user-balance" name="user-balance" value='<?php echo $balance ?> TRY' style='<?php echo $disable_user ?>' disabled>
+                  <label for="user-balance" class="form-label">Balance</label>
+                </div>
                 </div>
 
-
+              </div>
               <div class="row">
                 <div class="col-md-6 mb-4 pb-2">
 
