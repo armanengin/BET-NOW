@@ -18,7 +18,6 @@
 </div>";
 ?>
 <!doctype html>
-
 <html lang="en">
   <head>
  
@@ -43,7 +42,7 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-    <a class="navbar-brand" href="index.php">
+    <a class="navbar-brand" href="/BET-NOW/index.phpindex.php">
     <img src="assets/b-n.jpeg" width="30" class="d-inline-block align-top" alt="logo" class="img-fluid">
     <span style="font-family:Times New Roman; color:ForestGreen;">
     Bet-Now
@@ -56,22 +55,22 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="nav-link" href="#" style="font-family:Times New Roman;">LIVE <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="index.php" style="font-family:Times New Roman;">LIVE <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Football</a>
+            <a class="nav-link" href="football.php">Football</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Volleyball</a>
+            <a class="nav-link" href="volleyball.php">Volleyball</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Lottery</a>
+            <a class="nav-link" href="lottery.php">Lottery</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Horse Race</a>
+            <a class="nav-link" href="horce-race.php">Horse Race</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Editors</a>
+            <a class="nav-link" href="editors.php">Editors</a>
         </li>
         </ul>
         <div class="login-container" name="login-box" id="login-box" style='<?php echo $show_log ?>'>
@@ -85,20 +84,18 @@
         <div class="user-info" name="account-box" id="user-info" style='<?php echo $show_acc ?>'>
         <a class="btn btn-success" href="friends.php" role="button">Friends</a>
         <div class='col' style='<?php echo $display_acc_div ?>'>
-        <a class="btn btn-info" href="profile.php" role="button">My Profile</a>
-        <a class="btn btn-info" href="deposit_credit.php" role="button">Deposit Credit</a>
-        <a class="btn btn-info" href="withdraw_credit.php" role="button">Withdraw Credit</a>
-        <a class="btn btn-danger" href="logout.php" role="button">Logout</a>
+          <a class="btn btn-info" href="profile.php" role="button">My Profile</a>
+          <a class="btn btn-info" href="deposit_credit.php" role="button">Deposit Credit</a>
+          <a class="btn btn-info" href="withdraw_credit.php" role="button">Withdraw Credit</a>
+          <a class="btn btn-danger" href="logout.php" role="button">Logout</a>
         </div>
         <form method='post'>
           <input class="btn btn-primary" type="submit" name="acc-box" value="My Account">
       </form>
-
       </div>
     </nav>
 
 
-    <!--Main Navigation-->
 <header>
   <!-- Sidebar -->
   <nav id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-dark">
@@ -351,7 +348,7 @@
                            1
                         </div>
                         <div class="row">
-                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                        <a href="betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
                            0.38
                         </a>
                         </div>
@@ -362,7 +359,7 @@
                            X
                         </div>
                         <div class="row">
-                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin-left:1px">
+                        <a href="betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin-left:1px">
                            1.76
                         </a>
                         </div>
@@ -373,7 +370,7 @@
                            2
                         </div>
                         <div class="row">
-                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                        <a href="betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
                            2.00
                         </a>
                         </div>
@@ -529,7 +526,7 @@
                            1
                         </div>
                         <div class="row">
-                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                        <a href="/BET-NOW/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
                            0.38
                         </a>
                         </div>
@@ -540,7 +537,7 @@
                            X
                         </div>
                         <div class="row">
-                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin-left:1px">
+                        <a href="/BET-NOW/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true" style="margin-left:1px">
                            1.76
                         </a>
                         </div>
@@ -551,7 +548,7 @@
                            2
                         </div>
                         <div class="row">
-                        <a href="/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
+                        <a href="/BET-NOW/betslip.php" class="btn btn-dark btn-sm" role="button" aria-pressed="true">
                            2.00
                         </a>
                         </div>
@@ -596,7 +593,7 @@
   <header id="betslip-header">
     <div class="container-fluid bg-dark">
       <div class="row d-flex justify-content-center" style="width=100%;">
-      <label for="my-coupon" style="position:relative; font-weigth:bold; color:green; font-family: Arial, Helvetica, sans-serif;">
+      <label for="my-coupon" style="position:relative; font-weigth:bold; color:white; font-family: Arial, Helvetica, sans-serif;">
           My Coupon
       </label>
       </div>
@@ -717,8 +714,6 @@
           </div>
         </div>
         <a href="#" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="width:100%;  margin:3px;">Make Bet</a>
-     
-
       </div>
     </div>
 </header>
@@ -755,13 +750,7 @@
     border-style:solid;
     border-color:aqua;
   }
-  .h-80 {
-    height: 80%;
-}
-
-.h-20 {
-    height: 20%;
-}
+  
 /* Sidebar */
 .sidebar {
   position: absolute;
