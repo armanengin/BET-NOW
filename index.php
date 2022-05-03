@@ -595,7 +595,7 @@
   <!-- Betslip -->
   <header id="betslip-header">
     <div class="container-fluid bg-dark">
-      <div class="row d-flex justify-content-center" style="width=100%;">
+      <div class="row d-flex justify-content-center" style="width:100%;">
       <label for="my-coupon" style="position:relative; font-weigth:bold; color:green; font-family: Arial, Helvetica, sans-serif;">
           My Coupon
       </label>
@@ -621,7 +621,7 @@
         </div>
       </div>
 
-      <div class="row" style="position:relative; width=100%;" >
+      <div class="row" style="position:relative; width:100%;" >
         <div class="card" style="width:100%; background-color:aqua; margin:3px;">
           <div class="section" style="border-style:solid;">
             <p style="text-align:left; padding-bottom:7px; margin:0;">
