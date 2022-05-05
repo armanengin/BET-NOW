@@ -178,10 +178,18 @@ public class javaDB{
         String hasTable = "CREATE TABLE has(" +
                 "bet_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
-                " odd decimal(10, 2)," +
-                " PRIMARY KEY(bet_id, betslip_id), " +
+                " odd_id mediumint," +
+                " PRIMARY KEY(bet_id, betslip_id, odd_id), " +
                 "FOREIGN KEY (bet_id) REFERENCES bet(bet_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
-                "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
+                "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
+                "FOREIGN KEY (odd_id) REFERENCES odd(odd_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
+                ") ENGINE=INNODB";
+        String oddTable = "CREATE TABLE odd(" +
+                "odd_id MEDIUMINT NOT NULL," +
+                "winning_odd decimal(10, 2), " +
+                " draw_odd decimal(10, 2)," +
+                " losing_odd decimal(10, 2)," +
+                " PRIMARY KEY(odd_id) " +
                 ") ENGINE=INNODB";
         String commentsMatchTable = "CREATE TABLE comments_match(" +
                 "user_id MEDIUMINT NOT NULL," +
@@ -222,6 +230,8 @@ public class javaDB{
             stmt.executeUpdate("DROP TABLE IF EXISTS comments_match");
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS has");
+            stmt = conn.createStatement();
+            stmt.executeUpdate("DROP TABLE IF EXISTS odd");
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS editor_shares");
             stmt = conn.createStatement();
@@ -303,6 +313,9 @@ public class javaDB{
             stmt = conn.createStatement();
             stmt.executeUpdate(editorSharesTable);
             System.out.println("Editor Shares Table created");
+            stmt = conn.createStatement();
+            stmt.executeUpdate(oddTable);
+            System.out.println("Odd Table created");
             stmt = conn.createStatement();
             stmt.executeUpdate(hasTable);
             System.out.println("Has Table created");
