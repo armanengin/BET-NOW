@@ -104,12 +104,14 @@ public class javaDB{
                 ") ENGINE=INNODB";
         String betTable = "CREATE TABLE bet(" +
                 "bet_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
+                "match_id mediumint, " +
                 "mbn int, " +
                 " bet_date date," +
                 " bet_time time," +
                 " category varchar(100),"+
                 " user_id mediumint,"+
                 " match_id mediumint NOT NULL,"+
+                " odd_id mediumint," +
                 " PRIMARY KEY(bet_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (match_id) REFERENCES matchs(match_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -178,17 +180,32 @@ public class javaDB{
         String hasTable = "CREATE TABLE has(" +
                 "bet_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
-                " odd_id mediumint," +
-                " PRIMARY KEY(bet_id, betslip_id, odd_id), " +
+                "match_result_1 decimal(10, 2), " +
+                " match_result_x decimal(10, 2)," +
+                " match_result_2 decimal(10, 2)," +
+                " two_half_u decimal(10, 2)," +
+                " two_half_o decimal(10, 2)," +
+                " handicap_1 decimal(10, 2)," +
+                " handicap_x decimal(10, 2)," +
+                " handicap_2 decimal(10, 2)," +
+                " mutual_goal decimal(10, 2)," +
+                " not_mutual_goal decimal(10, 2)," +
+                " PRIMARY KEY(bet_id, betslip_id), " +
                 "FOREIGN KEY (bet_id) REFERENCES bet(bet_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
-                "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
-                "FOREIGN KEY (odd_id) REFERENCES odd(odd_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
+                "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String oddTable = "CREATE TABLE odd(" +
                 "odd_id MEDIUMINT NOT NULL," +
-                "winning_odd decimal(10, 2), " +
-                " draw_odd decimal(10, 2)," +
-                " losing_odd decimal(10, 2)," +
+                "match_result_1 decimal(10, 2), " +
+                " match_result_x decimal(10, 2)," +
+                " match_result_2 decimal(10, 2)," +
+                " two_half_u decimal(10, 2)," +
+                " two_half_o decimal(10, 2)," +
+                " handicap_1 decimal(10, 2)," +
+                " handicap_x decimal(10, 2)," +
+                " handicap_2 decimal(10, 2)," +
+                " mutual_goal decimal(10, 2)," +
+                " not_mutual_goal decimal(10, 2)," +
                 " PRIMARY KEY(odd_id) " +
                 ") ENGINE=INNODB";
         String commentsMatchTable = "CREATE TABLE comments_match(" +
