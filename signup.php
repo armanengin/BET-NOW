@@ -19,7 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $emailAddress = $_POST["emailAddress"];
     $phoneNumber = $_POST["phoneNumber"];
 
-    $sql = "Select * from person where username='$username'";
+    $sql = "Select * from user where username='$username'";
     
     $result = mysqli_query($db, $sql);
     
@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         if(($password == $cpassword) && $exists==false) {
                 
             // Password Hashing is used here. 
-            $sql = "INSERT INTO person ( first_name,
+            $sql = "INSERT INTO user ( first_name,
               last_name, username, identification_num, birthday, email, phone_num, password)  
               VALUES ('$firstName', '$lastName', '$username', '$identificationNum', '$birthdayDate', '$emailAddress', '$phoneNumber',
               '$password')";

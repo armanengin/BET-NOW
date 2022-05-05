@@ -2,7 +2,7 @@
   include('config.php');
   session_start();
   $username = $_SESSION['login_user'];
-  $sql = "SELECT id, first_name, last_name, username, identification_num, birthday, email, phone_num, password from person WHERE username = '$username'";
+  $sql = "SELECT id, first_name, last_name, username, identification_num, birthday, email, phone_num, password from user WHERE username = '$username'";
   $result = $db->query($sql);
   $num_row = $result->num_rows; 
 
