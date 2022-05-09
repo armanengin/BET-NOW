@@ -615,7 +615,7 @@
         </div>
       </div>
 
-      <div class="row" style="position:relative; width:100%;" >
+      <div class="row">
         <div class="card" style="width:100%; background-color:aqua; margin:3px;">
           <div class="section" style="border-style:solid;">
             <p style="text-align:left; padding-bottom:7px; margin:0;">
