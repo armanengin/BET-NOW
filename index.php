@@ -212,13 +212,13 @@
       </h5>
     </div>
     <div id="collapseDate" class="collapse" aria-labelledby="headingDtate" data-parent="#accordion">
-    <div class="form-outline datepicker w-100">
-                    <input
-                      type="date"
-                      class="form-control form-control-lg"
-                      id="date-index" name="date"
-                    />
-    </div>
+      <div class="form-outline datepicker w-100">
+        <input
+          type="date"
+          class="form-control form-control-lg"
+          id="date-index" name="date"
+        />
+      </div>
     <div>
     </div>
     

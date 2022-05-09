@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editors Page</title>
-</head>
-<body>
-<head>
  
  <!-- Required meta tags -->
  <meta charset="utf-8">
@@ -16,8 +9,7 @@
  <!-- Bootstrap CSS -->
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
  <link rel="stylesheet" href="css/styles.css">
- <title>Login
- </title>
+ <title>My Betslips Page </title>
  </head>
  <body>
      
@@ -26,7 +18,7 @@
      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
+ </body>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -57,7 +49,7 @@
         <li class="nav-item">
             <a class="nav-link" href="horce-race.php">Horse Race</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="editors.php">Editors</a>
         </li>
         <li class="nav-item">
@@ -93,43 +85,73 @@
         </div>
         <a class="btn btn-danger" href="logout.php" role="button" style="margin-left:2px;">Logout</a>
         </div>
+
     </div>
     </nav>
-
-    <!-- Performance -->
-    <div class="container" style="width:70%; border-style:solid;">
-        <div class="row justify-content-center">
-            <h1 style="color:white;">Remzi Tepe</h1>
-        </div>
+    
+    <!-- My Betslips -->
+    <div class="container" style="width:70%; border-style:solid; border-color:red;">
         <div class="row">
-            <div class="col-4">
-                <h5 style="width:100%; text-align:center;">Total Income Made</h4>
-                <h4 style="width:100%; text-align:center;">15467$</h2>
-            </div>
-            <div class="col-4">
-                <h5 style="width:100%; text-align:center;">Single Bet Prediction (Ratio)</h4>
-                <h4 style="width:100%; text-align:center;">60% (6/10)</h2>
-            </div>
-            <div class="col-4">
-                <h5 style="width:100%; text-align:center;">Total Odd Made</h4>
-                <h4 style="width:100%; text-align:center;">5672.82</h2>
-            </div>
-        </div>
-
-        <div class="row"> 
-            <?php
-                include("chart.php");
-            ?>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col" style="text-align:center; width:100%;">Betslip</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>06/09/2022</td>
+                        <td>
+                            <p>
+                                <button class="btn btn-success" style="width:100%;" type="button" data-toggle="collapse" data-target="#collapse-my-betslips" aria-expanded="false" aria-controls="collapse-my-betslips">
+                                    Button with data-target
+                                </button>
+                            </p>
+                            <div class="collapse" id="collapse-my-betslips">
+                                <div class="card card-body">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Win/Lose</th>
+                                                <th scope="col">MBN</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Match</th>
+                                                <th scope="col">Odd Type</th>
+                                                <th scope="col">Odd</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Lose</th>
+                                                <td>1</td>
+                                                <td>06/09/2022</td>
+                                                <td>Liverpool - Manchester City</td>
+                                                <td>MR1</td>
+                                                <td>1.17</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    
 </html>
+
 <style>
     body{
         background-color:gray;
     }
-}
+    .table{
+        font-size:16px;
+        text-align:center;
+    }
 </style>
-
-
