@@ -89,7 +89,6 @@
 
    </div>
  </nav>
-
  <main>
     <div class="row" style="margin-right:36px;">
             <div class="col-10 d-flex justify-content-end">
@@ -109,18 +108,15 @@
      <div class="container-fluid" style="border-style:solid; width:60%;">
         <div class="row">
             <div class="col-2">
-            <h5>@victusmaneo</h5>
+                <p>@victusmaneo</p>
             </div>
             <div class="col-5">
-            <h5>(146 followers)</h5>
+                <p>(146 followers)</p>
             </div>
-            <div class="col-1.5">
-            <h5>Shared at</h5>
+            <div class="col-5">
+                <p style="float:right;">Shared at : 29 April 2022 - 21.30</p>
             </div>
-            <div class="col-1.5">
-            <h5>: 29 April 2022 - 21.30</h5>
-            </div>
-            <div class="col-12">
+            <div class="col-12" style="font-size:13px;">
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit, magni necessitatibus repellendus alias at quod dicta sapiente adipisci nesciunt labore fugiat voluptate quo in deserunt aliquid provident explicabo? Molestias, sapiente.</p>
             </div>
         </div>
@@ -128,10 +124,10 @@
         <div class="row">
             <div class="col-10">
                 <div id="accordion">
-                    <div class="card">
+                    <div class="card"  >
                         <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
-                            <button class="btn btn-lg  btn-block" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="btn btn-lg  btn-block" style="font-size:13px;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             2 match | Odd: 4.80 | Coupon Price: 3 $
                             <span style="float:right;"> 156 people played </span>
                             </button>
@@ -178,13 +174,13 @@
         </div>
         <div class="row">
             <div class="col-4">
-                <button type="button" style="margin-top:5px;" class="btn btn-primary">
+                <button type="button" style="margin-top:5px;" class="btn btn-primary btn-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
                     </svg>
                     Share
                 </button>
-                <button type="button" style="margin-top:5px;" class="btn btn-primary">
+                <button type="button" style="margin-top:5px;" class="btn btn-primary btn-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
                     <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
                     </svg>
@@ -192,19 +188,19 @@
                 </button>
             </div>
             <div class="col-8 d-flex justify-content-end" style="margin-top:5px;">
-                <h5>45 Likes - <span data-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" id="comment-link">2 comments </span></h5>
+                <p>45 Likes - <span data-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" id="comment-link">2 comments </span></p>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
                 <div class="collapse" id="collapseComment">
                     <div class="card card-body">
-                        <h5 class="card-title">Arman Engin Sucu <span style="float:right;">20.03 - 29/04/2022</span></h5>
-                        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo laborum libero perspiciatis animi quibusdam iure quas ex dolore recusandae beatae. Minus, illum quibusdam aut inventore qui magnam aliquam voluptatum numquam?</p>
+                        <p style="font-size:13px;" class="card-title">Arman Engin Sucu <span style="float:right;">20.03 - 29/04/2022</span></p>
+                        <p style="font-size:13px;" class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo laborum libero perspiciatis animi quibusdam iure quas ex dolore recusandae beatae. Minus, illum quibusdam aut inventore qui magnam aliquam voluptatum numquam?</p>
                     </div>
                     <div class="card card-body">
-                        <h5 class="card-title">Remzi Tepe <span style="float:right;">20.03 - 29/04/2022</span></h5>
-                        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo laborum libero perspiciatis animi quibusdam iure quas ex dolore recusandae beatae. Minus, illum quibusdam aut inventore qui magnam aliquam voluptatum numquam?</p>
+                        <p style="font-size:13px;" class="card-title">Remzi Tepe <span style="float:right;">20.03 - 29/04/2022</span></p>
+                        <p style="font-size:13px;" class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo laborum libero perspiciatis animi quibusdam iure quas ex dolore recusandae beatae. Minus, illum quibusdam aut inventore qui magnam aliquam voluptatum numquam?</p>
                     </div>
                 </div>
             </div>
@@ -217,7 +213,7 @@
                 </div>
             </div>
             <div class="col-2">
-                <button type="button" class="btn btn-primary btn-lg btn-block" style="margin-top:40px;">Apply</button>
+                <button type="button" class="btn btn-primary btn-sm btn-block" style="margin-top:40px;">Apply</button>
             </div>
         </div>
     </div>
@@ -234,5 +230,8 @@
     #comment-link:hover{
         color:white;
     }
-    
+    .table{
+        font-size:13px;
+        text-align:center;
+    }
 </style>
