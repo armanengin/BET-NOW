@@ -97,7 +97,7 @@
     </nav>
 
     <!-- Performance -->
-    <div class="container" style="width:70%; border-style:solid;">
+    <div class="container" style="width:100%; border-style:solid;">
         <div class="row justify-content-center">
             <h1 style="color:white;">Remzi Tepe</h1>
         </div>

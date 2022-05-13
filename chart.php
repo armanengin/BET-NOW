@@ -14,7 +14,6 @@ $dataPoints = array(
 	array("y" => 20, "label" => "November"),
     array("y" => 20, "label" => "December")
 );
- 
 ?>
 <!DOCTYPE HTML>
 <html>
