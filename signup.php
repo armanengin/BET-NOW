@@ -78,7 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   </head>
   <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-    <a class="navbar-brand" href="index.php">
+    <a class="navbar-brand" href="live.php">
     <img src="assets/b-n.jpeg" width="30" class="d-inline-block align-top" alt="logo" class="img-fluid">
     <span style="font-family:Times New Roman; color:ForestGreen;">
     Bet-Now

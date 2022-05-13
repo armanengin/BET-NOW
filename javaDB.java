@@ -29,17 +29,18 @@ public class javaDB{
             "PRIMARY KEY(id)) ENGINE=INNODB";
             */
         String userTable = "CREATE TABLE user(" +
-                "user_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
-                "first_name varchar(50), " +
-                "last_name varchar(50) , " +
-                "username varchar(50), " +
-                "identification_num varchar(200), " +
-                "birthday date, " +
-                "email char(200), " +
-                "phone_num varchar(200)," +
-                "password VARCHAR(50)," +
-                "UNIQUE(username)," +
-                "PRIMARY KEY(user_id)) ENGINE=INNODB";
+            "user_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
+            "first_name varchar(50), " +
+            "last_name varchar(50) , " +
+            "username varchar(50), " +
+            "identification_num varchar(200), " +
+            "birthday date, " +
+            "email char(200), " +
+            "phone_num varchar(200)," +
+            "password VARCHAR(50)," +
+            "balance varchar(50)," + 
+            "UNIQUE(username)," +
+            "PRIMARY KEY(user_id)) ENGINE=INNODB";
         String adminTable = "CREATE TABLE admin(" + 
             "admin_id MEDIUMINT NOT NULL AUTO_INCREMENT, " +
             "first_name varchar(50), " +
@@ -50,19 +51,21 @@ public class javaDB{
             "email char(200), " +
             "phone_num varchar(200)," +
             "password VARCHAR(50)," +
+            "balance varchar(50)," + 
             "PRIMARY KEY (admin_id), " +
             " FOREIGN KEY (username) REFERENCES user(username) ON UPDATE CASCADE ON DELETE CASCADE"+
             ") ENGINE=INNODB";
         String editorTable = "CREATE TABLE editor(" +
             "editor_id 	MEDIUMINT NOT NULL, "+
-                "first_name varchar(50), " +
-                "last_name varchar(50) , " +
-                "username varchar(50), " +
-                "identification_num varchar(200), " +
-                "birthday date, " +
-                "email char(200), " +
-                "phone_num varchar(200)," +
-                "password VARCHAR(50)," +
+            "first_name varchar(50), " +
+            "last_name varchar(50) , " +
+            "username varchar(50), " +
+            "identification_num varchar(200), " +
+            "birthday date, " +
+            "email char(200), " +
+            "phone_num varchar(200)," +
+            "password VARCHAR(50)," +
+            "balance varchar(50)," + 
             "num_of_successful_betslip int," +
             "ratio_of_success decimal(3,2), "+	
             "PRIMARY KEY (editor_id), " + 
@@ -110,7 +113,6 @@ public class javaDB{
                 " bet_time time," +
                 " category varchar(100),"+
                 " user_id mediumint,"+
-                " match_id mediumint NOT NULL,"+
                 " odd_id mediumint," +
                 " PRIMARY KEY(bet_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
