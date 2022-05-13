@@ -59,7 +59,7 @@
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0" action="login.php" method="post">
-                    <?php if ($_SESSION['login_flag'] == true) { 
+                    <?php if ($_SESSION['login_flag']) { 
                         include("my-account.php");    
                     ?>
                     <?php } else { ?>
