@@ -4,7 +4,7 @@
    
    if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form 
-      
+      $_SESSION['login_flag'] = false;
       $myusername = mysqli_real_escape_string($db,$_POST['username']);
       $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
 
@@ -21,13 +21,13 @@
             $_SESSION['login_user'] = $myusername;
             $_SESSION['login_pass'] = $mypassword;
             $_SESSION['login_flag'] = true;
-            header("location: index.php");
+            header("location: live.php");
         }
         else {
            $_SESSION['login_flag'] = false;
             $error = "Your Login Name or Password is invalid";
             echo '<script>alert("Your Login Name or Password is invalid")</script>';
-            header("location: index.php");
+            header("location: live.php");
       }
    }
 ?>

@@ -25,6 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $num = mysqli_num_rows($result); 
     
+
     // This sql query is use to check if
     // the username is already present 
     // or not in our Database
@@ -45,8 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['login_user'] = $username;
                 $_SESSION['login_pass'] = $password;
                 $_SESSION['login_flag'] = true;
-                header("location: index.php");
-
+                header("location: live.php");
             }
             else
               echo '<script>alert("Signup is unsuccessful")</script>';
