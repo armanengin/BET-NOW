@@ -1,5 +1,35 @@
 <?php 
+  include('config.php');
  session_start();
+$username = $_SESSION['login_user'];
+
+    $sql = "SELECT bet_id, match_id, mbn, bet_date, bet_time, category, odd_type, odd_value from bet";
+    $match_sql = "SELECT match_id, match_date, match_time, match_category, league from matchs";
+    $contains_sql = "SELECT team_id, match_id from contains";
+    $team_sql = "SELECT team_name, match_id from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
+
+    $matchs = mysqli_query($db,$match_sql);
+    $bets_query = mysqli_query($db,$sql);
+    $contains = mysqli_query($db,$contains_sql);
+    $teams = mysqli_query($db,$team_sql);
+    $bets = [];
+    $mbn = [];
+    while($row = mysqli_fetch_assoc($bets_query)) {
+        $bets[] = $row;
+    }
+    
+    foreach( $matchs as $match){
+        $mbn[] = array_shift($bets)['mbn'];
+        for( $i = 0; $i < 9; $i++){
+            array_shift($bets);
+        }
+    }
+    $bets_query = mysqli_query($db,$sql);
+    $bets = [];
+    while($row = mysqli_fetch_assoc($bets_query)) {
+        $bets[] = $row;
+    }
+    
 ?>
 <!doctype html>
 <html lang="en">
@@ -207,25 +237,33 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            <?php foreach($matchs as $match){?>
                             <tr>
-                                <th scope="row">1</th>
-                                <td>2</td>
-                                <td>16/09/2022</td>
-                                <td>20.00</td>
-                                <td>Premier League</td>
-                                <td>Liverpool - Manchester City</td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">1.5</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">2.5</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">2.45</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">1.7</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">2.4</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">3.2</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">1.7</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">2.4</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">3.2</button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm">2.5</button></td>
+                                <th scope="row"><?php echo $match['match_id'] ?></th>
+                                <td><?php echo array_shift($mbn) ?></td>
+                                <td><?php echo $match['match_date'] ?></td>
+                                <td><?php echo $match['match_time'] ?></td>
+                                <td><?php echo $match['league'] ?></td>
+                                <td>
+                                <?php foreach($teams as $team){?>
+                                <?php if( $team['match_id'] == $match['match_id']){?>
+                                    <?php echo $team['team_name'] ?> <br>
+                                    <?php } ?>
+                                <?php } ?>
+                                </td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value']?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
                             </tr>
-                            <tr>
+                            <?php }  ?>
                         </tbody>
                     </table>
                 </div>
