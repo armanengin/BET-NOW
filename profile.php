@@ -88,47 +88,30 @@
             <div class="card-body p-4 p-md-5">
               <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">My Profile</h3>
               <form action='change_info.php' method='post'>
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-
-                    <div class="form-outline">
-                      <div class="row">
+                <div class="form-row">
+                    <div class="col">
                       <input type="text" id="firstName" name="firstName" class="form-control form-control-lg" value='<?php echo $first_name ?>' <?php echo $disable ?>/>
                       <label class="form-label" for="firstName">First Name</label>
-                      </div>
                     </div>
-                  </div>
-
-                  <div class="col-md-6 mb-4">
-
-                    <div class="form-outline">
+                    <div class="col">
                       <input type="text" id="lastName" name="lastName" class="form-control form-control-lg" value='<?php echo $last_name ?>' <?php echo $disable ?> />
                       <label class="form-label" for="lastName">Last Name</label>
                     </div>
+                </div>
+                <div class="form-row">
+                  <div class="col">
+                    <input type="text" id="username" name="username" class="form-control form-control-lg" value='<?php echo $username ?>' <?php echo $disable?> />
+                    <label class="form-label" for="username">Username</label>
+                  </div>
 
+                  <div class="col">
+                    <input type="text" id="identification-num" name="identification-num"class="form-control form-control-lg" value='<?php echo $identification_num ?>' <?php echo $disable ?>  />
+                    <label class="form-label" for="identification-num">TC identification Number</label>
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-md-6 mb-4 pb-2">
-
-                    <div class="form-outline">
-                      <input type="text" id="username" name="username" class="form-control form-control-lg" value='<?php echo $username ?>' <?php echo $disable?> />
-                      <label class="form-label" for="username">Username</label>
-                    </div>
-
-                  </div>
-                  <div class="col-md-6 mb-4 pb-2">
-
-                    <div class="form-outline">
-                      <input type="text" id="identification-num" name="identification-num"class="form-control form-control-lg" value='<?php echo $identification_num ?>' <?php echo $disable ?>  />
-                      <label class="form-label" for="identification-num">TC identification Number</label>
-                    </div>
-
-                  </div>
-                </div>
-                <div class="row">
-
+                <div class="form-row">
+                  <div class="col">
                     <div class="form-outline datepicker w-100">
                       <input
                         type="date"
@@ -137,53 +120,40 @@
                       />
                       <label for="birthdayDate" class="form-label">Birthday</label>
                     </div>
-                  <div class="form-outline">
+                  </div>
+                  <div class="col">
                     <input type="text"
                     class="form-control form-control-lg"
                     id="user-balance" name="user-balance" value='<?php echo $balance ?> TRY' style='<?php echo $disable_user ?>' disabled>
                     <label for="user-balance" class="form-label">Balance</label>
                   </div>
-                  </div>
-
                 </div>
-                <div class="row">
-                  <div class="col-md-6 mb-4 pb-2">
 
+                <div class="form-row">
+                  <div class="col">
                     <div class="form-outline">
                       <input type="email" id="emailAddress" name="emailAddress" class="form-control form-control-lg"  value='<?php echo $email ?>' <?php echo $disable ?> />
                       <label class="form-label" for="emailAddress">Email</label>
                     </div>
-
                   </div>
-                  <div class="col-md-6 mb-4 pb-2">
 
-                    <div class="form-outline">
-                      <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control form-control-lg" value='<?php echo $phone_num ?>' <?php echo $disable ?>  />
-                      <label class="form-label" for="phoneNumber">Phone Number</label>
-                    </div>
-
+                  <div class="col">
+                    <input type="tel" id="phoneNumber" name="phoneNumber" class="form-control form-control-lg" value='<?php echo $phone_num ?>' <?php echo $disable ?>  />
+                    <label class="form-label" for="phoneNumber">Phone Number</label>
                   </div>
                 </div>
 
                 <div class="row">
-                  <div class="col-md-6 mb-4 pb-2">
-
-                    <div class="form-outline">
+                    <div class="col">
                       <input type="password" id="password" name="password" class="form-control form-control-lg" value='<?php echo $password ?>' <?php echo $disable ?>   />
                       <label class="form-label" for="password">Password</label>
                     </div>
-
-                  </div>
-                  <div class="col-md-6 mb-4 pb-2">
-
-                    <div class="form-outline" style='<?php echo $disable_pass ?>'>
+                  
+                    <div class="col" style='<?php echo $disable_pass ?>'>
                       <input type="password" id="password-check" name="password-check" class="form-control form-control-lg" value ='<?php echo $password_check ?>'  <?php echo $disable ?>/>
                       <label class="form-label" for="password-check">Confirm Password</label>
                     </div>
-
-                    </div>
                     <input class="btn btn-primary" type="submit" name='submit-change' value="Change" style='<?php echo $display_submit ?>'>
-
                 </div>
               </form>
               <form method='post'>

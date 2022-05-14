@@ -15,12 +15,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $db->query($sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     $user_id = $row['user_id'];
-    $deposit_amount = $_POST["deposit-amount"]; 
-    $card_user = $_POST["deposit-card-user"]; 
-    $card_number = $_POST["deposit-card-number"];
-    $expire_date = $_POST["deposit-expire-date"];
-    $card_cvv = $_POST["deposit-card-cvv"];
-    if( isset($_POST['deposit-save-card'])){
+    $withdraw_amount = $_POST["withdraw-amount"]; 
+    $card_user = $_POST["withdraw-card-user"]; 
+    $card_number = $_POST["withdraw-card-number"];
+    $expire_date = $_POST["withdraw-expire-date"];
+    $card_cvv = $_POST["withdraw-card-cvv"];
+    if( isset($_POST['withdraw-save-card'])){
         $save_card = true;
     }
     else{
@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "UPDATE user SET balance = 0 WHERE user_id = '$user_id'";
             $result = $db->query($sql);
         }
-        $sql = "UPDATE user SET balance = balance + '$deposit_amount' WHERE user_id = '$user_id'";
+        $sql = "UPDATE user SET balance = balance - '$withdraw_amount' WHERE user_id = '$user_id'";
         $result = $db->query($sql);
         if( $result){
             $showAlert = true; 

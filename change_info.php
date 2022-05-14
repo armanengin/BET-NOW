@@ -15,7 +15,7 @@
       $phoneNumber = $_POST["phoneNumber"];
       
       if( $password === $cpassword){
-        $sql = "UPDATE person SET username = '$username', first_name = '$firstName', last_name = '$lastName', identification_num = '$identificationNum', birthday = '$birthdayDate', email = '$emailAddress', phone_num = '$phoneNumber', password = '$password' WHERE username = '$username_session'";
+        $sql = "UPDATE user SET username = '$username', first_name = '$firstName', last_name = '$lastName', identification_num = '$identificationNum', birthday = '$birthdayDate', email = '$emailAddress', phone_num = '$phoneNumber', password = '$password' WHERE username = '$username_session'";
         $result = mysqli_query($db,$sql);
         
               

@@ -19,7 +19,7 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="profile.php">Profile</a>
-            <a class="dropdown-item" href="credit-account.php">Wallet</a>
+            <a class="dropdown-item" href="wallet.php">Wallet</a>
             <a class="dropdown-item" href="friends.php">Friends</a>
             <a class="dropdown-item" href="my-betslips.php">My Betslips</a>
             <a class="dropdown-item" href="my-tickets.php">My Tickets</a>

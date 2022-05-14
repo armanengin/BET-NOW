@@ -184,7 +184,7 @@
                 </div>
                   <!-- Match Table -->
                 <div class="col-8" style="border-style:solid;">
-                    <table class="table-responsive table-bordered">
+                    <table class="table-responsive table-bordered" id="bet-table">
                         Today's Matches
                         <thead>
                             <tr>
@@ -257,106 +257,46 @@
                             </div>
                         </div>
 
-                        <div class="row">
-                            <div class="card" style="width:100%; background-color:aqua; margin:3px;">
-                                <div class="section" style="border-style:solid;">
-                                    <p style="text-align:left; padding-bottom:7px; margin:0;">
-                                    <span style="float:right"> 
-                                                <button type="button" class="btn btn-warning btn-sm">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                                </svg>
-                                            </button>
-                                    </span>
-                                    <script> document.write(new Date().toLocaleDateString()); </script>
-                                    </p>
-                                    <hr style="margin:0">
-                                    <p style="text-align:left;">
-                                    <span style="float:right">1</span>
-                                        Home Team
-                                    </p>
-                                    <p style="text-align:left;">
-                                    <span style="float:right">2</span>
-                                        Away Team
-                                    </p>
-                                    <hr style="margin:0">
-                                    <p style="text-align:left; margin:0;">
-                                    <span style="float:right"> 
-                                    Match Result: 1.17
-                                    </span>
-                                    MBN: 1
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="card" style="width:100%; background-color:aqua; margin:3px;">
-                                <div class="section" style="border-style:solid;">
-                                    <p style="text-align:left; padding-bottom:7px; margin:0;">
-                                    <span style="float:right"> 
-                                                <button type="button" class="btn btn-warning btn-sm">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                                </svg>
-                                            </button>
-                                    </span>
-                                    <script> document.write(new Date().toLocaleDateString()); </script>
-                                    </p>
-                                    <hr style="margin:0">
-                                    <p style="text-align:left;">
-                                    <span style="float:right">1</span>
-                                        Home Team
-                                    </p>
-                                    <p style="text-align:left;">
-                                    <span style="float:right">2</span>
-                                        Away Team
-                                    </p>
-                                    <hr style="margin:0">
-                                    <p style="text-align:left; margin:0;">
-                                    <span style="float:right"> 
-                                    Match Result: 1.17
-                                    </span>
-                                    MBN: 1
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="card" style="width:100%; background-color:yellow; margin:3px;">
-                                <div class="section">
-                                    <p style="text-align:left;">
-                                    <span style="float:right"> 
-                                        4.17
-                                    </span>
-                                    Total Odd: 
-                                    </p>
-
-                                    <hr style="margin:0">
-
-                                    <div class="form-group row">
-                                    <label for="deposit-amount-label" class="col-6 col-form-label">Deposit:</label>
-                                    <div class="col-6">
-                                        <input type="text" class="form-control" id="id-deposit-amount" placeholder="TL">
-                                    </div>
-                                    </div>
-
-                                    <hr style="margin:0">
-
-                                    <p style="text-align:left;">
-                                    <span style="float:right"> 
-                                    150 TL
-                                    </span>
-                                    Total Income: 
-                                    </p>
-                                </div>
-                            </div>
-                            <a href="#" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="width:100%;  margin:3px;">Make Bet</a>
+                        <div class="row" id="row-betslip">
+                            
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="card" style="width:100%; background-color:yellow; margin:3px;">
+                                    <div class="section">
+                                        <p style="text-align:left;">
+                                        <span style="float:right"> 
+                                            4.17
+                                        </span>
+                                        Total Odd: 
+                                        </p>
+
+                                        <hr style="margin:0">
+
+                                        <div class="form-group row">
+                                        <label for="deposit-amount-label" class="col-6 col-form-label">Deposit:</label>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" id="id-deposit-amount" placeholder="TL">
+                                        </div>
+                                        </div>
+
+                                        <hr style="margin:0">
+
+                                        <p style="text-align:left;">
+                                        <span style="float:right"> 
+                                        150 TL
+                                        </span>
+                                        Total Income: 
+                                        </p>
+                                    </div>
+                                </div>
+                                <a href="#" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="width:100%;  margin:3px;">Make Bet</a>
+                            </div>
+                        </div>
                 </div>
         </div>
     </html>
     <?php 
+            
     ?> 
     <style>
         .table-responsive{
@@ -368,4 +308,68 @@
         .col{
             overflow:auto;
         }
+        #bet-table th,td { text-align: center; }
+        .selected { background-color:green }
     </style>
+   
+   <?php 
+        $card_betslip_id = 0;
+        $button_delete_betslip_id = 0;
+   ?>
+
+    <script>
+        $(function() {
+            
+            $('#bet-table button').on("click",function(e){
+                e.preventDefault();
+                $('#bet-table button').removeClass("selected");
+                $(this).addClass("selected");
+                $("#row-betslip").append(`<div class="card" id="card-betslip" style="width:100%; background-color:aqua; margin:3px;">
+                                <div class="section" style="border-style:solid;">
+                                    <p style="text-align:left; padding-bottom:7px; margin:0;">
+                                    <span style="float:right"> 
+                                                <button type="button" id="button-delete-betslip" class="btn btn-warning btn-sm" >
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                </svg>
+                                                </button>
+                                    </span>
+                                    16/09/2022
+                                    </p>
+                                    <hr style="margin:0">
+                                    <p style="text-align:left;">
+                                    <span style="float:right">1</span>
+                                        Home Team
+                                    </p>
+                                    <p style="text-align:left;">
+                                    <span style="float:right">2</span>
+                                        Away Team
+                                    </p>
+                                    <hr style="margin:0">
+                                    <p style="text-align:left; margin:0;">
+                                    <span style="float:right"> 
+                                    Match Result: 1.17
+                                    </span>
+                                    MBN: 1
+                                    </p>
+                                </div>
+                            </div>`);
+
+                $(function() {
+                    $("#button-delete-betslip").on("click",function(e){
+                        $("#card-betslip").remove();
+                        $('#bet-table button').removeClass("selected");
+                    });
+                 
+                });
+     
+            });
+        });
+
+       
+        
+
+    </script>
+   
+

@@ -197,8 +197,8 @@ public class javaDB{
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String oddTable = "CREATE TABLE odd(" +
-                "odd_id MEDIUMINT NOT NULL," +
-                "match_result_1 decimal(10, 2), " +
+                " odd_id MEDIUMINT NOT NULL," +
+                " match_result_1 decimal(10, 2), " +
                 " match_result_x decimal(10, 2)," +
                 " match_result_2 decimal(10, 2)," +
                 " two_half_u decimal(10, 2)," +
