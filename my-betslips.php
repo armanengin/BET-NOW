@@ -90,57 +90,95 @@
     </nav>
     
     <!-- My Betslips -->
-    <div class="container" style="width:70%; border-style:solid; border-color:red;">
+    <div class="container-fluid" style="width:100%; border-style:solid; border-color:red;">
         <div class="row">
-            <table class="table">
-                <thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Date</th>
-                    <th scope="col" style="text-align:center; width:100%;">Betslip</th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>06/09/2022</td>
-                        <td>
-                            <p>
-                                <button class="btn btn-success" style="width:100%;" type="button" data-toggle="collapse" data-target="#collapse-my-betslips" aria-expanded="false" aria-controls="collapse-my-betslips">
-                                    Button with data-target
-                                </button>
-                            </p>
-                            <div class="collapse" id="collapse-my-betslips">
-                                <div class="card card-body">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">Win/Lose</th>
-                                                <th scope="col">MBN</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Match</th>
-                                                <th scope="col">Odd Type</th>
-                                                <th scope="col">Odd</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope="row">1</th>
-                                                <td>Lose</th>
-                                                <td>1</td>
-                                                <td>06/09/2022</td>
-                                                <td>Liverpool - Manchester City</td>
-                                                <td>MR1</td>
-                                                <td>1.17</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+            <div class="col-2"  style="border-style:solid; border-color:aqua; margin:0; padding:0;">
+                <h5 style="text-align:center; color:white;">Filter</h5>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" style="width:100%;" id="dropdown-betslip-status-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Betslip Status
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdown-betslip-status-button">
+                        <a class="dropdown-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="saved-betslip">
+                                <label class="form-check-label" for="default-check-turkey">
+                                   Saved
+                                </label>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </a>
+                        <a class="dropdown-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="shared-betslip">
+                                <label class="form-check-label" for="default-check-turkey">
+                                    Shared
+                                </label>
+                            </div>
+                        </a>
+                        <a class="dropdown-item">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="played-betslip">
+                                <label class="form-check-label" for="default-check-turkey">
+                                   Played
+                                </label>
+                            </div>
+                        </a> 
+                    </div>
+                    <input type="submit"style="width:100%;" class="btn btn-warning btn-lg active" value='Apply'> 
+                </div>
+            </div>
+            <div class="col-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col" style="text-align:center; width:100%;">Betslip</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>06/09/2022</td>
+                            <td>
+                                <p>
+                                    <button class="btn btn-success" style="width:100%;" type="button" data-toggle="collapse" data-target="#collapse-my-betslips" aria-expanded="false" aria-controls="collapse-my-betslips">
+                                        2 match | Odd: 4.80 | Coupon Price: 3 $
+                                    </button>
+                                </p>
+                                <div class="collapse" id="collapse-my-betslips">
+                                    <div class="card card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Win/Lose</th>
+                                                    <th scope="col">MBN</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Match</th>
+                                                    <th scope="col">Odd Type</th>
+                                                    <th scope="col">Odd</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>Lose</th>
+                                                    <td>1</td>
+                                                    <td>06/09/2022</td>
+                                                    <td>Liverpool - Manchester City</td>
+                                                    <td>MR1</td>
+                                                    <td>1.17</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+           
         </div>
     </div>
 

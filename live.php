@@ -92,6 +92,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="editors.php">Editors</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="social.php">Social</a>
+                    </li>
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0" action="login.php" method="post">
@@ -240,28 +243,34 @@
             <!-- Betslip -->
                 <div class="col-2" style="border-style:solid; border-color:aqua;">
                     <div class="row d-flex justify-content-center"  style="width:100%;">
-                        <label for="my-coupon" style="position:relative; font-weigth:bold; color:white; font-family: Arial, Helvetica, sans-serif;">
+                        <label for="my-coupon" style="text-align:center; font-weigth:bold; color:white; font-family: Arial, Helvetica, sans-serif;">
                             My Coupon
                         </label>
                         </div>
                         <hr style="margin:0">
-                        <div class="row">
-                            <div class="col-6 d-flex justify-content-center">
-                            <button type="button" class="btn btn-danger">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        <div class="row d-flex justify-content-center">
+                            <div class="btn-group" role="group" aria-label="button-group-betslip">
+                                <button type="button btn-sm" class="btn btn-danger btn-sm" style="margin:2px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                    Delete 
+                                </button>
+
+                                <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-betslip">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
+                                    </svg>
+                                    Share 
+                                </button>
+
+                                <button type="button" class="btn btn-success btn-sm" style="margin:2px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                                <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
                                 </svg>
-                                Delete 
-                            </button>
-                            </div>
-                            <div class="col-6 d-flex justify-content-center" >
-                            <button type="button" class="btn btn-success">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
-                            <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
-                            </svg>
-                                Save 
-                            </button>
+                                    Save 
+                                </button>
                             </div>
                         </div>
 
@@ -302,6 +311,52 @@
                         </div>
                 </div>
         </div>
+        <!-- Modal Betslip (Share Button) -->
+        <div class="modal fade" id="modal-betslip" tabindex="-1" role="dialog" aria-labelledby="label-modal-betslip" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="label-modal-betslip">Share Betslip</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">MBN</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">League</th>
+                            <th scope="col">Match</th>
+                            <th scope="col">Odd Type</th>
+                            <th scope="col">Odd</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>5</td>
+                                <td>22-05-14</td>
+                                <td>15:41:12</td>
+                                <td>Premier</td>
+                                <td>Liverpool - Real Madrid</td>
+                                <td>MR1</td>
+                                <td>1.50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <h5>Total Odd: 1.5</h5>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Share Bet</button>
+                </div>
+                </div>
+            </div>
+         </div>
     </html>
     <?php 
             
@@ -325,59 +380,58 @@
         $button_delete_betslip_id = 0;
    ?>
 
-    <script>
-        $(function() {
-            
-            $('#bet-table button').on("click",function(e){
-                e.preventDefault();
-                $('#bet-table button').removeClass("selected");
-                $(this).addClass("selected");
-                $("#row-betslip").append(`<div class="card" id="card-betslip" style="width:100%; background-color:aqua; margin:3px;">
-                                <div class="section" style="border-style:solid;">
-                                    <p style="text-align:left; padding-bottom:7px; margin:0;">
-                                    <span style="float:right"> 
-                                                <button type="button" id="button-delete-betslip" class="btn btn-warning btn-sm" >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                                </svg>
-                                                </button>
-                                    </span>
-                                    16/09/2022
-                                    </p>
-                                    <hr style="margin:0">
-                                    <p style="text-align:left;">
-                                    <span style="float:right">1</span>
-                                        Home Team
-                                    </p>
-                                    <p style="text-align:left;">
-                                    <span style="float:right">2</span>
-                                        Away Team
-                                    </p>
-                                    <hr style="margin:0">
-                                    <p style="text-align:left; margin:0;">
-                                    <span style="float:right"> 
-                                    Match Result: 1.17
-                                    </span>
-                                    MBN: 1
-                                    </p>
-                                </div>
-                            </div>`);
+<script>
+    $(function() {
+        
+        $('#bet-table button').on("click",function(e){
+            e.preventDefault();
+            $('#bet-table button').removeClass("selected");
+            $(this).addClass("selected");
+            $("#row-betslip").append(`<div class="card" id="card-betslip" style="width:100%; background-color:aqua; margin:3px;">
+                            <div class="section" style="border-style:solid;">
+                                <p style="text-align:left; padding-bottom:7px; margin:0;">
+                                <span style="float:right"> 
+                                            <button type="button" id="button-delete-betslip" class="btn btn-warning btn-sm" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                            </svg>
+                                            </button>
+                                </span>
+                                16/09/2022
+                                </p>
+                                <hr style="margin:0">
+                                <p style="text-align:left;">
+                                <span style="float:right">1</span>
+                                    Home Team
+                                </p>
+                                <p style="text-align:left;">
+                                <span style="float:right">2</span>
+                                    Away Team
+                                </p>
+                                <hr style="margin:0">
+                                <p style="text-align:left; margin:0;">
+                                <span style="float:right"> 
+                                Match Result: 1.17
+                                </span>
+                                MBN: 1
+                                </p>
+                            </div>
+                        </div>`);
 
-                $(function() {
-                    $("#button-delete-betslip").on("click",function(e){
-                        $("#card-betslip").remove();
-                        $('#bet-table button').removeClass("selected");
-                    });
-                 
+            $(function() {
+                $("#button-delete-betslip").on("click",function(e){
+                    $("#card-betslip").remove();
+                    $('#bet-table button').removeClass("selected");
                 });
-     
             });
         });
-
-       
-        
-
-    </script>
+    });
+</script>
    
-
+<style>
+    .table{
+        font-size:12px;
+        text-align:center;
+    }
+</style>
