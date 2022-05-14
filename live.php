@@ -1,23 +1,29 @@
 <?php 
   include('config.php');
  session_start();
-$username = $_SESSION['login_user'];
+    $username = $_SESSION['login_user'];
 
     $sql = "SELECT bet_id, match_id, mbn, bet_date, bet_time, category, odd_type, odd_value from bet";
     $match_sql = "SELECT match_id, match_date, match_time, match_category, league from matchs";
     $contains_sql = "SELECT team_id, match_id from contains";
     $team_sql = "SELECT team_name, match_id from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
 
+    $leagues_sql = "SELECT DISTINCT league from matchs";
+    $leagues = mysqli_query($db, $leagues_sql);
+    $sports_sql = "SELECT DISTINCT match_category from matchs";
+    $sports = mysqli_query($db, $sports_sql);
     $matchs = mysqli_query($db,$match_sql);
     $bets_query = mysqli_query($db,$sql);
     $contains = mysqli_query($db,$contains_sql);
     $teams = mysqli_query($db,$team_sql);
     $bets = [];
     $mbn = [];
+
+  
     while($row = mysqli_fetch_assoc($bets_query)) {
         $bets[] = $row;
     }
-    
+
     foreach( $matchs as $match){
         $mbn[] = array_shift($bets)['mbn'];
         for( $i = 0; $i < 9; $i++){
@@ -107,35 +113,22 @@ $username = $_SESSION['login_user'];
             <div class="row">
                 <div class="col-2" style="border-style:solid; border-color:aqua; margin:0; padding:0;">
                     <h5 style="text-align:center; color:white;">Filter</h5>
+                    <form action="filter_bets.php" method='post'>
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" style="width:100%;" id="dropdown-league-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         League
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown-league-button">
+                            <?php foreach($leagues as $league){?>
                             <a class="dropdown-item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-turkey">
+                                    <input class="form-check-input" type="checkbox" value="" id="default-league-<?php echo $league['league']?>">
                                     <label class="form-check-label" for="default-check-turkey">
-                                        Turkey
+                                        <?php echo $league['league'] ?>
                                     </label>
                                 </div>
                             </a>
-                            <a class="dropdown-item">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-england">
-                                    <label class="form-check-label" for="default-check-england">
-                                        England
-                                    </label>
-                                </div>
-                            </a>
-                            <a class="dropdown-item">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-spain">
-                                    <label class="form-check-label" for="defaul-check-spain">
-                                    Spain
-                                    </label>
-                                </div>
-                            </a>
+                            <?php } ?>
                         </div>
                     </div>
 
@@ -144,30 +137,17 @@ $username = $_SESSION['login_user'];
                         Sports
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown-sports-button">
+                        <?php foreach($sports as $sport){?>
                             <a class="dropdown-item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-football">
+                                    <input class="form-check-input" type="checkbox" value=""id="default-sports-<?php echo $sport['match_category']?>">
                                     <label class="form-check-label" for="default-check-football">
-                                        Football
+                                    <?php echo $sport['match_category'] ?>
                                     </label>
                                 </div>
                             </a>
-                            <a class="dropdown-item">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-basketball">
-                                    <label class="form-check-label" for="default-check-basketball">
-                                        Basketball
-                                    </label>
-                                </div>
-                            </a>
-                            <a class="dropdown-item">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-volleyball">
-                                    <label class="form-check-label" for="defaul-check-volleyball">
-                                    Volleyball
-                                    </label>
-                                </div>
-                            </a>
+                            <?php } ?>
+
                         </div>
                     </div>
 
@@ -176,30 +156,18 @@ $username = $_SESSION['login_user'];
                         MBN
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown-mbn-button">
+                            <?php  $mbns = array_unique($mbn)?>
+                        <?php for($i = 0; $i < count($mbns); $i++){?>
                             <a class="dropdown-item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-mbn1">
+                                    <input class="form-check-input" type="checkbox" value="" id="default-mbn-<?php echo $mbns[$i]?>">
                                     <label class="form-check-label" for="default-check-mbn1">
-                                    1
+                                    <?php echo $mbns[$i] ?>
+
                                     </label>
                                 </div>
                             </a>
-                            <a class="dropdown-item">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-mbn2">
-                                    <label class="form-check-label" for="default-check-mbn2">
-                                        2
-                                    </label>
-                                </div>
-                            </a>
-                            <a class="dropdown-item">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-check-mbn3">
-                                    <label class="form-check-label" for="defaul-check-mbn3">
-                                    3
-                                    </label>
-                                </div>
-                            </a>
+                            <?php } ?>
                         </div>
                         <div class="form-outline datepicker w-100" style="margin-top:2px;">
                                 <input
@@ -209,8 +177,10 @@ $username = $_SESSION['login_user'];
                                 id="date-index" name="date"
                                 />
                         </div>
-                        <a href="#" style="width:100%;" class="btn btn-warning btn-lg active" role="button">Apply</a>
+                        <input type="submit"style="width:100%;" class="btn btn-warning btn-lg active" value='Apply'> 
                     </div>
+                    </form>
+
                 </div>
                   <!-- Match Table -->
                 <div class="col-8" style="border-style:solid;">
