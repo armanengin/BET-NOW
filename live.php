@@ -1,41 +1,68 @@
 <?php 
-  include('config.php');
- session_start();
+include('config.php');
+session_start();
     $username = $_SESSION['login_user'];
 
-    $sql = "SELECT bet_id, match_id, mbn, bet_date, bet_time, category, odd_type, odd_value from bet";
-    $match_sql = "SELECT match_id, match_date, match_time, match_category, league from matchs";
-    $contains_sql = "SELECT team_id, match_id from contains";
-    $team_sql = "SELECT team_name, match_id from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
-
-    $leagues_sql = "SELECT DISTINCT league from matchs";
-    $leagues = mysqli_query($db, $leagues_sql);
-    $sports_sql = "SELECT DISTINCT match_category from matchs";
-    $sports = mysqli_query($db, $sports_sql);
-    $matchs = mysqli_query($db,$match_sql);
-    $bets_query = mysqli_query($db,$sql);
-    $contains = mysqli_query($db,$contains_sql);
-    $teams = mysqli_query($db,$team_sql);
-    $bets = [];
-    $mbn = [];
-
-  
-    while($row = mysqli_fetch_assoc($bets_query)) {
-        $bets[] = $row;
-    }
-
-    foreach( $matchs as $match){
-        $mbn[] = array_shift($bets)['mbn'];
-        for( $i = 0; $i < 9; $i++){
-            array_shift($bets);
+    if( isset($_SESSION['bets'])){
+        $bets_query = $_SESSION['bets'];
+        $match_ids = [];
+        foreach( $bets_query as $bet){
+            $match_ids[] = $bet['match_id'];
         }
+        $match_ids = implode("','", $match_ids);
+
+        $leagues_sql = "SELECT DISTINCT league from matchs WHERE match_id IN ('".$match_ids."')";
+        $leagues = mysqli_query($db, $leagues_sql);
+
+        $sports_sql = "SELECT DISTINCT match_category from matchs WHERE match_id IN ('".$match_ids."')";
+        $sports = mysqli_query($db, $sports_sql);
+
+        $match_sql = "SELECT DISTINCT match_id, match_date, match_time, league from matchs WHERE match_id IN ('".$match_ids."')";
+        $matchs = mysqli_query($db,$match_sql);
+
+        $contains_sql = "SELECT DISTINCT team_id, match_id from contains WHERE match_id IN ('".$match_ids."')";
+        $contains = mysqli_query($db,$contains_sql);
+        $contains_arr = [];
+        foreach( $contains as $contain){
+            $contains_arr[] = $contain['team_id'];
+        }
+        $contains_arr = implode("','", $contains_arr);
+        $team_sql = "SELECT team_name, match_id from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
+        $teams = mysqli_query($db,$team_sql);
+        $bets = $bets_query;
     }
-    $bets_query = mysqli_query($db,$sql);
-    $bets = [];
-    while($row = mysqli_fetch_assoc($bets_query)) {
-        $bets[] = $row;
-    }
+    else{
+
+        $sql = "SELECT bet_id, match_id, mbn, bet_date, bet_time, category, odd_type, odd_value from bet";
+        $match_sql = "SELECT match_id, match_date, match_time, match_category, league from matchs";
+        $contains_sql = "SELECT team_id, match_id from contains";
+        $team_sql = "SELECT team_name, match_id from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
     
+        $leagues_sql = "SELECT DISTINCT league from matchs";
+        $leagues = mysqli_query($db, $leagues_sql);
+        $sports_sql = "SELECT DISTINCT match_category from matchs";
+        $sports = mysqli_query($db, $sports_sql);
+        $matchs = mysqli_query($db,$match_sql);
+        $bets_query = mysqli_query($db,$sql);
+        $contains = mysqli_query($db,$contains_sql);
+        $teams = mysqli_query($db,$team_sql);
+
+        $bets = [];
+        while($row = mysqli_fetch_assoc($bets_query)) {
+            $bets[] = $row;
+        }
+
+    }
+    $filter_mbn = [];
+    $mbns_sql = "SELECT mbn FROM bet";
+    $mbns = mysqli_query($db, $mbns_sql);
+    foreach( $mbns as $mbn){
+        $filter_mbn[] = $mbn['mbn'];
+    }
+    $filter_leagues_sql = "SELECT DISTINCT league from matchs";
+    $filter_leagues = mysqli_query($db, $filter_leagues_sql);
+    $filter_sports_sql = "SELECT DISTINCT match_category from matchs";
+    $filter_sports = mysqli_query($db, $filter_sports_sql);
 ?>
 <!doctype html>
 <html lang="en">
@@ -119,10 +146,10 @@
                         League
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown-league-button">
-                            <?php foreach($leagues as $league){?>
+                            <?php foreach($filter_leagues as $league){?>
                             <a class="dropdown-item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-league-<?php echo $league['league']?>">
+                                    <input class="form-check-input" type="checkbox" value="" id="default-league-<?php echo $league['league']?>" name="default-league-<?php echo $league['league']?>">
                                     <label class="form-check-label" for="default-check-turkey">
                                         <?php echo $league['league'] ?>
                                     </label>
@@ -137,10 +164,10 @@
                         Sports
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown-sports-button">
-                        <?php foreach($sports as $sport){?>
+                        <?php foreach($filter_sports as $sport){?>
                             <a class="dropdown-item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value=""id="default-sports-<?php echo $sport['match_category']?>">
+                                    <input class="form-check-input" type="checkbox" value=""id="default-sports-<?php echo $sport['match_category']?>" name="default-sports-<?php echo $sport['match_category']?>">
                                     <label class="form-check-label" for="default-check-football">
                                     <?php echo $sport['match_category'] ?>
                                     </label>
@@ -156,13 +183,13 @@
                         MBN
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdown-mbn-button">
-                            <?php  $mbns = array_unique($mbn)?>
-                        <?php for($i = 0; $i < count($mbns); $i++){?>
+                            <?php  $filter_mbns = array_unique($filter_mbn)?>
+                        <?php for($i = 0; $i < count($filter_mbns); $i++){?>
                             <a class="dropdown-item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-mbn-<?php echo $mbns[$i]?>">
+                                    <input class="form-check-input" type="checkbox" value="" id="default-mbn-<?php echo $filter_mbns[$i]?>"name="default-mbn-<?php echo $filter_mbns[$i]?>">
                                     <label class="form-check-label" for="default-check-mbn1">
-                                    <?php echo $mbns[$i] ?>
+                                    <?php echo $filter_mbns[$i] ?>
 
                                     </label>
                                 </div>
@@ -174,7 +201,7 @@
                                 style="font-size:16px; text-align:center;"
                                 type="date"
                                 class="form-control form-control-lg"
-                                id="date-index" name="date"
+                                id="date-filter" name="date-filter"
                                 />
                         </div>
                         <input type="submit"style="width:100%;" class="btn btn-warning btn-lg active" value='Apply'> 
@@ -211,7 +238,7 @@
                             <?php foreach($matchs as $match){?>
                             <tr>
                                 <th scope="row"><?php echo $match['match_id'] ?></th>
-                                <td><?php echo array_shift($mbn) ?></td>
+                                <td><?php echo $filter_mbn[0] ?></td>
                                 <td><?php echo $match['match_date'] ?></td>
                                 <td><?php echo $match['match_time'] ?></td>
                                 <td><?php echo $match['league'] ?></td>
