@@ -67,7 +67,8 @@ public class javaDB{
             "password VARCHAR(50)," +
             "balance varchar(50)," + 
             "num_of_successful_betslip int," +
-            "ratio_of_success decimal(3,2), "+	
+            "ratio_of_success decimal(3,2), "+
+            "bio_editor varchar(1000)," +	
             "PRIMARY KEY (editor_id), " + 
             "FOREIGN KEY (username) REFERENCES  user(username) ON UPDATE CASCADE ON DELETE CASCADE"+
             ") ENGINE=INNODB";
@@ -112,10 +113,9 @@ public class javaDB{
                 " bet_date date," +
                 " bet_time time," +
                 " category varchar(100),"+
-                " user_id mediumint,"+
-                " odd_id mediumint," +
+                "odd_type ENUM('MR1', 'MRX', 'MR2', 'HO', 'HU', 'HR1', 'HRX', 'HR2', 'MG1', 'MG0') NOT NULL," +
+                "odd_value decimal(10,2)," +
                 " PRIMARY KEY(bet_id), " +
-                "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (match_id) REFERENCES matchs(match_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String matchTable = "CREATE TABLE matchs(" +
@@ -182,33 +182,9 @@ public class javaDB{
         String hasTable = "CREATE TABLE has(" +
                 "bet_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
-                "match_result_1 decimal(10, 2), " +
-                " match_result_x decimal(10, 2)," +
-                " match_result_2 decimal(10, 2)," +
-                " two_half_u decimal(10, 2)," +
-                " two_half_o decimal(10, 2)," +
-                " handicap_1 decimal(10, 2)," +
-                " handicap_x decimal(10, 2)," +
-                " handicap_2 decimal(10, 2)," +
-                " mutual_goal decimal(10, 2)," +
-                " not_mutual_goal decimal(10, 2)," +
                 " PRIMARY KEY(bet_id, betslip_id), " +
                 "FOREIGN KEY (bet_id) REFERENCES bet(bet_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
-                ") ENGINE=INNODB";
-        String oddTable = "CREATE TABLE odd(" +
-                " odd_id MEDIUMINT NOT NULL," +
-                " match_result_1 decimal(10, 2), " +
-                " match_result_x decimal(10, 2)," +
-                " match_result_2 decimal(10, 2)," +
-                " two_half_u decimal(10, 2)," +
-                " two_half_o decimal(10, 2)," +
-                " handicap_1 decimal(10, 2)," +
-                " handicap_x decimal(10, 2)," +
-                " handicap_2 decimal(10, 2)," +
-                " mutual_goal decimal(10, 2)," +
-                " not_mutual_goal decimal(10, 2)," +
-                " PRIMARY KEY(odd_id) " +
                 ") ENGINE=INNODB";
         String commentsMatchTable = "CREATE TABLE comments_match(" +
                 "user_id MEDIUMINT NOT NULL," +
@@ -238,6 +214,42 @@ public class javaDB{
                 "FOREIGN KEY (team_id) REFERENCES team(team_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (match_id) REFERENCES matchs(match_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
+
+        String addTeam = "INSERT INTO team(team_name)" +
+            "VALUES ('Liverpool')," +
+            "('Real Madrid')," +
+            "('Barcelona')," +
+            "('Ankaragücü')";
+        String addMatch = "INSERT INTO matchs(match_date, match_time, match_category, league)" +
+        "VALUES (curdate(), now(), 'football', 'premier')," +
+        "(curdate(), now(), 'football', 'premier')";
+        String addContains = "INSERT INTO contains(team_id, match_id)" +
+        "VALUES (1, 1)," +
+        "(2, 1)," +
+        "(3, 2)," +
+        "(4, 2)";
+        String addBet = "INSERT INTO bet(match_id, mbn, bet_date, bet_time, category, odd_type, odd_value)" +
+        "VALUES (1, 5, curdate(), now(), 'football', 'MR1', 1.5)," +
+        "(1, 5, curdate(), now(), 'football','MRX', 1.7)," +
+        "(1, 5, curdate(), now(), 'football','MR2', 1.2)," +
+        "(1, 5, curdate(), now(), 'football','HU', 1.9)," +
+        "(1, 5, curdate(), now(), 'football','HO', 2.0)," +
+        "(1, 5, curdate(), now(), 'football','HR1', 3.0)," +
+        "(1, 5, curdate(), now(), 'football','HRX', 1.0)," +
+        "(1, 5, curdate(), now(), 'football','HR2', 4.0)," +
+        "(1, 5, curdate(), now(), 'football','MG1', 5.0)," +
+        "(1, 5, curdate(), now(), 'football','MG0', 6.0)," + 
+        "(2, 5, curdate(), now(), 'football','MR1', 1.5)," +
+        "(2, 5, curdate(), now(), 'football','MRX', 1.7)," +
+        "(2, 5, curdate(), now(), 'football','MR2', 1.2)," +
+        "(2, 5, curdate(), now(), 'football','HU', 1.9)," +
+        "(2, 5, curdate(), now(), 'football','HO', 2.0)," +
+        "(2, 5, curdate(), now(), 'football','HR1', 3.0)," +
+        "(2, 5, curdate(), now(), 'football','HRX', 1.0)," +
+        "(2, 5, curdate(), now(), 'football','HR2', 4.0)," +
+        "(2, 5, curdate(), now(), 'football','MG1', 5.0)," +
+        "(2, 5, curdate(), now(), 'football','MG0', 6.0)"; 
+
         try{
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS contains");
@@ -249,8 +261,6 @@ public class javaDB{
             stmt.executeUpdate("DROP TABLE IF EXISTS comments_match");
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS has");
-            stmt = conn.createStatement();
-            stmt.executeUpdate("DROP TABLE IF EXISTS odd");
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS editor_shares");
             stmt = conn.createStatement();
@@ -333,8 +343,6 @@ public class javaDB{
             stmt.executeUpdate(editorSharesTable);
             System.out.println("Editor Shares Table created");
             stmt = conn.createStatement();
-            stmt.executeUpdate(oddTable);
-            System.out.println("Odd Table created");
             stmt = conn.createStatement();
             stmt.executeUpdate(hasTable);
             System.out.println("Has Table created");
@@ -350,6 +358,13 @@ public class javaDB{
             stmt = conn.createStatement();
             stmt.executeUpdate(containsTable);
             System.out.println("Contains Table created");
+            stmt.executeUpdate(addTeam);
+            System.out.println("added odds");
+            stmt.executeUpdate(addMatch);
+            stmt.executeUpdate(addContains);
+            stmt.executeUpdate(addBet);
+
+
         } catch (Exception e){
             e.printStackTrace();
         }
