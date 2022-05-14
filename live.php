@@ -53,16 +53,21 @@ session_start();
         }
 
     }
+
     $filter_mbn = [];
     $mbns_sql = "SELECT mbn FROM bet";
     $mbns = mysqli_query($db, $mbns_sql);
     foreach( $mbns as $mbn){
         $filter_mbn[] = $mbn['mbn'];
     }
+
     $filter_leagues_sql = "SELECT DISTINCT league from matchs";
     $filter_leagues = mysqli_query($db, $filter_leagues_sql);
     $filter_sports_sql = "SELECT DISTINCT match_category from matchs";
     $filter_sports = mysqli_query($db, $filter_sports_sql);
+    $betslip = [];
+    $odd_arr = [];
+    $totalOdd = 1;
 ?>
 <!doctype html>
 <html lang="en">
@@ -82,6 +87,7 @@ session_start();
     
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -211,7 +217,7 @@ session_start();
                 </div>
                   <!-- Match Table -->
                 <div class="col-8" style="border-style:solid;">
-                    <table class="table-responsive table-bordered" id="bet-table">
+                    <table class="table-responsive table-bordered">
                         Today's Matches
                         <thead>
                             <tr>
@@ -236,7 +242,7 @@ session_start();
                         <tbody>
 
                             <?php foreach($matchs as $match){?>
-                            <tr>
+                            <tr id="bet-table">
                                 <th scope="row"><?php echo $match['match_id'] ?></th>
                                 <td><?php echo $filter_mbn[0] ?></td>
                                 <td><?php echo $match['match_date'] ?></td>
@@ -249,16 +255,9 @@ session_start();
                                     <?php } ?>
                                 <?php } ?>
                                 </td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value']?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
-                                <td><button type="button" class="btn btn-secondary btn-sm"><?php echo array_shift($bets)['odd_value'] ?></button></td>
+                                <?php for( $i = ($match['match_id'] - 1) * 10; $i < 10 * $match['match_id'] ; $i++){?>
+                                <td><button type="button" class="btn btn-secondary btn-sm" id="bet-button-<?php echo $bets[$i]['bet_id']?>"><?php echo $bets[$i]['odd_value'] ?></button></td>
+                                <?php }?>
                             </tr>
                             <?php }  ?>
                         </tbody>
@@ -296,11 +295,11 @@ session_start();
                             
                         </div>
                         <div class="row">
-                            <div class="card" style="width:100%; background-color:yellow; margin:3px;">
+                            <div class="card" style="width:100%; background-color:yellow; margin:3px;" id='make-bet'>
                                     <div class="section">
                                         <p style="text-align:left;">
-                                        <span style="float:right"> 
-                                            4.17
+                                        <span style="float:right" id="odd-value"> 
+                                        <?php echo $totalOdd ?>     
                                         </span>
                                         Total Odd: 
                                         </p>
@@ -351,26 +350,35 @@ session_start();
         $card_betslip_id = 0;
         $button_delete_betslip_id = 0;
    ?>
-
+   
+<?php for($i = 0; $i < count($bets); $i++){?>
     <script>
-        $(function() {
-            
-            $('#bet-table button').on("click",function(e){
+
+        $(document).ready(function() {
+                $('#bet-button-<?php echo $bets[$i]['bet_id'] ?>').click(function(e){
                 e.preventDefault();
-                $('#bet-table button').removeClass("selected");
+                <?php $betslip[] = ($bets[$i]['bet_id'])?>
+                <?php for($j = floor($i / 10) * 10; $j < 10 * (floor($i / 10) + 1); $j++){?>
+
+
+                    $('#bet-button-<?php echo $bets[$j]['bet_id'] ?>').removeClass("selected");
+                    $("#card-betslip-<?php echo $bets[$j]['bet_id'] ?>").remove();
+      
+                <?php }?>
+                        $('#odd-value').html('<?php echo count($betslip) ?>');
                 $(this).addClass("selected");
-                $("#row-betslip").append(`<div class="card" id="card-betslip" style="width:100%; background-color:aqua; margin:3px;">
+                $("#row-betslip").append(`<div class="card" id="card-betslip-<?php echo $bets[$i]['bet_id'] ?>" style="width:100%; background-color:aqua; margin:3px;">
                                 <div class="section" style="border-style:solid;">
                                     <p style="text-align:left; padding-bottom:7px; margin:0;">
                                     <span style="float:right"> 
-                                                <button type="button" id="button-delete-betslip" class="btn btn-warning btn-sm" >
+                                                <button type="button" id="button-delete-betslip-<?php echo $bets[$i]['bet_id'] ?>" class="btn btn-warning btn-sm" >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                                                 </svg>
                                                 </button>
                                     </span>
-                                    16/09/2022
+                                        <?php echo $bets[$i]['bet_date']?>
                                     </p>
                                     <hr style="margin:0">
                                     <p style="text-align:left;">
@@ -384,7 +392,8 @@ session_start();
                                     <hr style="margin:0">
                                     <p style="text-align:left; margin:0;">
                                     <span style="float:right"> 
-                                    Match Result: 1.17
+                                    <?php echo $bets[$i]['odd_value']?>
+
                                     </span>
                                     MBN: 1
                                     </p>
@@ -392,19 +401,21 @@ session_start();
                             </div>`);
 
                 $(function() {
-                    $("#button-delete-betslip").on("click",function(e){
-                        $("#card-betslip").remove();
-                        $('#bet-table button').removeClass("selected");
+                    $("#button-delete-betslip-<?php echo $bets[$i]['bet_id'] ?>").on("click",function(e){
+                        $("#card-betslip-<?php echo $bets[$i]['bet_id'] ?>").remove();
+                        $('#bet-button-<?php echo $bets[$i]['bet_id'] ?>').removeClass("selected");
                     });
                  
                 });
-     
+
+
             });
+
+            
         });
 
-       
-        
-
     </script>
+<?php }?>
+
    
 
