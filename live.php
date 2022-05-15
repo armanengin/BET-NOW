@@ -27,17 +27,20 @@ session_start();
             $contains_arr[] = $contain['team_id'];
         }
         $contains_arr = implode("','", $contains_arr);
-        $team_sql = "SELECT team_name, match_id from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
-        $teams = mysqli_query($db,$team_sql);
+        $team_sql = "SELECT match_id, team_name from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
+        $teams_query = mysqli_query($db,$team_sql);
         $bets = $bets_query;
+        $teams = [];
+        while($row = mysqli_fetch_assoc($teams_query)) {
+            $teams[] = $row;
+        }
     }
     else{
 
         $sql = "SELECT bet_id, match_id, mbn, bet_date, bet_time, category, odd_type, odd_value from bet";
         $match_sql = "SELECT match_id, match_date, match_time, match_category, league from matchs";
         $contains_sql = "SELECT team_id, match_id from contains";
-        $team_sql = "SELECT team_name, match_id from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
-    
+        $team_sql = "SELECT match_id, team_name from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
         $leagues_sql = "SELECT DISTINCT league from matchs";
         $leagues = mysqli_query($db, $leagues_sql);
         $sports_sql = "SELECT DISTINCT match_category from matchs";
@@ -45,13 +48,17 @@ session_start();
         $matchs = mysqli_query($db,$match_sql);
         $bets_query = mysqli_query($db,$sql);
         $contains = mysqli_query($db,$contains_sql);
-        $teams = mysqli_query($db,$team_sql);
+        $teams_query = mysqli_query($db,$team_sql);
 
         $bets = [];
         while($row = mysqli_fetch_assoc($bets_query)) {
             $bets[] = $row;
         }
 
+        $teams = [];
+        while($row = mysqli_fetch_assoc($teams_query)) {
+            $teams[] = $row;
+        }
     }
 
     $filter_mbn = [];
@@ -273,7 +280,7 @@ session_start();
                         <hr style="margin:0">
                         <div class="row">
                             <div class="col-6 d-flex justify-content-center">
-                            <button type="button" class="btn btn-danger">
+                            <button type="button" class="btn btn-danger" id='delete-all-button'>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -357,15 +364,20 @@ session_start();
         $(document).ready(function() {
                 $('#bet-button-<?php echo $bets[$i]['bet_id'] ?>').click(function(e){
                 e.preventDefault();
-                <?php $betslip[] = ($bets[$i]['bet_id'])?>
                 <?php for($j = floor($i / 10) * 10; $j < 10 * (floor($i / 10) + 1); $j++){?>
-
-
                     $('#bet-button-<?php echo $bets[$j]['bet_id'] ?>').removeClass("selected");
                     $("#card-betslip-<?php echo $bets[$j]['bet_id'] ?>").remove();
-      
+                    <?php if($key = array_search( $j + 1, $betslip)){?>
+                        <?php unset($betslip[$key])?>
+                    <?php }?>
                 <?php }?>
-                        $('#odd-value').html('<?php echo count($betslip) ?>');
+
+                <?php $team_compete = [] ?>
+                <?php foreach($teams as $team){?>
+                     <?php if( $team['match_id'] == floor($i / 10) + 1){?>
+                            <?php $team_compete[] = $team['team_name'] ?>
+                        <?php } ?>
+                <?php } ?>
                 $(this).addClass("selected");
                 $("#row-betslip").append(`<div class="card" id="card-betslip-<?php echo $bets[$i]['bet_id'] ?>" style="width:100%; background-color:aqua; margin:3px;">
                                 <div class="section" style="border-style:solid;">
@@ -383,11 +395,11 @@ session_start();
                                     <hr style="margin:0">
                                     <p style="text-align:left;">
                                     <span style="float:right">1</span>
-                                        Home Team
+                                        <?php echo $team_compete[0] ?>
                                     </p>
                                     <p style="text-align:left;">
                                     <span style="float:right">2</span>
-                                        Away Team
+                                    <?php echo $team_compete[1] ?>
                                     </p>
                                     <hr style="margin:0">
                                     <p style="text-align:left; margin:0;">
@@ -395,11 +407,10 @@ session_start();
                                     <?php echo $bets[$i]['odd_value']?>
 
                                     </span>
-                                    MBN: 1
+                                    MBN: <?php  echo $bets[$i]['mbn']?>
                                     </p>
                                 </div>
                             </div>`);
-
                 $(function() {
                     $("#button-delete-betslip-<?php echo $bets[$i]['bet_id'] ?>").on("click",function(e){
                         $("#card-betslip-<?php echo $bets[$i]['bet_id'] ?>").remove();
@@ -408,6 +419,7 @@ session_start();
                  
                 });
 
+                <?php $betslip[] = ($bets[$i]['bet_id'])   ?>
 
             });
 
@@ -415,7 +427,21 @@ session_start();
         });
 
     </script>
+
 <?php }?>
 
-   
+<script>
+    $(document).ready( function(){
+        $('#delete-all-button').click( function(e){
+            e.preventDefault();
+            $('#row-betslip').html('');
+            <?php for($j = 0; $j < count($bets); $j++){?>
+                    $('#bet-button-<?php echo $bets[$j]['bet_id'] ?>').removeClass("selected");
+                    $("#card-betslip-<?php echo $bets[$j]['bet_id'] ?>").remove();
+            <?php }?>
+        });
+    });
+
+    
+</script>
 
