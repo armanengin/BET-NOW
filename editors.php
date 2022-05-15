@@ -1,3 +1,11 @@
+<?php 
+    include('config.php');
+    session_start();
+
+    $sql = "SELECT editor_id, first_name, last_name, username, num_of_successful_betslip, ratio_of_success, editor_bio FROM editor";
+    $editor_sql = mysqli_query($db, $sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -121,7 +129,6 @@
                     <thead>
                         <tr>
                         <th scope="col">#</th>
-                        <th style="width:10%;" scope="col">Editor Photo</th>
                         <th scope="col">Editor</th>
                         <th scope="col">Follower Number</th>
                         <th scope="col">Winning Rate</th>
@@ -129,48 +136,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td><img src="assets/gamer.png" style="width:100%;"></td>
-                            <td>Deniz Semih Özal</td>
-                            <td>146</td>
-                            <td>65%</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="editor-profile.php" class="btn btn-primary" role="button">Profile</a>
-                                    <a href="editor-betslips.php" class="btn btn-warning" role="button">Performance</a>
-                                    <a href="#" id="follow-button" class="btn btn-success " role="button">Follow</a>
-                                </div>
-                            </td>  
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td><img src="assets/hacker.png" style="width:100%;"></td>
-                            <td>Remzi Tepe</td>
-                            <td>155</td>
-                            <td>67%</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="editor-profile.php" class="btn btn-primary" role="button">Profile</a>
-                                    <a href="editor-betslips.php" class="btn btn-warning" role="button">Performance</a>
-                                    <a href="#" id="follow-button" class="btn btn-success " role="button">Follow</a>
-                                </div>
-                            </td>  
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td><img  src="assets/training.png" style="width:100%;"></td>
-                            <td>Arman Engin Sucu</td>
-                            <td>187</td>
-                            <td>68%</td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                    <a href="editor-profile.php" class="btn btn-primary" role="button">Profile</a>
-                                    <a href="editor-betslips.php" class="btn btn-warning" role="button">Performance</a>
-                                    <a href="#" id="follow-button" class="btn btn-success " role="button">Follow</a>
-                                </div>
-                            </td>  
-                        </tr>
+                        <?php foreach($editor_sql as $editor){?>
+                            <tr>
+                                <th scope="row"><?php echo $editor['editor_id'] ?></th>
+                                <td><?php echo $editor['first_name']." ".$editor['last_name'] ?></td>
+                                <td>146</td>
+                                <td><?php echo $editor['ratio_of_success'] ?></td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <a href="editor-profile.php" class="btn btn-primary" role="button">Profile</a>
+                                        <a href="editor-performance.php" class="btn btn-warning" role="button">Performance</a>
+                                        <a href="#" id="follow-button" class="btn btn-success " role="button">Follow</a>
+                                    </div>
+                                </td>  
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
@@ -180,6 +160,10 @@
 <style>
     body{
         background-color:gray;
+    }
+    .table{
+        
+        text-align:center;
     }
 }
 </style>
