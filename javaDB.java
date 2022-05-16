@@ -91,6 +91,9 @@ public class javaDB{
                 " no_of_bets int,"+
                 " admin_id mediumint,"+
                 " user_id mediumint,"+
+                " isShared boolean,"+
+                " isSaved boolean,"+
+                " isPlayed boolean,"+
                 " PRIMARY KEY(betslip_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (admin_id) REFERENCES admin(admin_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
