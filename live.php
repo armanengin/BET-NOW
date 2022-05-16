@@ -336,11 +336,10 @@ session_start();
 
                                         <?php echo $totalOdd ?>     
                                         </span>
-                                        Total Odd: 
+                                            Total Odd: 
                                         </p>
 
                                         <hr style="margin:0">
-
                                         <div class="form-group row">
                                             <label for="deposit-amount-label" class="col-6 col-form-label" >Deposit:</label>
                                             <div class="col-6">
@@ -350,12 +349,11 @@ session_start();
                                         </div>
 
                                         <hr style="margin:0">
-
                                         <p style="text-align:left;">
                                         <span style="float:right" id="income-value"> 
                                             0 TL
                                         </span>
-                                        Total Income: 
+                                            Total Income: 
                                         </p>
                                     </div>
                                 </div>
@@ -368,59 +366,51 @@ session_start();
         <div class="modal fade" style="width:60%;" id="modal-Save" tabindex="-1" role="dialog" aria-labelledby="label-modal-Save" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="label-modal-Save">
-                                   Save Bets
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-dark">
-                        <thead>
-                            <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">MBN</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Time</th>
-                            <th scope="col">League</th>
-                            <th scope="col">Match</th>
-                            <th scope="col">Odd Type</th>
-                            <th scope="col">Odd</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                         
-                        <?php    if( isset($_SESSION['betslip'])){ ?>
-                            <?php         $betslip_arr = $_SESSION['betslip'] ?>
-                            <?php       $odd_value = $_SESSION['odd_value'] ?>
-                            <?php     $income_value = $_SESSION['income_value'] ?>
-                            <?php     } ?>
-                            <?php   for( $i = 0; $i < count($betslip_arr); $i++){   ?>  
-                        <tr id="bet-table">
-                                <th scope="col"><?php echo $bets[$betslip_arr[$i]]['bet_id']?></th>
-                                <td><?php echo $bets[$betslip_arr[$i]]['mbn']?></td>
-                                <td><?php echo $bets[$betslip_arr[$i]]['bet_date']?></td>
-                                <td><?php echo$bets[$betslip_arr[$i]]['bet_time'] ?></td>
-                                <td><?php echo $bets[$betslip_arr[$i]]['category'] ?></td>
-                                <td>
-                                <?php foreach($teams as $team){?>
-                                <?php if( $team['match_id'] == $bets[$betslip_arr[$i]]['match_id']){?>
-                                    <?php echo $team['team_name'] ?> <br>
-                                    <?php } ?>
-                                <?php } ?>
-                                </td>
-                            </tr>
-                            <?php }  ?>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="modal-footer">
-                    <h5>Total Odd: 1.5</h5>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Share Bet</button>
-                </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="label-modal-betslip">Share Betslip</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <div class="form-group" style="width:100%;">
+                            <label for="textarea-share-betslip">You can mention about your betslip</label>
+                            <textarea class="form-control" id="textarea-share-betslip" rows="3"></textarea>
+                        </div>
+                    
+                        <table class="table table-dark table-responsive" id="table-share-betslip">
+                            <thead>
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">MBN</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Time</th>
+                                <th scope="col">League</th>
+                                <th scope="col">Match</th>
+                                <th scope="col">Odd Type</th>
+                                <th scope="col">Odd</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td>5</td>
+                                    <td>22-05-14</td>
+                                    <td>15:41:12</td>
+                                    <td>Premier</td>
+                                    <td>Liverpool - Real Madrid</td>
+                                    <td>MR1</td>
+                                    <td>1.50</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <h5>Total Odd: 1.5</h5>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Share Bet</button>
+                    </div>
                 </div>
             </div>
          </div>
@@ -431,6 +421,7 @@ session_start();
     <style>
         .table-responsive{
             text-align:center;
+            font-size: 12px;
         }
         body{
             background-color:#8fbc8f;

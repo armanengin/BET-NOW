@@ -29,59 +29,59 @@ public class javaDB{
             "PRIMARY KEY(id)) ENGINE=INNODB";
             */
         String userTable = "CREATE TABLE user(" +
-            "user_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
-            "first_name varchar(50), " +
-            "last_name varchar(50) , " +
-            "username varchar(50), " +
-            "identification_num varchar(200), " +
-            "birthday date, " +
-            "email char(200), " +
-            "phone_num varchar(200)," +
-            "password VARCHAR(50)," +
-            "balance varchar(50)," + 
-            "UNIQUE(username)," +
-            "PRIMARY KEY(user_id)) ENGINE=INNODB";
-        String adminTable = "CREATE TABLE admin(" + 
-            "admin_id MEDIUMINT NOT NULL AUTO_INCREMENT, " +
-            "first_name varchar(50), " +
-            "last_name varchar(50) , " +
-            "username varchar(50), " +
-            "identification_num varchar(200), " +
-            "birthday date, " +
-            "email char(200), " +
-            "phone_num varchar(200)," +
-            "password VARCHAR(50)," +
-            "balance varchar(50)," + 
-            "PRIMARY KEY (admin_id), " +
-            " FOREIGN KEY (username) REFERENCES user(username) ON UPDATE CASCADE ON DELETE CASCADE"+
-            ") ENGINE=INNODB";
+                "user_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
+                "first_name varchar(50), " +
+                "last_name varchar(50) , " +
+                "username varchar(50), " +
+                "identification_num varchar(200), " +
+                "birthday date, " +
+                "email char(200), " +
+                "phone_num varchar(200)," +
+                "password VARCHAR(50)," +
+                "balance varchar(50)," +
+                "UNIQUE(username)," +
+                "PRIMARY KEY(user_id)) ENGINE=INNODB";
+        String adminTable = "CREATE TABLE admin(" +
+                "admin_id MEDIUMINT NOT NULL AUTO_INCREMENT, " +
+                "first_name varchar(50), " +
+                "last_name varchar(50) , " +
+                "username varchar(50), " +
+                "identification_num varchar(200), " +
+                "birthday date, " +
+                "email char(200), " +
+                "phone_num varchar(200)," +
+                "password VARCHAR(50)," +
+                "balance varchar(50)," +
+                "PRIMARY KEY (admin_id), " +
+                " FOREIGN KEY (username) REFERENCES user(username) ON UPDATE CASCADE ON DELETE CASCADE"+
+                ") ENGINE=INNODB";
         String editorTable = "CREATE TABLE editor(" +
-            "editor_id 	MEDIUMINT NOT NULL, "+
-            "first_name varchar(50), " +
-            "last_name varchar(50) , " +
-            "username varchar(50), " +
-            "identification_num varchar(200), " +
-            "birthday date, " +
-            "email char(200), " +
-            "phone_num varchar(200)," +
-            "password VARCHAR(50)," +
-            "balance varchar(50)," + 
-            "num_of_successful_betslip int," +
-            "ratio_of_success decimal(3,2), "+
-            "bio_editor varchar(1000)," +	
-            "PRIMARY KEY (editor_id), " + 
-            "FOREIGN KEY (username) REFERENCES  user(username) ON UPDATE CASCADE ON DELETE CASCADE"+
-            ") ENGINE=INNODB";
-        
+                "editor_id MEDIUMINT NOT NULL AUTO_INCREMENT, "+
+                "first_name varchar(50), " +
+                "last_name varchar(50) , " +
+                "username varchar(50), " +
+                "identification_num varchar(200), " +
+                "birthday date, " +
+                "email char(200), " +
+                "phone_num varchar(200)," +
+                "password VARCHAR(50)," +
+                "balance varchar(50)," +
+                "num_of_successful_betslip int," +
+                "ratio_of_success decimal(3,2), "+
+                "editor_bio varchar(1000)," +
+                "PRIMARY KEY (editor_id), " +
+                "FOREIGN KEY (username) REFERENCES  user(username) ON UPDATE CASCADE ON DELETE CASCADE"+
+                ") ENGINE=INNODB";
+
         String debitCardTable = "CREATE TABLE debit_card(" +
-        "card_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
-        "user_id MEDIUMINT  , " +
-        " card_name varchar(100)," +
-        " card_expiration_date date," +
-        " card_cvc INT,"+
-        " PRIMARY KEY(card_id, user_id), " +
-        "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
-        ") ENGINE=INNODB";
+                "card_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
+                "user_id MEDIUMINT  , " +
+                " card_name varchar(100)," +
+                " card_expiration_date date," +
+                " card_cvc INT,"+
+                " PRIMARY KEY(card_id, user_id), " +
+                "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
+                ") ENGINE=INNODB";
 
         String betslipTable = "CREATE TABLE betslip(" +
                 "betslip_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
@@ -91,13 +91,16 @@ public class javaDB{
                 " no_of_bets int,"+
                 " admin_id mediumint,"+
                 " user_id mediumint,"+
+                " isShared boolean,"+
+                " isSaved boolean,"+
+                " isPlayed boolean,"+
                 " PRIMARY KEY(betslip_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (admin_id) REFERENCES admin(admin_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String transactionTable = "CREATE TABLE transaction(" +
-                "transaction_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
-                "betslip_id mediumint, " +
+                " transaction_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
+                " betslip_id mediumint, " +
                 " lottery_id mediumint," +
                 " amount_of_cost int," +
                 " transaction_date date,"+
@@ -173,10 +176,22 @@ public class javaDB{
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String editorSharesTable = "CREATE TABLE editor_shares(" +
-                "id MEDIUMINT NOT NULL," +
+                "editor_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
-                " PRIMARY KEY(id, betslip_id), " +
-                "FOREIGN KEY (id) REFERENCES editor(editor_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
+                "comment varchar(256) , " +
+                " date date, " +
+                " PRIMARY KEY(editor_id, betslip_id), " +
+                "FOREIGN KEY (editor_id) REFERENCES editor(editor_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
+                "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
+                ") ENGINE=INNODB";
+        String userSharesTable = "CREATE TABLE user_shares(" +
+                "user_id MEDIUMINT NOT NULL," +
+                "betslip_id mediumint NOT NULL, " +
+                "comment varchar(256) , " +
+                " share_date date, " +
+                " share_time time, " +
+                " PRIMARY KEY(user_id, betslip_id), " +
+                "FOREIGN KEY (user_id) REFERENCES editor(editor_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String hasTable = "CREATE TABLE has(" +
@@ -189,6 +204,8 @@ public class javaDB{
         String commentsMatchTable = "CREATE TABLE comments_match(" +
                 "user_id MEDIUMINT NOT NULL," +
                 "match_id mediumint NOT NULL, " +
+                "comment varchar(256) , " +
+                " date date, " +
                 " PRIMARY KEY(user_id, match_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (match_id) REFERENCES matchs(match_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -196,6 +213,8 @@ public class javaDB{
         String commentsBetslipTable = "CREATE TABLE comments_betslip(" +
                 "user_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
+                "comment varchar(256) , " +
+                " date date, " +
                 " PRIMARY KEY(user_id, betslip_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -216,40 +235,60 @@ public class javaDB{
                 ") ENGINE=INNODB";
 
         String addTeam = "INSERT INTO team(team_name)" +
-            "VALUES ('Liverpool')," +
-            "('Real Madrid')," +
-            "('Barcelona')," +
-            "('Ankaragücü')";
-        String addMatch = "INSERT INTO matchs(match_date, match_time, match_category, league)" +
-        "VALUES (curdate(), now(), 'football', 'premier')," +
-        "(curdate(), now(), 'football', 'premier')";
-        String addContains = "INSERT INTO contains(team_id, match_id)" +
-        "VALUES (1, 1)," +
-        "(2, 1)," +
-        "(3, 2)," +
-        "(4, 2)";
-        String addBet = "INSERT INTO bet(match_id, mbn, bet_date, bet_time, category, odd_type, odd_value)" +
-        "VALUES (1, 5, curdate(), now(), 'football', 'MR1', 1.5)," +
-        "(1, 5, curdate(), now(), 'football','MRX', 1.7)," +
-        "(1, 5, curdate(), now(), 'football','MR2', 1.2)," +
-        "(1, 5, curdate(), now(), 'football','HU', 1.9)," +
-        "(1, 5, curdate(), now(), 'football','HO', 2.0)," +
-        "(1, 5, curdate(), now(), 'football','HR1', 3.0)," +
-        "(1, 5, curdate(), now(), 'football','HRX', 1.0)," +
-        "(1, 5, curdate(), now(), 'football','HR2', 4.0)," +
-        "(1, 5, curdate(), now(), 'football','MG1', 5.0)," +
-        "(1, 5, curdate(), now(), 'football','MG0', 6.0)," + 
-        "(2, 5, curdate(), now(), 'football','MR1', 1.5)," +
-        "(2, 5, curdate(), now(), 'football','MRX', 1.7)," +
-        "(2, 5, curdate(), now(), 'football','MR2', 1.2)," +
-        "(2, 5, curdate(), now(), 'football','HU', 1.9)," +
-        "(2, 5, curdate(), now(), 'football','HO', 2.0)," +
-        "(2, 5, curdate(), now(), 'football','HR1', 3.0)," +
-        "(2, 5, curdate(), now(), 'football','HRX', 1.0)," +
-        "(2, 5, curdate(), now(), 'football','HR2', 4.0)," +
-        "(2, 5, curdate(), now(), 'football','MG1', 5.0)," +
-        "(2, 5, curdate(), now(), 'football','MG0', 6.0)"; 
+                "VALUES ('Liverpool')," +
+                "('Real Madrid')," +
+                "('Barcelona')," +
+                "('Ankaragucu')," + 
+                "('Manchester City')," +
+                "('Manchester United')," +
+                "('Galatasaray')," +
+                "('Fenerbahce')," + 
+                "('Besiktas')," +
+                "('Juventus')," +
+                "('Inter')," + 
+                "('Bayern Munchen')," +
+                "('Borussia Dortmund')";
 
+        String addMatch = "INSERT INTO matchs(match_date, match_time, match_category, league)" +
+                "VALUES (curdate(), now(), 'football', 'premier')," +
+                "(curdate(), now(), 'football', 'premier')";
+        String addContains = "INSERT INTO contains(team_id, match_id)" +
+                "VALUES (1, 1)," +
+                "(2, 1)," +
+                "(3, 2)," +
+                "(4, 2)";
+        String addBet = "INSERT INTO bet(match_id, mbn, bet_date, bet_time, category, odd_type, odd_value)" +
+                "VALUES (1, 5, curdate(), now(), 'football', 'MR1', 1.5)," +
+                "(1, 5, curdate(), now(), 'football','MRX', 1.7)," +
+                "(1, 5, curdate(), now(), 'football','MR2', 1.2)," +
+                "(1, 5, curdate(), now(), 'football','HU', 1.9)," +
+                "(1, 5, curdate(), now(), 'football','HO', 2.0)," +
+                "(1, 5, curdate(), now(), 'football','HR1', 3.0)," +
+                "(1, 5, curdate(), now(), 'football','HRX', 1.0)," +
+                "(1, 5, curdate(), now(), 'football','HR2', 4.0)," +
+                "(1, 5, curdate(), now(), 'football','MG1', 5.0)," +
+                "(1, 5, curdate(), now(), 'football','MG0', 6.0)," +
+                "(2, 5, curdate(), now(), 'football','MR1', 1.5)," +
+                "(2, 5, curdate(), now(), 'football','MRX', 1.7)," +
+                "(2, 5, curdate(), now(), 'football','MR2', 1.2)," +
+                "(2, 5, curdate(), now(), 'football','HU', 1.9)," +
+                "(2, 5, curdate(), now(), 'football','HO', 2.0)," +
+                "(2, 5, curdate(), now(), 'football','HR1', 3.0)," +
+                "(2, 5, curdate(), now(), 'football','HRX', 1.0)," +
+                "(2, 5, curdate(), now(), 'football','HR2', 4.0)," +
+                "(2, 5, curdate(), now(), 'football','MG1', 5.0)," +
+                "(2, 5, curdate(), now(), 'football','MG0', 6.0)";
+        String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed)" +
+                "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false)," +
+                "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false)," +
+                "(curdate(), now(), 'betslip3', 1, NULL, 1, true, false, false)";
+        String addUser = "INSERT INTO user(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance)" +
+                "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
+                "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
+
+        String addUserShares = "INSERT INTO user_shares(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance)" +
+                "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
+                "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
         try{
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS contains");
@@ -263,6 +302,8 @@ public class javaDB{
             stmt.executeUpdate("DROP TABLE IF EXISTS has");
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS editor_shares");
+            stmt = conn.createStatement();
+            stmt.executeUpdate("DROP TABLE IF EXISTS user_shares");
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS likes");
             stmt = conn.createStatement();
@@ -343,6 +384,8 @@ public class javaDB{
             stmt.executeUpdate(editorSharesTable);
             System.out.println("Editor Shares Table created");
             stmt = conn.createStatement();
+            stmt.executeUpdate(userSharesTable);
+            System.out.println("User Shares Table created");
             stmt = conn.createStatement();
             stmt.executeUpdate(hasTable);
             System.out.println("Has Table created");
@@ -358,11 +401,13 @@ public class javaDB{
             stmt = conn.createStatement();
             stmt.executeUpdate(containsTable);
             System.out.println("Contains Table created");
+            stmt.executeUpdate(addUser);
             stmt.executeUpdate(addTeam);
             System.out.println("added odds");
             stmt.executeUpdate(addMatch);
             stmt.executeUpdate(addContains);
             stmt.executeUpdate(addBet);
+            stmt.executeUpdate(addBetslip);
 
 
         } catch (Exception e){

@@ -4,11 +4,15 @@
   $username = $_SESSION['login_user'];
 
   $sql = "SELECT user_id, first_name, last_name, username, identification_num, birthday, email, phone_num, password FROM user WHERE username = '$username'";
+  $sql_editor = "SELECT editor_id, first_name, last_name, username, identification_num, birthday, email, phone_num, password FROM editor WHERE username = '$username'";
+
 
   $result = mysqli_query($db,$sql);
-  
-  $num_row = mysqli_num_rows($result);
+  $result_editor = mysqli_query($db,$sql_editor);
 
+  $num_row = mysqli_num_rows($result);
+  $num_row_editor = mysqli_num_rows($result_editor);
+  
   if( $num_row === 1){
       $row = $result->fetch_assoc();
       $id = $row['user_id'];
@@ -33,6 +37,30 @@
         $disable_user = 'display: none';
       }
   }
+  if( $num_row_editor === 1){
+    $row = $result_editor->fetch_assoc();
+    $id = $row['editor_id'];
+    $first_name = $row['first_name'];
+    $last_name = $row['last_name'];
+    $username = $row['username'];
+    $identification_num = $row['identification_num'];
+    $birthday = $row['birthday'];
+    $email = $row['email'];
+    $phone_num = $row['phone_num'];
+    $password = $row['password'];
+    $password_check = $password;
+    $sql = "SELECT editor_id, balance from editor WHERE editor_id = '$id'";
+    $result = $db->query($sql);
+    if( $result !== false && $result->num_rows === 1){
+      $row = $result->fetch_assoc();
+      $balance = $row['balance'];
+      $disable_user = 'display: block';
+    }
+    else{
+      $balance = 0;
+      $disable_user = 'display: none';
+    }
+}
   if (isset($_POST['disable'])){
     $disable = 'enabled';
     $display_edit = 'display: none';
@@ -44,10 +72,8 @@
     $display_edit = 'display: block';
     $disable_pass = 'display: none';
     $display_submit = 'display: none';
-
   }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -86,7 +112,7 @@
         <div class="col-12 col-lg-9 col-xl-7">
           <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
             <div class="card-body p-4 p-md-5">
-              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">My Profile</h3>
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">My Profile (Editor)</h3>
               <form action='change_info.php' method='post'>
                 <div class="form-row">
                     <div class="col">

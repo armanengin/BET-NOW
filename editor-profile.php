@@ -1,3 +1,13 @@
+<?php 
+    include('config.php');
+    session_start();
+    $sql = "SELECT editor_id, first_name, last_name, username, num_of_successful_betslip, ratio_of_success, editor_bio FROM editor WHERE editor_id = {$_SESSION["editor-profile"]}";
+    $editor_sql = mysqli_query($db, $sql);
+    $num = mysqli_num_rows($editor_sql); 
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +36,9 @@
      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
- </body>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js%22%3E"></script>
+     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    </body>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -102,8 +114,20 @@
                 <div class="card" style="width: 13rem;">
                     <img class="card-img-top" src="assets/hacker.png" alt="Card image cap">
                     <div class="card-body">
-                        <h5 class="card-title">Remzi Tepe</h5>
-                        <p class="card-text">Remzi Tepe is a well-known archeologist who is working in Stealth Startup as a Software Engineer</p>
+                        <h5 class="card-title" id="card-editor-name">
+                            <?php 
+                                foreach($editor_sql as $editor){ 
+                                    echo $editor['first_name'] . " " .$editor['last_name'];
+                                }
+                            ?>
+                        </h5>
+                        <p class="card-text">
+                            <?php 
+                                foreach($editor_sql as $editor){ 
+                                    echo $editor['editor_bio'];
+                                }
+                            ?>
+                        </p>
                         <a href="editor-performance.php" class="btn btn-primary">Performance</a>
                     </div>
                 </div>

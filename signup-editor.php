@@ -17,11 +17,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
    $birthdayDate = $_POST["birthdayDate"];
    $emailAddress = $_POST["emailAddress"];
    $phoneNumber = $_POST["phoneNumber"];
-   
-   $sql = "select * from user where username='$username'";
+   $editor_bio = trim($_POST["textarea-editor"]);
+
+   $sql = "select * from editor where username='$username'";
    $result = mysqli_query($db, $sql);
    $num = mysqli_num_rows($result); 
-   
+  
 
     // This sql query is use to check if
     // the username is already present 
@@ -30,12 +31,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         if(($password == $cpassword) && $exists==false) {
          
             // Password Hashing is used here. 
-            $sql = "INSERT INTO user ( first_name, last_name, username, identification_num, birthday, email, phone_num, password)  
+            $sql_user = "INSERT INTO user ( first_name, last_name, username, identification_num, birthday, email, phone_num, password)  
               VALUES ('$firstName', '$lastName', '$username', '$identificationNum', '$birthdayDate', '$emailAddress', '$phoneNumber',
               '$password')";
 
+            // Password Hashing is used here. 
+            $sql_editor = "INSERT INTO editor ( first_name, last_name, username, identification_num, birthday, email, phone_num, password, editor_bio)  
+            VALUES ('$firstName', '$lastName', '$username', '$identificationNum', '$birthdayDate', '$emailAddress', '$phoneNumber',
+            '$password','$editor_bio')";
 
-            $result = $db->query($sql);
+            $result = $db->query($sql_user);
+            $result_editor = $db->query($sql_editor);
+            echo "selam";
             if ($result) {
                 $showAlert = true; 
                 session_start();
@@ -91,28 +98,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="col-12 col-lg-9 col-xl-7">
         <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
           <div class="card-body p-4 p-md-5">
-            <div class="row">
-              <div class="col-6">
-                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-              </div>
-              <div class="col-6">
-                <a href="signup-editor.php" class="btn btn-primary btn-lg btn-block active" role="button" aria-pressed="true">Apply For Editor</a>
-              </div>
-            </div>
-           
-            <form action="signup.php" method="post" enctype="multipart/form-data">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form (For Editor)</h3>
+            <form action="signup-editor.php" method="post" enctype="multipart/form-data">
               <div class="row">
                 <div class="col-md-6 mb-4">
+
                   <div class="form-outline">
                     <input type="text" id="firstName" name="firstName" class="form-control form-control-lg" />
                     <label class="form-label" for="firstName">First Name</label>
                   </div>
                 </div>
                 <div class="col-md-6 mb-4">
+
                   <div class="form-outline">
                     <input type="text" id="lastName" name="lastName"class="form-control form-control-lg" />
                     <label class="form-label" for="lastName">Last Name</label>
                   </div>
+
                 </div>
               </div>
 
@@ -224,6 +226,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                   </div>
 
                 </div>
+              </div>
+              <div class="row">
+                  <div class="col-12">
+                     <div class="form-group">
+                     <label for="textarea-editor">Please mention about yourself</label>
+                     <textarea class="form-control" name="textarea-editor" id="textarea-editor" rows="3" required></textarea>
+                     </div>
+                  </div>
               </div>
               <div class="mt-4 pt-2">
                 <input class="btn btn-primary btn-lg" type="submit" value="Submit" />
