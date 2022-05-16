@@ -1,9 +1,35 @@
 <?php 
     include('config.php');
     session_start();
-    $sql = "SELECT editor_id, first_name, last_name, username, num_of_successful_betslip, ratio_of_success, editor_bio FROM editor WHERE editor_id = {$_SESSION["editor-profile"]}";
-    $editor_sql = mysqli_query($db, $sql);
-    $num = mysqli_num_rows($editor_sql); 
+    $last_winning_counter = 0;
+    $last_losing_counter = 0;
+    $current_counter = 0;
+
+    $editor_sql_id = "SELECT editor_id, first_name, last_name, username, num_of_successful_betslip, ratio_of_success, editor_bio FROM editor WHERE editor_id = {$_SESSION["editor-profile"]}";
+    $editor_sql_id = mysqli_query($db, $editor_sql_id);
+    $num_editor_sql_id = mysqli_num_rows($editor_sql_id); 
+   
+    // Select User since editor is a user
+    foreach($editor_sql_id as $editor){
+        $editor_username = $editor['username'];
+    }
+
+    $editor_sql_username = "SELECT user_id FROM user WHERE username = '$editor_username'";
+    $editor_sql_username = mysqli_query($db, $editor_sql_username);
+    // Select User since editor is a user
+    foreach($editor_sql_username as $user){
+        $user_id = $user['user_id'];
+    }
+    
+
+    $editor_sql_winning_betslip = "SELECT betslip_id, betslip_date, name, no_of_bets, user_id, isShared, isSaved, isPlayed, isSuccess_betslip, totalOdd FROM betslip WHERE user_id = '$user_id' and isSuccess_betslip = '1' ";
+    $editor_sql_winning_betslip = mysqli_query($db, $editor_sql_winning_betslip);
+
+    $editor_sql_losing_betslip = "SELECT betslip_id, betslip_date, name, no_of_bets, user_id, isShared, isSaved, isPlayed, isSuccess_betslip, totalOdd FROM betslip WHERE user_id = '$user_id' and isSuccess_betslip = '0' ";
+    $editor_sql_losing_betslip = mysqli_query($db, $editor_sql_losing_betslip);
+
+    $editor_sql_current_betslip = "SELECT betslip_id, betslip_date, name, no_of_bets, user_id, isShared, isSaved, isPlayed, isSuccess_betslip, totalOdd FROM betslip WHERE user_id = '$user_id' and isSuccess_betslip IS NULL";
+    $editor_sql_current_betslip = mysqli_query($db, $editor_sql_current_betslip);
 ?>
 
 
@@ -16,7 +42,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editors Profile</title>
 </head>
-<body>
 <head>
  
  <!-- Required meta tags -->
@@ -38,7 +63,7 @@
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js%22%3E"></script>
      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    </body>
+    
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -116,14 +141,14 @@
                     <div class="card-body">
                         <h5 class="card-title" id="card-editor-name">
                             <?php 
-                                foreach($editor_sql as $editor){ 
+                                foreach($editor_sql_id as $editor){ 
                                     echo $editor['first_name'] . " " .$editor['last_name'];
                                 }
                             ?>
                         </h5>
                         <p class="card-text">
                             <?php 
-                                foreach($editor_sql as $editor){ 
+                                foreach($editor_sql_id as $editor){ 
                                     echo $editor['editor_bio'];
                                 }
                             ?>
@@ -164,45 +189,69 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>06/09/2022</td>
-                                    <td style="width:100%;">
-                                        <p>
-                                            <a class="btn btn-success btn-block" style="font-size:12px;" data-toggle="collapse" href="#collapse-winning-betslip" role="button" aria-expanded="false" aria-controls="collapse-winning-betslip">
-                                               2 Match | Odd: 4.80 | Coupon Price: 3$ (Income: 15.2$) <span style="float:right;"> 156 played</span>
-                                            </a>
-                                        </p>
-                                        <div class="collapse" id="collapse-winning-betslip">
-                                            <div class="card card-body">
-                                                <table class="table" id="betslip-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Win/Lose</th>
-                                                            <th scope="col">MBN</th>
-                                                            <th scope="col">Date</th>
-                                                            <th scope="col">Match</th>
-                                                            <th scope="col">Odd Type</th>
-                                                            <th scope="col">Odd</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Win</th>
-                                                            <td>1</td>
-                                                            <td>06/09/2022</td>
-                                                            <td>Liverpool - Manchester City</td>
-                                                            <td>MR1</td>
-                                                            <td>1.17</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                <?php foreach($editor_sql_winning_betslip as $last_winning_betslip){ ?>
+                                    <tr>
+                                        <th scope="row"><?php echo ++$last_winning_counter ?></th>
+                                        <td><?php echo $last_winning_betslip['betslip_date'] ?></td>
+                                        <td style="width:100%;">
+                                            <p>
+                                                <a class="btn btn-success btn-block" style="font-size:12px;" data-toggle="collapse" href="#collapse-winning-betslip-<?php echo $last_winning_betslip['betslip_id']?>" role="button" aria-expanded="false" aria-controls="collapse-winning-betslip-<?php echo $last_winning_betslip['betslip_id']?>">
+                                                <?php echo $last_winning_betslip['no_of_bets'] ?> Match | Odd: <?php echo $last_winning_betslip['totalOdd'] ?> | Coupon Price: 3$ (Income: 15.2$) <span style="float:right;"> 156 played</span>
+                                                </a>
+                                            </p>
+                                            <div class="collapse" id="collapse-winning-betslip-<?php echo $last_winning_betslip['betslip_id']?>">
+                                                <div class="card card-body">
+                                                    <table class="table" id="betslip-winning-table-<?php echo $last_winning_betslip['betslip_id']?>">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Bet Id</th>
+                                                                <th scope="col">Win/Lose</th>
+                                                                <th scope="col">MBN</th>
+                                                                <th scope="col">Date</th>
+                                                                <th scope="col">Match</th>
+                                                                <th scope="col">Odd Type</th>
+                                                                <th scope="col">Odd</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <?php 
+                                                             $editor_sql_winning_betslip_bets = "SELECT bet_id, mbn, match_id, bet_date, isSuccess_bet, odd_type, odd_value FROM has NATURAL JOIN betslip NATURAL JOIN bet WHERE betslip_id = '{$last_winning_betslip['betslip_id']}'";
+                                                             $editor_sql_winning_betslip_bets = mysqli_query($db, $editor_sql_winning_betslip_bets);
+                                                        ?>
+                                                        <tbody>
+                                                            <?php foreach( $editor_sql_winning_betslip_bets as $last_winning_betslip_bets){ ?>
+                                                                <tr>
+                                                                    <?php 
+                                                                            $last_winning_betslip_bets_matches = "SELECT match_id, match_date, team_name, league FROM team NATURAL JOIN contains NATURAL JOIN matchs WHERE match_id = '{$last_winning_betslip_bets['match_id']}'";
+                                                                            $last_winning_betslip_bets_matches = mysqli_query($db, $last_winning_betslip_bets_matches);
+                                                                    ?>
+                                                                    <th scope="row"><?php echo $last_winning_betslip_bets['bet_id'] ?></th>
+                                                                    <td><?php echo $last_winning_betslip_bets['isSuccess_bet'] ?></th>
+                                                                    <td><?php echo $last_winning_betslip_bets['mbn'] ?></td>
+                                                                    <td>
+                                                                        <?php 
+                                                                            // Associative array
+                                                                            $match = $last_winning_betslip_bets_matches -> fetch_array(MYSQLI_ASSOC);
+                                                                            echo $match['match_date'];
+                                                                        ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php 
+                                                                            foreach($last_winning_betslip_bets_matches as $team){
+                                                                                echo $team['team_name']." ";
+                                                                            }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td><?php echo $last_winning_betslip_bets['odd_type'] ?></td>
+                                                                    <td><?php echo $last_winning_betslip_bets['odd_value'] ?></td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -217,21 +266,22 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            <?php foreach($editor_sql_losing_betslip as $last_losing_betslip){ ?>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>06/09/2022</td>
+                                    <th scope="row"><?php echo ++$last_losing_counter?></th>
+                                    <td><?php echo $last_losing_betslip['betslip_date'] ?></td>
                                     <td style="width:100%;">
                                         <p>
-                                            <a class="btn btn-danger btn-block" style="font-size:12px;" data-toggle="collapse" href="#collapse-losing-betslip" role="button" aria-expanded="false" aria-controls="collapse-losing-betslip">
-                                               2 Match | Odd: 4.80 | Coupon Price: 3$ (Income: 15.2$) <span style="float:right;"> 156 played</span>
+                                            <a class="btn btn-danger btn-block" style="font-size:12px;" data-toggle="collapse" href="#collapse-losing-betslip-<?php echo $last_losing_betslip['betslip_id']?>" role="button" aria-expanded="false" aria-controls="collapse-losing-betslip-<?php echo $last_losing_betslip['betslip_id']?>">
+                                                <?php echo $last_losing_betslip['no_of_bets'] ?> Match | Odd: <?php echo $last_losing_betslip['totalOdd'] ?> | Coupon Price: 3$ (Income: 15.2$) <span style="float:right;"> 156 played</span>
                                             </a>
                                         </p>
-                                        <div class="collapse" id="collapse-losing-betslip">
+                                        <div class="collapse" id="collapse-losing-betslip-<?php echo $last_losing_betslip['betslip_id']?>">
                                             <div class="card card-body">
-                                                <table class="table" id="betslip-table">
+                                                <table class="table" id="betslip-losing-table-<?php echo $last_losing_betslip['betslip_id']?>">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">#</th>
+                                                            <th scope="col">Bet Id</th>
                                                             <th scope="col">Win/Lose</th>
                                                             <th scope="col">MBN</th>
                                                             <th scope="col">Date</th>
@@ -240,22 +290,45 @@
                                                             <th scope="col">Odd</th>
                                                         </tr>
                                                     </thead>
+                                                    <?php 
+                                                        $editor_sql_losing_betslip_bets = "SELECT bet_id, mbn, match_id, bet_date, isSuccess_bet, odd_type, odd_value FROM has NATURAL JOIN betslip NATURAL JOIN bet WHERE betslip_id = '{$last_losing_betslip['betslip_id']}'";
+                                                        $editor_sql_losing_betslip_bets = mysqli_query($db, $editor_sql_losing_betslip_bets);
+                                                    ?>
                                                     <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Lose</th>
-                                                            <td>1</td>
-                                                            <td>06/09/2022</td>
-                                                            <td>Liverpool - Manchester City</td>
-                                                            <td>MR1</td>
-                                                            <td>1.17</td>
-                                                        </tr>
+                                                    <?php foreach( $editor_sql_losing_betslip_bets as $last_losing_betslip_bets){ ?>
+                                                            <tr>
+                                                                <?php 
+                                                                    $last_losing_betslip_bets_matches = "SELECT match_id, match_date, team_name, league FROM team NATURAL JOIN contains NATURAL JOIN matchs WHERE match_id = '{$last_losing_betslip_bets['match_id']}'";
+                                                                    $last_losing_betslip_bets_matches = mysqli_query($db, $last_losing_betslip_bets_matches);
+                                                                ?>
+                                                                <th scope="row"><?php echo $last_losing_betslip_bets['bet_id'] ?></th>
+                                                                <td><?php echo $last_losing_betslip_bets['isSuccess_bet'] ?></th>
+                                                                <td><?php echo $last_losing_betslip_bets['mbn'] ?></td>
+                                                                <td>
+                                                                    <?php 
+                                                                            // Associative array
+                                                                            $match = $last_losing_betslip_bets_matches -> fetch_array(MYSQLI_ASSOC);
+                                                                            echo $match['match_date'];
+                                                                    ?>
+                                                                </td>
+                                                                <td>
+                                                                    <?php 
+                                                                        foreach($last_losing_betslip_bets_matches as $team){
+                                                                            echo $team['team_name']." ";
+                                                                        }
+                                                                    ?>
+                                                                </td>
+                                                                <td><?php echo $last_losing_betslip_bets['odd_type'] ?></td>
+                                                                <td><?php echo $last_losing_betslip_bets['odd_value'] ?></td>
+                                                            </tr>
+                                                        <?php } ?>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
+                            <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -271,45 +344,69 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>06/09/2022</td>
-                                    <td style="width:100%;">
-                                        <p>
-                                            <a class="btn btn-primary btn-block" style="font-size:12px;" data-toggle="collapse" href="#collapse-daily-betslip" role="button" aria-expanded="false" aria-controls="collapse-daily-betslip">
-                                               2 Match | Odd: 4.80 | Coupon Price: 3$ (Income: 15.2$) <span style="float:right;"> 156 played</span>
-                                            </a>
-                                        </p>
-                                        <div class="collapse" id="collapse-daily-betslip">
-                                            <div class="card card-body">
-                                                <table class="table" id="betslip-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Win/Lose</th>
-                                                            <th scope="col">MBN</th>
-                                                            <th scope="col">Date</th>
-                                                            <th scope="col">Match</th>
-                                                            <th scope="col">Odd Type</th>
-                                                            <th scope="col">Odd</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>NA</th>
-                                                            <td>1</td>
-                                                            <td>06/09/2022</td>
-                                                            <td>Liverpool - Manchester City</td>
-                                                            <td>MR1</td>
-                                                            <td>1.17</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                <?php foreach($editor_sql_current_betslip as $current_betslip){ ?>
+                                    <tr>
+                                        <th scope="row"><?php echo ++$current_counter?></th>
+                                        <td><?php echo $current_betslip['betslip_date'] ?></td>
+                                        <td style="width:100%;">
+                                            <p>
+                                                <a class="btn btn-primary btn-block" style="font-size:12px;" data-toggle="collapse" href="#collapse-daily-betslip-<?php echo $current_betslip['betslip_id']?>" role="button" aria-expanded="false" aria-controls="collapse-daily-betslip-<?php echo $current_betslip['betslip_id']?>">
+                                                    <?php echo $current_betslip['no_of_bets'] ?> Match | Odd: <?php echo $current_betslip['totalOdd'] ?> | Coupon Price: 3$ (Income: 15.2$) <span style="float:right;"> 156 played</span>
+                                                </a>
+                                            </p>
+                                            <div class="collapse" id="collapse-daily-betslip-<?php echo $current_betslip['betslip_id']?>">
+                                                <div class="card card-body">
+                                                    <table class="table" id="betslip-current-table-<?php echo $current_betslip['betslip_id']?>">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">#</th>
+                                                                <th scope="col">Win/Lose</th>
+                                                                <th scope="col">MBN</th>
+                                                                <th scope="col">Date</th>
+                                                                <th scope="col">Match</th>
+                                                                <th scope="col">Odd Type</th>
+                                                                <th scope="col">Odd</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <?php 
+                                                            $editor_sql_current_betslip_bets = "SELECT bet_id, mbn, match_id, bet_date, isSuccess_bet, odd_type, odd_value FROM has NATURAL JOIN betslip NATURAL JOIN bet WHERE betslip_id = '{$current_betslip['betslip_id']}'";
+                                                            $editor_sql_current_betslip_bets = mysqli_query($db, $editor_sql_current_betslip_bets);
+                                                        ?>
+                                                        <tbody>
+                                                            <?php foreach( $editor_sql_current_betslip_bets as $current_betslip_bets){ ?>
+                                                                <tr>
+                                                                    <?php 
+                                                                        $current_betslip_bets_matches = "SELECT match_id, match_date, team_name, league FROM team NATURAL JOIN contains NATURAL JOIN matchs WHERE match_id = '{$current_betslip_bets['match_id']}'";
+                                                                        $current_betslip_bets_matches = mysqli_query($db, $current_betslip_bets_matches);
+                                                                    ?>
+                                                                    <th scope="row"><?php echo $current_betslip_bets['bet_id'] ?></th>
+                                                                    <td><?php echo $current_betslip_bets['isSuccess_bet'] ?></th>
+                                                                    <td><?php echo $current_betslip_bets['mbn'] ?></td>
+                                                                    <td>
+                                                                        <?php 
+                                                                                // Associative array
+                                                                                $match = $current_betslip_bets_matches -> fetch_array(MYSQLI_ASSOC);
+                                                                                echo $match['match_date'];
+                                                                        ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php 
+                                                                            foreach($current_betslip_bets_matches as $team){
+                                                                                echo $team['team_name']." ";
+                                                                            }
+                                                                        ?>
+                                                                    </td>
+                                                                    <td><?php echo $current_betslip_bets['odd_type'] ?></td>
+                                                                    <td><?php echo $current_betslip_bets['odd_value'] ?></td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>
@@ -317,16 +414,17 @@
             </div>
         </div>
     </div>
-</html>
-                  
-<style>
-    body{
-        background-color:gray;
-    }
-    #betslip-table{
-        font-size:11px;
+    </body>
+
+    <style>
+    body {background-color: gray;}
+    .table{
+        font-size:13px;
         text-align:center;
         margin:0;
         padding:0;
     }
-</style>
+    </style>
+
+</html>
+                  

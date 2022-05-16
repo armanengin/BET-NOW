@@ -94,6 +94,8 @@ public class javaDB{
                 " isShared boolean,"+
                 " isSaved boolean,"+
                 " isPlayed boolean,"+
+                " isSuccess_betslip boolean,"+
+                " totalOdd decimal(10,5),"+
                 " PRIMARY KEY(betslip_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (admin_id) REFERENCES admin(admin_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -115,6 +117,7 @@ public class javaDB{
                 "match_id mediumint, " +
                 "mbn int, " +
                 " bet_date date," +
+                "isSuccess_bet boolean," +
                 " bet_time time," +
                 " category varchar(100),"+
                 "odd_type ENUM('MR1', 'MRX', 'MR2', 'HO', 'HU', 'HR1', 'HRX', 'HR2', 'MG1', 'MG0') NOT NULL," +
@@ -192,7 +195,7 @@ public class javaDB{
                 " share_date date, " +
                 " share_time time, " +
                 " PRIMARY KEY(user_id, betslip_id), " +
-                "FOREIGN KEY (user_id) REFERENCES editor(editor_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
+                "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String hasTable = "CREATE TABLE has(" +
@@ -215,7 +218,8 @@ public class javaDB{
                 "user_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
                 "comment varchar(256) , " +
-                " date date, " +
+                " comment_date date, " +
+                " comment_time time, " +
                 " PRIMARY KEY(user_id, betslip_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -239,57 +243,57 @@ public class javaDB{
                 "VALUES ('Liverpool')," +
                 "('Real Madrid')," +
                 "('Barcelona')," +
-                "('Ankaragucu')," + 
+                "('Ankaragucu')," +
                 "('Manchester City')," +
                 "('Manchester United')," +
                 "('Galatasaray')," +
-                "('Fenerbahce')," + 
+                "('Fenerbahce')," +
                 "('Besiktas')," +
                 "('Juventus')," +
-                "('Inter')," + 
+                "('Inter')," +
                 "('Bayern Munchen')," +
-                "('Borussia Dortmund')," + 
+                "('Borussia Dortmund')," +
                 "('FC Dynamo Kyiv')," +
                 "('Basel')," +
                 "('Paris Saint-Germain')," +
-                "('Monaco FC')," + 
+                "('Monaco FC')," +
                 "('AFC Ajax')," +
                 "('PSV')," +
-                "('S.L. Benfica')," + 
+                "('S.L. Benfica')," +
                 "('FC Porto')";
 
         String addMatch = "INSERT INTO matchs(match_date, match_time, match_category, league)" +
                 "VALUES (curdate(), now(), 'football', 'Premier League')," +
-                        "(curdate(), now(), 'football', 'Premier League')," + 
-                        "(curdate(), now(), 'football', 'Premier League')," + 
-                        "(curdate(), now(), 'football', 'Turkish Super League')," +
-                        "(curdate(), now(), 'football', 'Serie A')," + 
-                        "(curdate(), now(), 'football', 'Bundesliga')," + 
-                        "(curdate(), now(), 'football', 'Ukrainian Premier League')," + 
-                        "(curdate(), now(), 'football', 'Ligue 1')," +
-                        "(curdate(), now(), 'football', 'Eredivisie')," + 
-                        "(curdate(), now(), 'football', 'Liga Portugal')";
-                
+                "(curdate(), now(), 'football', 'Premier League')," +
+                "(curdate(), now(), 'football', 'Premier League')," +
+                "(curdate(), now(), 'football', 'Turkish Super League')," +
+                "(curdate(), now(), 'football', 'Serie A')," +
+                "(curdate(), now(), 'football', 'Bundesliga')," +
+                "(curdate(), now(), 'football', 'Ukrainian Premier League')," +
+                "(curdate(), now(), 'football', 'Ligue 1')," +
+                "(curdate(), now(), 'football', 'Eredivisie')," +
+                "(curdate(), now(), 'football', 'Liga Portugal')";
+
         String addContains = "INSERT INTO contains(team_id, match_id)" +
                 "VALUES (1, 1)," +
                 "(2, 1)," +
                 "(3, 2)," +
-                "(4, 2)," + 
+                "(4, 2)," +
                 "(5, 3)," +
                 "(6, 3)," +
                 "(7, 4)," +
-                "(8, 4)," + 
+                "(8, 4)," +
                 "(10, 5)," +
-                "(11, 5)," + 
+                "(11, 5)," +
                 "(12, 6)," +
-                "(13, 6)," + 
-                "(14, 7)," + 
+                "(13, 6)," +
+                "(14, 7)," +
                 "(15, 7)," +
-                "(16, 8)," + 
+                "(16, 8)," +
                 "(17, 8)," +
-                "(18, 9)," + 
-                "(19, 9)," + 
-                "(20, 10)," +
+                "(18, 9)," +
+                "(19, 9)," +
+                "(20, 10),"+
                 "(21, 10)";
 
         String addBet = "INSERT INTO bet(match_id, mbn, bet_date, bet_time, category, odd_type, odd_value)" +
@@ -322,7 +326,7 @@ public class javaDB{
                 "(3, 2, curdate(), now(), 'football','HRX', 2.3)," +
                 "(3, 2, curdate(), now(), 'football','HR2', 2.2)," +
                 "(3, 2, curdate(), now(), 'football','MG1', 3.4)," +
-                "(3, 2, curdate(), now(), 'football','MG0', 4.5), " + 
+                "(3, 2, curdate(), now(), 'football','MG0', 4.5), " +
                 "(4, 3, curdate(), now(), 'football','MR1', 1.9)," +
                 "(4, 3, curdate(), now(), 'football','MRX', 2.2)," +
                 "(4, 3, curdate(), now(), 'football','MR2', 2.4)," +
@@ -332,7 +336,7 @@ public class javaDB{
                 "(4, 3, curdate(), now(), 'football','HRX', 2.4)," +
                 "(4, 3, curdate(), now(), 'football','HR2', 3.42)," +
                 "(4, 3, curdate(), now(), 'football','MG1', 2.33)," +
-                "(4, 3, curdate(), now(), 'football','MG0', 3.55)," + 
+                "(4, 3, curdate(), now(), 'football','MG0', 3.55)," +
                 "(5, 1, curdate(), now(), 'football','MR1', 1.8)," +
                 "(5, 1, curdate(), now(), 'football','MRX', 2.24)," +
                 "(5, 1, curdate(), now(), 'football','MR2', 2.67)," +
@@ -342,7 +346,7 @@ public class javaDB{
                 "(5, 1, curdate(), now(), 'football','HRX', 2.32)," +
                 "(5, 1, curdate(), now(), 'football','HR2', 2.21)," +
                 "(5, 1, curdate(), now(), 'football','MG1', 1.95)," +
-                "(5, 1, curdate(), now(), 'football','MG0', 2.89)," + 
+                "(5, 1, curdate(), now(), 'football','MG0', 2.89)," +
                 "(6, 2, curdate(), now(), 'football','MR1', 1.33)," +
                 "(6, 2, curdate(), now(), 'football','MRX', 2.25)," +
                 "(6, 2, curdate(), now(), 'football','MR2', 3.42)," +
@@ -362,7 +366,7 @@ public class javaDB{
                 "(7, 2, curdate(), now(), 'football','HRX', 4.5)," +
                 "(7, 2, curdate(), now(), 'football','HR2', 1.34)," +
                 "(7, 2, curdate(), now(), 'football','MG1', 4.56)," +
-                "(7, 2, curdate(), now(), 'football','MG0', 3.42)," + 
+                "(7, 2, curdate(), now(), 'football','MG0', 3.42)," +
                 "(8, 3, curdate(), now(), 'football','MR1', 1.33)," +
                 "(8, 3, curdate(), now(), 'football','MRX', 2.25)," +
                 "(8, 3, curdate(), now(), 'football','MR2', 3.42)," +
@@ -372,7 +376,7 @@ public class javaDB{
                 "(8, 3, curdate(), now(), 'football','HRX', 4.5)," +
                 "(8, 3, curdate(), now(), 'football','HR2', 1.34)," +
                 "(8, 3, curdate(), now(), 'football','MG1', 4.56)," +
-                "(8, 3, curdate(), now(), 'football','MG0', 3.42)," + 
+                "(8, 3, curdate(), now(), 'football','MG0', 3.42)," +
                 "(9, 1, curdate(), now(), 'football','MR1', 1.33)," +
                 "(9, 1, curdate(), now(), 'football','MRX', 2.25)," +
                 "(9, 1, curdate(), now(), 'football','MR2', 3.42)," +
@@ -382,7 +386,7 @@ public class javaDB{
                 "(9, 1, curdate(), now(), 'football','HRX', 4.5)," +
                 "(9, 1, curdate(), now(), 'football','HR2', 1.34)," +
                 "(9, 1, curdate(), now(), 'football','MG1', 4.56)," +
-                "(9, 1, curdate(), now(), 'football','MG0', 3.42)," + 
+                "(9, 1, curdate(), now(), 'football','MG0', 3.42)," +
                 "(10, 1, curdate(), now(), 'football','MR1', 1.33)," +
                 "(10, 1, curdate(), now(), 'football','MRX', 2.25)," +
                 "(10, 1, curdate(), now(), 'football','MR2', 3.42)," +
@@ -394,17 +398,97 @@ public class javaDB{
                 "(10, 1, curdate(), now(), 'football','MG1', 4.56)," +
                 "(10, 1, curdate(), now(), 'football','MG0', 3.42)";
 
-        String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed)" +
-                "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false)," +
-                "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false)," +
-                "(curdate(), now(), 'betslip3', 1, NULL, 1, true, false, false)";
         String addUser = "INSERT INTO user(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance)" +
                 "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
-                "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
+                "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')," +
+                "('Remzi', 'Tepe', 'remzitepe', '12345', '1999-12-28', 'remzitepe@gmail.com', NULL, 'remzi123', '0')," +
+                "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0')";
 
-        String addUserShares = "INSERT INTO user_shares(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance)" +
-                "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
-                "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
+        String addEditor = "INSERT INTO editor(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance,editor_bio)" +
+                "VALUES ('Remzi', 'Tepe', 'remzitepe', '12345', '1999-12-28', 'remzitepe@gmail.com', NULL, 'remzi123', '0','Hi I am Remzi')," +
+                "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0','Hi I am Taha')";
+
+        String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed, isSuccess_betslip)" +
+                "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip3', 1, NULL, 1, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip4', 1, NULL, 1, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip5', 3, NULL, 3, true, false, false, true)," +
+                "(curdate(), now(), 'betslip6', 2, NULL, 3, true, false, false, true)," +
+                "(curdate(), now(), 'betslip7', 2, NULL, 3, true, false, false, false)," +
+                "(curdate(), now(), 'betslip8', 3, NULL, 3, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip9', 2, NULL, 4, true, false, false, true)," +
+                "(curdate(), now(), 'betslip10', 2, NULL, 4, true, false, false, false)," +
+                "(curdate(), now(), 'betslip11', 3, NULL, 4, true, false, false, NULL)";
+
+        String addUserShares = "INSERT INTO user_shares(user_id, betslip_id, comment, share_date, share_time)" +
+                "VALUES (1, 1, 'This is the best cupon!!', curdate(), now())," +
+                "(1, 2, 'This is the best cupon2!!', curdate(), now())," +
+                "(2, 3, 'I am gonna be rich!!', curdate(), now())";
+
+        String addHas = "INSERT INTO has(bet_id, betslip_id)" +
+                "VALUES (1, 1)," +
+                "(2, 1)," +
+                "(3, 1)," +
+                "(4, 1)," +
+                "(5, 1)," +
+                "(6, 1)," +
+                "(7, 1)," +
+                "(8, 1)," +
+                "(9, 1)," +
+                "(10, 1)," +
+                "(11, 2)," +
+                "(12, 2)," +
+                "(13, 2)," +
+                "(14, 2)," +
+                "(15, 2)," +
+                "(16, 2)," +
+                "(17, 2)," +
+                "(18, 2)," +
+                "(19, 2)," +
+                "(20, 2)," +
+                "(21, 3)," +
+                "(22, 3)," +
+                "(23, 3)," +
+                "(24, 3)," +
+                "(25, 3)," +
+                "(26, 3)," +
+                "(27, 3)," +
+                "(28, 3)," +
+                "(29, 3)," +
+                "(30, 3)," +
+                "(31, 5)," +
+                "(32, 5)," +
+                "(33, 5)," +
+                "(34, 6)," +
+                "(35, 6)," +
+                "(36, 7)," +
+                "(37, 7)," +
+                "(38, 8)," +
+                "(39, 8)," +
+                "(40, 8)," +
+                "(41, 9)," +
+                "(42, 9)," +
+                "(43, 10)," +
+                "(44, 10)," +
+                "(45, 11)," +
+                "(46, 11)," +
+                "(47, 11)";
+            /*
+            String addComentsBetslip = "INSERT INTO comments_betslip(user_id, betslip_id, comment, date)" +
+                    "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
+                    "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
+            String commentsBetslipTable = "CREATE TABLE comments_betslip(" +
+                    "user_id MEDIUMINT NOT NULL," +
+                    "betslip_id mediumint NOT NULL, " +
+                    "comment varchar(256) , " +
+                    " date date, " +
+                    " PRIMARY KEY(user_id, betslip_id), " +
+                    "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
+                    "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
+                    ") ENGINE=INNODB";
+                    */
+
         try{
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS contains");
@@ -524,6 +608,9 @@ public class javaDB{
             stmt.executeUpdate(addContains);
             stmt.executeUpdate(addBet);
             stmt.executeUpdate(addBetslip);
+            stmt.executeUpdate(addUserShares);
+            stmt.executeUpdate(addHas);
+            stmt.executeUpdate(addEditor);
 
 
         } catch (Exception e){

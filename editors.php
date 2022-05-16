@@ -8,8 +8,10 @@
     while($row = mysqli_fetch_assoc($editor_sql)) {
         $editor_arr[] = $row;
     }
-
 ?>
+<script>
+    sessionStorage.setItem('follow_text', 'Follow');
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -152,8 +154,20 @@
                                 <td>
                                     <div class="btn-group" role="group" aria-label="btn-group-editor">
                                         <button type="button" class="btn btn-primary" id="button-editor-profile-<?php echo $editor['editor_id']?>" onClick="profileFunction(<?php echo $editor['editor_id']?>)" >Profile</button>
-                                        <button type="button" class="btn btn-warning" id="button-editor-performance-<?php echo $editor['editor_id']?>">Performance </button>
-                                        <button type="button" class="btn btn-success" id="button-editor-follow-<?php echo $editor['editor_id']?>">Follow</button>
+                                        <button type="button" class="btn btn-warning" id="button-editor-performance-<?php echo $editor['editor_id']?>" onClick="performanceFunction(<?php echo $editor['editor_id']?>)">Performance </button>
+                                        <button type="button" class="btn btn-success" id="button-editor-follow-<?php echo $editor['editor_id']?>" onClick="followFunction(<?php echo $editor['editor_id']?>)">
+                                            <script>
+                                                if(sessionStorage.getItem('follow-button') == NULL){
+                                                    alert("selam");
+                                                    document.write("Follow");
+                                                }
+                                                else{
+                                                    alert("selam1");
+                                                    document.write(localStorage.getItem('follow-button'));
+                                                }
+                                            </script>    
+                                        Follow
+                                        </button>
                                     </div>
                                 </td>  
                             </tr>
@@ -191,10 +205,47 @@
         });
         window.location.href = "editor-profile.php";
     }
+
+    function performanceFunction(id){
+        $.ajax({
+                type: "POST",
+                url: "editor-performance-ajax.php",
+                data: {
+                    editor_id: id,
+                },
+                cache: false,
+                success: function(editor_id) {
+                    alert(editor_id);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr);
+                }
+        });
+        window.location.href = "editor-performance.php";
+    }
+
+    function followFunction(id){
+        var button_id = $("#button-editor-follow-" + id).attr('id');
+        var button_text = document.getElementById(button_id);;
+        if(button_text.innerText == "Follow"){
+            sessionStorage.setItem('follow-button', 'Unfollow');
+            button_text.innerText =  sessionStorage.getItem('follow-button');
+        }
+        else if(button_text.innerText == "Unfollow"){
+            sessionStorage.setItem('follow-button', 'Follow');
+            button_text.innerText =  sessionStorage.getItem('follow-button');
+        }
+       
+    }
 </script>
-<?php 
-  
-?>
+<style>
+    .red{
+        background-color:red;
+    }
+    .green{
+        background-color:green;
+    }
+</style>
 
 
 
