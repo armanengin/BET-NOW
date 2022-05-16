@@ -129,7 +129,6 @@
     body{
         background-color:gray;
     }
-}
 </style>
 
 

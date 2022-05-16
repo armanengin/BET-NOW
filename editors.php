@@ -172,7 +172,6 @@
         
         text-align:center;
     }
-}
 </style>
 <script type="text/javascript">
     function profileFunction(id){

@@ -209,6 +209,7 @@
                 </div>
             </div>
         </div>
+        <?php $_SESSION["betslip_id"] = $betslip_id; ?>
         <form action="make_comment.php" method="post">
             <div class="row">
                     <div class="col-10">
