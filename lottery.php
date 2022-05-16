@@ -213,7 +213,7 @@
     <!--Ticket Slip-->
     <header id="ticketslip-header">
         <div class="container-fluid bg-dark">
-            <div class="row d-flex justify-content-center" style="width:100% border-style:solid; border-color:white;">
+            <div class="row d-flex justify-content-center" style="width:100% border-style=solid; border-color:white;">
                 <label for="my-ticket-coupon" style="position:relative; font-weigth:bold; color:white; font-family: Arial, Helvetica, sans-serif;">
                     My Ticket Coupon
                 </label>

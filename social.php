@@ -1,3 +1,11 @@
+<?php
+    include('config.php');
+    ini_set('display_errors', 1);
+    error_reporting(~0);
+    session_start();
+    $sql = "SELECT betslip_id FROM betslip WHERE isShared = true";
+    $betslip_ids = mysqli_query($db, $sql);
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -81,19 +89,29 @@
                 </div>
             </div>
     </div>
+    <?php while($id = mysqli_fetch_assoc($betslip_ids)){
+        $sql_for_bet_ids = "SELECT bet_id FROM betslip NATURAL JOIN has WHERE betslip.betslip_id = $id";
+        $bet_ids = mysqli_query($db, $sql_for_bet_ids);
+        $sql_for_name = "SELECT username FROM user_shares NATURAL JOIN user WHERE betslip_id = $id";
+        $name = mysqli_query($db, $sql_for_name);
+        $sql_for_userShares = "SELECT share_date, share_time, comment FROM userShares WHERE betslip_id = $id"; 
+        $userShares_data = mysqli_query($db, $sql_for_userShares);
+    ?>
+
      <div class="container-fluid" style="border-style:solid; width:60%;">
         <div class="row">
             <div class="col-2">
-                <p>@victusmaneo</p>
+                <p><?php echo mysqli_fetch_assoc($name)['username']?></p>
             </div>
             <div class="col-5">
                 <p>(146 followers)</p>
             </div>
+            <?php $rowForUserShares = mysqli_fetch_assoc($userShares_data) ?>
             <div class="col-5">
-                <p style="float:right;">Shared at : 29 April 2022 - 21.30</p>
+                <p style="float:right;">Shared at : <p><?php echo $rowForUserShares['share_date']?> - ><?php echo $rowForUserShares['share_time']?></p></p>
             </div>
             <div class="col-12" style="font-size:13px;">
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit, magni necessitatibus repellendus alias at quod dicta sapiente adipisci nesciunt labore fugiat voluptate quo in deserunt aliquid provident explicabo? Molestias, sapiente.</p>
+                <p><p><?php echo $rowForUserShares['comment']?></p></p>
             </div>
         </div>
 
@@ -122,21 +140,23 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $row_num = 1 ?>
+                                <?php while($bet_id = mysqli_fetch_assoc($bet_ids)){ 
+                                    $sql_for_bet_infos = "SELECT mbn, bet_date, bet_time, odd_type, odd_value FROM bet WHERE bet_id = $bet_id";
+                                    $bet_infos = mysqli_query($db, $sql_for_bet_infos);
+                                    $sql_for_teams = "SELECT team_name FROM bet NATURAL JOIN contains NATURAL JOIN team WHERE bet_id = $bet_id";
+                                    $teams = mysqli_query($db, $sql_for_teams);
+                                ?>
                                 <tr>
-                                <th scope="row">1</th>
-                                <td>1</td>
-                                <td>Liverpool - Manchester City</td>
-                                <td>19.30 / 4.29.2022</td>
-                                <td>MR1: 1.17 </td>
+                                <th scope="row"><?php echo $row_num?></th>
+                                <?php $bet_info = mysqli_fetch_assoc($bet_infos) ?>
+                                <td><?php echo $bet_info['mbn']?></td>
+                                <td><?php echo mysqli_fetch_assoc($teams)['team_name']?> - <?php echo mysqli_fetch_assoc($teams)['team_name']?></td>
+                                <td><?php echo $bet_info['bet_time']?> / <?php echo $bet_info['bet_date']?></td>
+                                <td><?php echo $bet_info['odd_type']?>: <?php echo $bet_info['odd_value']?> </td>
+                                <?php $row_num++; ?>
                                 </tr>
-                                <tr>
-                                <th scope="row">2</th>
-                                <td>1</td>
-                                <td>Everton - Chealsea</td>
-                                <td>20.00 / 4.29.2022</td>
-                                <td>MG+: 2.50 </td>
-                                </tr>
-                                <tr>
+                                <?php } ?>
                             </tbody>
                             </table>
                             </div>
@@ -164,35 +184,42 @@
                 </button>
             </div>
             <div class="col-8 d-flex justify-content-end" style="margin-top:5px;">
-                <p>45 Likes - <span data-toggle="collapse" href="#collapseComment" role="button" aria-expanded="false" id="comment-link">2 comments </span></p>
+                <p>45 Likes - <span data-toggle="collapse" href="#collapseComment<?php echo $id ?>" role="button" aria-expanded="false" id="comment-link">2 comments </span></p>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="collapse" id="collapseComment">
+                <div class="collapse" id="collapseComment <?php echo $id ?>">
+                <?php  $sql_for_commenters = "SELECT user_id, comment FROM comments_betslip WHERE betslip_id = '$id'";
+                    $commenters = mysqli_query($db, $sql_for_commenters);
+                    while($row = mysqli_fetch_assoc($commenters)){
+                        $user_id = $row['user_id'];
+                        $sql_for_username = "SELECT username FROM user WHERE user_id = '$user_id'";
+                        $username = mysqli_query($db, $sql_for_username);
+                ?>
                     <div class="card card-body">
-                        <p style="font-size:13px;" class="card-title">Arman Engin Sucu <span style="float:right;">20.03 - 29/04/2022</span></p>
-                        <p style="font-size:13px;" class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo laborum libero perspiciatis animi quibusdam iure quas ex dolore recusandae beatae. Minus, illum quibusdam aut inventore qui magnam aliquam voluptatum numquam?</p>
+                        <p style="font-size:13px;" class="card-title"><?php echo mysqli_fetch_assoc($username)['username'] ?> <span style="float:right;">20.03 - 29/04/2022</span></p>
+                        <p style="font-size:13px;" class="card-text"><?php echo $row['comment'] ?></p>
                     </div>
-                    <div class="card card-body">
-                        <p style="font-size:13px;" class="card-title">Remzi Tepe <span style="float:right;">20.03 - 29/04/2022</span></p>
-                        <p style="font-size:13px;" class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo laborum libero perspiciatis animi quibusdam iure quas ex dolore recusandae beatae. Minus, illum quibusdam aut inventore qui magnam aliquam voluptatum numquam?</p>
-                    </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-10">
-                <div class="form-group">
-                    <label for="Comment">Comment</label>
-                    <textarea class="form-control" id="comment-id" rows="2"></textarea>
-                </div>
+        <form action="make_comment.php" method="post">
+            <div class="row">
+                    <div class="col-10">
+                        <div class="form-group">
+                            <label for="Comment">Comment</label>
+                            <textarea class="form-control" id="comment-id" name="comment_betslip" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="btn btn-primary btn-sm btn-block" style="margin-top:40px;">Apply</button>
+                    </div>
             </div>
-            <div class="col-2">
-                <button type="button" class="btn btn-primary btn-sm btn-block" style="margin-top:40px;">Apply</button>
-            </div>
-        </div>
+        </form>
     </div>
+    <?php } ?>
  </main>
 </html>
 
