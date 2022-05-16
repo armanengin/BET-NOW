@@ -90,18 +90,19 @@
             </div>
     </div>
     <?php while($id = mysqli_fetch_assoc($betslip_ids)){
-        $sql_for_bet_ids = "SELECT bet_id FROM betslip NATURAL JOIN has WHERE betslip.betslip_id = $id";
+        $betslip_id = $id['betslip_id'];
+        $sql_for_bet_ids = "SELECT bet_id FROM betslip NATURAL JOIN has WHERE betslip.betslip_id = '$betslip_id'";
         $bet_ids = mysqli_query($db, $sql_for_bet_ids);
-        $sql_for_name = "SELECT username FROM user_shares NATURAL JOIN user WHERE betslip_id = $id";
+        $sql_for_name = "SELECT username FROM user_shares NATURAL JOIN user WHERE betslip_id = '$betslip_id'";
         $name = mysqli_query($db, $sql_for_name);
-        $sql_for_userShares = "SELECT share_date, share_time, comment FROM userShares WHERE betslip_id = $id"; 
+        $sql_for_userShares = "SELECT share_date, share_time, comment FROM user_shares WHERE betslip_id = '$betslip_id'"; 
         $userShares_data = mysqli_query($db, $sql_for_userShares);
     ?>
 
      <div class="container-fluid" style="border-style:solid; width:60%;">
         <div class="row">
             <div class="col-2">
-                <p><?php echo mysqli_fetch_assoc($name)['username']?></p>
+                <p><?php echo mysqli_fetch_assoc($name)['username']; ?></p>
             </div>
             <div class="col-5">
                 <p>(146 followers)</p>
@@ -121,13 +122,13 @@
                     <div class="card"  >
                         <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
-                            <button class="btn btn-lg  btn-block" style="font-size:13px;" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="btn btn-lg  btn-block" style="font-size:13px;" data-toggle="collapse" data-target="#collapseOne-<?php echo $betslip_id ?>" aria-expanded="true" aria-controls="collapseOne">
                             2 match | Odd: 4.80 | Coupon Price: 3 $
                             <span style="float:right;"> 156 people played </span>
                             </button>
                         </h5>
                         </div>
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div id="collapseOne-<?php echo $betslip_id ?>" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
                             <table class="table table-dark">
                             <thead>
@@ -141,10 +142,11 @@
                             </thead>
                             <tbody>
                                 <?php $row_num = 1 ?>
-                                <?php while($bet_id = mysqli_fetch_assoc($bet_ids)){ 
-                                    $sql_for_bet_infos = "SELECT mbn, bet_date, bet_time, odd_type, odd_value FROM bet WHERE bet_id = $bet_id";
+                                <?php while($row = mysqli_fetch_assoc($bet_ids)){ 
+                                    $bet_id = $row['bet_id'];
+                                    $sql_for_bet_infos = "SELECT mbn, bet_date, bet_time, odd_type, odd_value FROM bet WHERE bet_id = '$bet_id'";
                                     $bet_infos = mysqli_query($db, $sql_for_bet_infos);
-                                    $sql_for_teams = "SELECT team_name FROM bet NATURAL JOIN contains NATURAL JOIN team WHERE bet_id = $bet_id";
+                                    $sql_for_teams = "SELECT team_name FROM bet NATURAL JOIN contains NATURAL JOIN team WHERE bet_id = '$bet_id'";
                                     $teams = mysqli_query($db, $sql_for_teams);
                                 ?>
                                 <tr>
@@ -184,14 +186,16 @@
                 </button>
             </div>
             <div class="col-8 d-flex justify-content-end" style="margin-top:5px;">
-                <p>45 Likes - <span data-toggle="collapse" href="#collapseComment<?php echo $id ?>" role="button" aria-expanded="false" id="comment-link">2 comments </span></p>
+            <?php $sql_for_commenters = "SELECT user_id, comment FROM comments_betslip WHERE betslip_id = '$betslip_id'";
+                $commenters = mysqli_query($db, $sql_for_commenters);
+            ?>
+                <p>45 Likes - <span data-toggle="collapse" href="#collapseComment-<?php echo $betslip_id ?>" role="button" aria-expanded="false" id="comment-link"><?php echo $commenters->num_rows ?> comments </span></p>
             </div>
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="collapse" id="collapseComment <?php echo $id ?>">
-                <?php  $sql_for_commenters = "SELECT user_id, comment FROM comments_betslip WHERE betslip_id = '$id'";
-                    $commenters = mysqli_query($db, $sql_for_commenters);
+                <div class="collapse" id="collapseComment-<?php echo $betslip_id ?>">
+                <?php
                     while($row = mysqli_fetch_assoc($commenters)){
                         $user_id = $row['user_id'];
                         $sql_for_username = "SELECT username FROM user WHERE user_id = '$user_id'";
@@ -210,11 +214,11 @@
                     <div class="col-10">
                         <div class="form-group">
                             <label for="Comment">Comment</label>
-                            <textarea class="form-control" id="comment-id" name="comment_betslip" rows="2"></textarea>
+                            <input type="text" class="form-control" id="comment-id" name="comment_betslip" rows="2"></input>
                         </div>
                     </div>
                     <div class="col-2">
-                        <button type="button" class="btn btn-primary btn-sm btn-block" style="margin-top:40px;">Apply</button>
+                        <button type="submit" class="btn btn-primary btn-sm btn-block">Apply</button>
                     </div>
             </div>
         </form>

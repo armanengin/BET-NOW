@@ -12,4 +12,5 @@
         $sql = "INSERT INTO comments_betslip(user_id, betslip_id, comment) VALUES ($user_id, $betslip_id, $comment)";
         mysqli_query($db, $sql);
     }
-    ?>
+    header("location:social.php");
+?>
