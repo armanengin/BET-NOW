@@ -1,3 +1,23 @@
+<?php 
+include('config.php');
+session_start();
+    if( isset($_SESSION['login_flag']) && $_SESSION['login_flag']){
+        $username = $_SESSION['login_user'];
+
+        $sql_user = "SELECT admin_id from admin WHERE username = '$username'";
+        $result = $db->query($sql_user);
+        $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $admin_id = $row_user['admin_id'];
+    }
+    else{
+        header('location: live.php');
+    }
+
+    $odd_sql = "SELECT * from bet";
+
+    $result_odds = mysqli_query($db, $odd_sql);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -202,16 +222,14 @@
                     <a href="#" style="width:100%;" class="btn btn-warning btn-lg active" role="button" aria-pressed="true">Apply</a>
                 </div>
             </div>
-            <div class="col-10" style="border-style:solid; border-color:aqua;">
-                <div class="row">
-                    <table class="table">
+            <div class="col-10" style="border-style:solid;">
+                    <table class="table-responsive table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">MBN</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Time</th>
-                                <th scope="col">Last Modified</th>
                                 <th scope="col">Match</th>
                                 <th scope="col">Odd Type</th>
                                 <th scope="col">Odd</th>
@@ -219,24 +237,73 @@
                             <tr>
                         </thead>
                         <tbody>
+                        <?php while($row_odd = mysqli_fetch_assoc($result_odds)){ ?>
+                                <?php  if(  $row_odd['odd_value'] != 1){?>
                             <tr>
-                                <th scope="row">1</th>
-                                <td>1</td>
-                                <td>06/09/2022</td>
-                                <td>20.00</td>
-                                <td>06/09/2022 - 15.57</td>
-                                <td>Liverpool - Mancester City</td>
-                                <td>MR1</td>
-                                <td>2.7</td>
+                                <th scope="row"><?php echo $row_odd['bet_id']?></th>
+                                <td><?php echo $row_odd['mbn']?></td>
+                                <td><?php echo $row_odd['bet_date']?></td>
+                                <td><?php echo $row_odd['bet_time']?></td>
+                                <td>
+                                <?php 
+                                    $match_id = $row_odd['match_id'];
+                                    $teams_sql = "SELECT team_name, contains.match_id from team NATURAL JOIN contains, bet WHERE contains.match_id = '$match_id' and bet.match_id = contains.match_id group by team_name";
+                                    $teams_query = mysqli_query($db, $teams_sql);
+                                    while( $row_teams = mysqli_fetch_assoc($teams_query)){
+                                ?>
+                             <?php echo $row_teams['team_name'] ?> <br>
+                                <?php }?>
+                                    </td>
+                                <td><?php echo $row_odd['odd_type']?></td>
+                                <td><?php echo $row_odd['odd_value']?></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="btn-admin-options">
-                                        <a href="#" class="btn btn-danger btn-sm" role="button">Remove</a>
-                                        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-odd-change">
-                                         Change Odd
-                                        </button>
+                                        <form action="delete_odd.php" method='post'>
+                                            <input type="number" value='<?php echo $row_odd['bet_id']?>' name='delete_odd' style='display:none'>
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to delete this odd?')">
+                                                Remove
+                                            </button>
+                                            
+                                        </form>
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modal-odd-change-<?php echo $row_odd['bet_id']?>">
+                                                Change Odd
+                                            </button>
+                                            <div class="modal fade" id="modal-odd-change-<?php echo $row_odd['bet_id']?>" tabindex="-1" role="dialog" aria-labelledby="modal-odd-change-title-<?php echo $row_odd['bet_id']?>" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="modal-odd-change-long-<?php echo $row_odd['bet_id']?>">Change Odd</h5>
+                                                            <button type="button" class="close" data-dismiss="modal-<?php echo $row_odd['bet_id']?>" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form action="change_odd.php" method='post'>
+
+                                                            <div class="modal-body">
+                                                                <h5>Past Bet Odd: <?php echo $row_odd['odd_value'] ?></h5>
+                                                                <input type="number" value='<?php echo $row_odd['bet_id']?>' name='change-odd' style='display:none'>
+                                                                    <div class="form-group row">
+                                                                        <label for="input-new-odd" class="col-4 col-form-label">Enter New Odd</label>
+                                                                        <div class="col-8">
+                                                                            <input type="number" min="0" step="0.01"  pattern="^\d+(?:\.\d{1,2})?$" class="form-control" name="input-new-odd" placeholder="New Odd">
+                                                                        </div>
+                                                                    </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">Change Odd</button>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                     </div>
                                 </td>
                             </tr>
+                            <?php }?>
+                            <?php }?>
+
                         </tbody>
                     </table>
                 </div>
@@ -244,33 +311,7 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="modal-odd-change" tabindex="-1" role="dialog" aria-labelledby="modal-odd-change-title" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal-odd-change-long">Change Odd</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <h5>Past Bet Odd: 2.7</h5>
-                    <form>
-                        <div class="form-group row">
-                            <label for="input-new-odd" class="col-4 col-form-label">Enter New Odd</label>
-                            <div class="col-8">
-                                <input type="text" class="form-control" id="input-new-odd" placeholder="New Odd">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </html>
 
 <style>
