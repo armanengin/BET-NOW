@@ -74,20 +74,18 @@
    </div>
  </nav>
  <main>
-    <div class="row" style="margin-right:36px;">
-            <div class="col-10 d-flex justify-content-end">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       Sort By
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="old-to-new.php">Old to New</a>
-                        <a class="dropdown-item" href="new-to-old.php">New to Old</a>
-                        <a class="dropdown-item" href="most-likes.php">Most Likes</a>
-                        <a class="dropdown-item" href="most-comments.php">Most Comments</a>
-                    </div>
-                </div>
+    <div class="container-fluid d-flex justify-content-end" style="width:60%; padding:0;">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort By
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="old-to-new.php">Old to New</a>
+                <a class="dropdown-item" href="new-to-old.php">New to Old</a>
+                <a class="dropdown-item" href="most-likes.php">Most Likes</a>
+                <a class="dropdown-item" href="most-comments.php">Most Comments</a>
             </div>
+        </div>     
     </div>
     <?php while($id = mysqli_fetch_assoc($betslip_ids)){
         $betslip_id = $id['betslip_id'];
@@ -108,8 +106,8 @@
                 <p>(146 followers)</p>
             </div>
             <?php $rowForUserShares = mysqli_fetch_assoc($userShares_data) ?>
-            <div class="col-5">
-                <p style="float:right;">Shared at : <p><?php echo $rowForUserShares['share_date']?> - ><?php echo $rowForUserShares['share_time']?></p></p>
+            <div class="col-5 d-flex justify-content-end">
+                <p> Shared at :  <p> <span> <?php echo $rowForUserShares['share_date']?> -> <?php echo $rowForUserShares['share_time']?> <span></p>
             </div>
             <div class="col-12" style="font-size:13px;">
                 <p><p><?php echo $rowForUserShares['comment']?></p></p>
@@ -166,6 +164,7 @@
                     </div>
                 </div>
             </div>
+<<<<<<< HEAD
             <div class="col-2">
                 <?php
                     $sql_for_bet_ids2 = "SELECT bet_id FROM betslip NATURAL JOIN has WHERE betslip.betslip_id = '$betslip_id'";
@@ -184,6 +183,40 @@
                 ?>
                 <input type="number" style="display:none;", name="betslip_id", value= <?php echo $betslip_id ?> />
                 <button type="submit" style="margin-top:15px;" class="btn btn-primary">Play Betslip</button>
+=======
+            <div class="col-2 justify-content-center">
+                <?php 
+                   $sql = "SELECT totalOdd "
+                ?> 
+                <form action="make_bet.php"> 
+                    <input type="number" style="display:none;", name="betslip_id", value= <?php echo $betslip_id ?> />
+                    <button type="button" style="width:100%; margin-top:10%;" class="btn btn-primary" data-toggle="modal" data-target="#modal-betslip-play">Play Betslip</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-betslip-play" tabindex="-1" role="dialog" aria-labelledby="label-betslip-play" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="label-betslip-play">Play Betslip</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group row">
+                                        <label for="label-deposit-amount-social" class="col-6 col-form-label" >Deposit:</label>
+                                        <div class="col-6">
+                                            <input type="number" class="form-control" id="deposit-amount-social" placeholder="TL">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Play Bet</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+>>>>>>> 558c6bcd8a9b4fc541c4cd3cf520d47e31c108d6
                 </form>
             </div>
         </div>
@@ -236,9 +269,9 @@
                             <input type="text" class="form-control" id="comment-id" name="comment_betslip" rows="2"></input>
                         </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-2 justify-content-center">
                         <input type="number" style="display:none;", name="betslip_id", value= <?php echo $betslip_id ?> />
-                        <button type="submit" class="btn btn-primary btn-sm btn-block">Apply</button>
+                        <button type="submit" class="btn btn-primary btn-sm btn-block" style="margin-top:30%;">Apply</button>
                     </div>
             </div>
         </form>
