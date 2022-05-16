@@ -1,6 +1,6 @@
 import java.sql.*;
 
-    public class javaDB{
+    public class javaApp{
         public static void main(String[] args) {
             Connection conn = null;
             try{
@@ -94,8 +94,6 @@ import java.sql.*;
                     " isShared boolean,"+
                     " isSaved boolean,"+
                     " isPlayed boolean,"+
-                    " isSuccess_betslip boolean,"+
-                    " totalOdd decimal(10,5),"+
                     " PRIMARY KEY(betslip_id), " +
                     "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                     "FOREIGN KEY (admin_id) REFERENCES admin(admin_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -117,7 +115,6 @@ import java.sql.*;
                     "match_id mediumint, " +
                     "mbn int, " +
                     " bet_date date," +
-                    "isSuccess_bet boolean," +
                     " bet_time time," +
                     " category varchar(100),"+
                     "odd_type ENUM('MR1', 'MRX', 'MR2', 'HO', 'HU', 'HR1', 'HRX', 'HR2', 'MG1', 'MG0') NOT NULL," +
@@ -183,8 +180,8 @@ import java.sql.*;
                     "editor_id MEDIUMINT NOT NULL," +
                     "betslip_id mediumint NOT NULL, " +
                     "comment varchar(256) , " +
-                    "date date, " +
-                    "PRIMARY KEY(editor_id, betslip_id), " +
+                    " date date, " +
+                    " PRIMARY KEY(editor_id, betslip_id), " +
                     "FOREIGN KEY (editor_id) REFERENCES editor(editor_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                     "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                     ") ENGINE=INNODB";
@@ -218,7 +215,8 @@ import java.sql.*;
                     "user_id MEDIUMINT NOT NULL," +
                     "betslip_id mediumint NOT NULL, " +
                     "comment varchar(256) , " +
-                    " date date, " +
+                    " comment_date date, " +
+                    " comment_time time, " +
                     " PRIMARY KEY(user_id, betslip_id), " +
                     "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                     "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -292,7 +290,7 @@ import java.sql.*;
                     "(17, 8)," +
                     "(18, 9)," +
                     "(19, 9)," +
-                    "(20, 10),"+
+                    "(20, 10)," +
                     "(21, 10)";
 
             String addBet = "INSERT INTO bet(match_id, mbn, bet_date, bet_time, category, odd_type, odd_value)" +
@@ -397,29 +395,14 @@ import java.sql.*;
                     "(10, 1, curdate(), now(), 'football','MG1', 4.56)," +
                     "(10, 1, curdate(), now(), 'football','MG0', 3.42)";
 
+            String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed)" +
+                    "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false)," +
+                    "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false)," +
+                    "(curdate(), now(), 'betslip3', 1, NULL, 1, true, false, false)";
             String addUser = "INSERT INTO user(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance)" +
-            "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
-            "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')," + 
-            "('Remzi', 'Tepe', 'remzitepe', '12345', '1999-12-28', 'remzitepe@gmail.com', NULL, 'remzi123', '0')," + 
-            "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0')";    
-            
-            String addEditor = "INSERT INTO editor(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance,editor_bio)" +
-                  "VALUES ('Remzi', 'Tepe', 'remzitepe', '12345', '1999-12-28', 'remzitepe@gmail.com', NULL, 'remzi123', '0','Hi I am Remzi')," +
-                  "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0','Hi I am Taha')";   
+                    "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
+                    "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
 
-            String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed, isSuccess_betslip)" +
-                    "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false, NULL)," +
-                    "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false, NULL)," +
-                    "(curdate(), now(), 'betslip3', 1, NULL, 1, true, false, false, NULL)," + 
-                    "(curdate(), now(), 'betslip4', 1, NULL, 1, true, false, false, NULL)," +
-                    "(curdate(), now(), 'betslip5', 3, NULL, 3, true, false, false, true)," + 
-                    "(curdate(), now(), 'betslip6', 2, NULL, 3, true, false, false, true)," + 
-                    "(curdate(), now(), 'betslip7', 2, NULL, 3, true, false, false, false)," + 
-                    "(curdate(), now(), 'betslip8', 3, NULL, 3, true, false, false, NULL)," + 
-                    "(curdate(), now(), 'betslip9', 2, NULL, 4, true, false, false, true)," + 
-                    "(curdate(), now(), 'betslip10', 2, NULL, 4, true, false, false, false)," + 
-                    "(curdate(), now(), 'betslip11', 3, NULL, 4, true, false, false, NULL)";
-                    
             String addUserShares = "INSERT INTO user_shares(user_id, betslip_id, comment, share_date, share_time)" +
                     "VALUES (1, 1, 'This is the best cupon!!', curdate(), now())," +
                     "(1, 2, 'This is the best cupon2!!', curdate(), now())," +
@@ -455,25 +438,22 @@ import java.sql.*;
                     "(27, 3)," +
                     "(28, 3)," +
                     "(29, 3)," +
-                    "(30, 3)," + 
-                    "(31, 5)," +
-                    "(32, 5)," +
-                    "(33, 5)," +
-                    "(34, 6)," +
-                    "(35, 6)," +
-                    "(36, 7)," +
-                    "(37, 7)," +
-                    "(38, 8)," +
-                    "(39, 8)," +
-                    "(40, 8)," +
-                    "(41, 9)," + 
-                    "(42, 9)," +
-                    "(43, 10)," +
-                    "(44, 10)," +
-                    "(45, 11)," +
-                    "(46, 11)," +
-                    "(47, 11)";
-                    
+                    "(30, 3)";
+            /*
+            String addComentsBetslip = "INSERT INTO comments_betslip(user_id, betslip_id, comment, date)" +
+                    "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
+                    "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
+            String commentsBetslipTable = "CREATE TABLE comments_betslip(" +
+                    "user_id MEDIUMINT NOT NULL," +
+                    "betslip_id mediumint NOT NULL, " +
+                    "comment varchar(256) , " +
+                    " date date, " +
+                    " PRIMARY KEY(user_id, betslip_id), " +
+                    "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
+                    "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
+                    ") ENGINE=INNODB";
+                    */
+
             try{
                 stmt = conn.createStatement();
                 stmt.executeUpdate("DROP TABLE IF EXISTS contains");
@@ -595,7 +575,6 @@ import java.sql.*;
                 stmt.executeUpdate(addBetslip);
                 stmt.executeUpdate(addUserShares);
                 stmt.executeUpdate(addHas);
-                stmt.executeUpdate(addEditor);
 
 
             } catch (Exception e){
