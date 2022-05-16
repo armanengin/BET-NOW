@@ -482,7 +482,8 @@ public class javaApp{
                     "user_id MEDIUMINT NOT NULL," +
                     "betslip_id mediumint NOT NULL, " +
                     "comment varchar(256) , " +
-                    " date date, " +
+                    " comment_date date, " +
+                    " comment_time time, " +
                     " PRIMARY KEY(user_id, betslip_id), " +
                     "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                     "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
