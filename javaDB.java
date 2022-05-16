@@ -473,7 +473,6 @@ import java.sql.*;
                     "(45, 11)," +
                     "(46, 11)," +
                     "(47, 11)";
-                    
             try{
                 stmt = conn.createStatement();
                 stmt.executeUpdate("DROP TABLE IF EXISTS contains");
@@ -596,8 +595,6 @@ import java.sql.*;
                 stmt.executeUpdate(addUserShares);
                 stmt.executeUpdate(addHas);
                 stmt.executeUpdate(addEditor);
-
-
             } catch (Exception e){
                 e.printStackTrace();
             }
