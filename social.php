@@ -101,7 +101,7 @@
 
      <div class="container-fluid" style="border-style:solid; width:60%;">
         <div class="row">
-            <div class="col-2">
+            <div class="col-2"> 
                 <p><?php echo mysqli_fetch_assoc($name)['username']; ?></p>
             </div>
             <div class="col-5">
@@ -167,7 +167,13 @@
                 </div>
             </div>
             <div class="col-2">
-                <button type="button" style="margin-top:15px;" class="btn btn-primary">Play Betslip</button>
+                <?php 
+                   $sql = "SELECT totalOdd "
+                ?> 
+                <form action="make_bet.php"> 
+                <input type="number" style="display:none;", name="betslip_id", value= <?php echo $betslip_id ?> />
+                <button type="submit" style="margin-top:15px;" class="btn btn-primary">Play Betslip</button>
+                </form>
             </div>
         </div>
         <div class="row">

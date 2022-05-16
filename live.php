@@ -328,21 +328,12 @@ session_start();
                                     Delete 
                                 </button>
 
-<<<<<<< HEAD
-                                <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Share" id="share-all-bets">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
-                                    </svg>
-                                    Share 
-                                </button>
-=======
                             <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" id="share-all-bets">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
                                 </svg>
                                 Share 
                             </button>
->>>>>>> a27774361db812988dcdb240cea243943f2230c2
 
                                 <button type="button" class="btn btn-success btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Save" id="save-all-bets">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
@@ -391,11 +382,7 @@ session_start();
                 </div>
         </div>
         <!-- Modal Betslip (Share Button) -->
-<<<<<<< HEAD
-        <div class="modal fade" style="width:60%;" id="modal-Share" tabindex="-1" role="dialog" aria-labelledby="label-modal-Save" aria-hidden="true">
-=======
         <div class="modal fade" style="width:60%;" id="modal-Share" tabindex="-1" role="dialog" aria-labelledby="label-modal-Share" aria-hidden="true">
->>>>>>> a27774361db812988dcdb240cea243943f2230c2
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
