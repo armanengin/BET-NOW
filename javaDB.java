@@ -98,6 +98,7 @@ public class javaDB{
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (admin_id) REFERENCES admin(admin_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
+
         String transactionTable = "CREATE TABLE transaction(" +
                 " transaction_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
                 " betslip_id mediumint, " +
@@ -247,16 +248,50 @@ public class javaDB{
                 "('Juventus')," +
                 "('Inter')," + 
                 "('Bayern Munchen')," +
-                "('Borussia Dortmund')";
+                "('Borussia Dortmund')," + 
+                "('FC Dynamo Kyiv')," +
+                "('Basel')," +
+                "('Paris Saint-Germain')," +
+                "('Monaco FC')," + 
+                "('AFC Ajax')," +
+                "('PSV')," +
+                "('S.L. Benfica')," + 
+                "('FC Porto')";
 
         String addMatch = "INSERT INTO matchs(match_date, match_time, match_category, league)" +
-                "VALUES (curdate(), now(), 'football', 'premier')," +
-                "(curdate(), now(), 'football', 'premier')";
+                "VALUES (curdate(), now(), 'football', 'Premier League')," +
+                        "(curdate(), now(), 'football', 'Premier League')," + 
+                        "(curdate(), now(), 'football', 'Premier League')," + 
+                        "(curdate(), now(), 'football', 'Turkish Super League')," +
+                        "(curdate(), now(), 'football', 'Serie A')," + 
+                        "(curdate(), now(), 'football', 'Bundesliga')," + 
+                        "(curdate(), now(), 'football', 'Ukrainian Premier League')," + 
+                        "(curdate(), now(), 'football', 'Ligue 1')," +
+                        "(curdate(), now(), 'football', 'Eredivisie')," + 
+                        "(curdate(), now(), 'football', 'Liga Portugal')";
+                
         String addContains = "INSERT INTO contains(team_id, match_id)" +
                 "VALUES (1, 1)," +
                 "(2, 1)," +
                 "(3, 2)," +
-                "(4, 2)";
+                "(4, 2)," + 
+                "(5, 3)," +
+                "(6, 3)," +
+                "(7, 4)," +
+                "(8, 4)," + 
+                "(10, 5)," +
+                "(11, 5)," + 
+                "(12, 6)," +
+                "(13, 6)," + 
+                "(14, 7)," + 
+                "(15, 7)," +
+                "(16, 8)," + 
+                "(17, 8)," +
+                "(18, 9)," + 
+                "(19, 9)," + 
+                "(20, 10)," +
+                "(21, 10)";
+
         String addBet = "INSERT INTO bet(match_id, mbn, bet_date, bet_time, category, odd_type, odd_value)" +
                 "VALUES (1, 5, curdate(), now(), 'football', 'MR1', 1.5)," +
                 "(1, 5, curdate(), now(), 'football','MRX', 1.7)," +
@@ -277,7 +312,88 @@ public class javaDB{
                 "(2, 5, curdate(), now(), 'football','HRX', 1.0)," +
                 "(2, 5, curdate(), now(), 'football','HR2', 4.0)," +
                 "(2, 5, curdate(), now(), 'football','MG1', 5.0)," +
-                "(2, 5, curdate(), now(), 'football','MG0', 6.0)";
+                "(2, 5, curdate(), now(), 'football','MG0', 6.0)," +
+                "(3, 2, curdate(), now(), 'football','MR1', 1.5)," +
+                "(3, 2, curdate(), now(), 'football','MRX', 2.5)," +
+                "(3, 2, curdate(), now(), 'football','MR2', 2.3)," +
+                "(3, 2, curdate(), now(), 'football','HU', 2.4)," +
+                "(3, 2, curdate(), now(), 'football','HO', 3.5)," +
+                "(3, 2, curdate(), now(), 'football','HR1', 1.7)," +
+                "(3, 2, curdate(), now(), 'football','HRX', 2.3)," +
+                "(3, 2, curdate(), now(), 'football','HR2', 2.2)," +
+                "(3, 2, curdate(), now(), 'football','MG1', 3.4)," +
+                "(3, 2, curdate(), now(), 'football','MG0', 4.5), " + 
+                "(4, 3, curdate(), now(), 'football','MR1', 1.9)," +
+                "(4, 3, curdate(), now(), 'football','MRX', 2.2)," +
+                "(4, 3, curdate(), now(), 'football','MR2', 2.4)," +
+                "(4, 3, curdate(), now(), 'football','HU', 2.32)," +
+                "(4, 3, curdate(), now(), 'football','HO', 4.67)," +
+                "(4, 3, curdate(), now(), 'football','HR1', 1.8)," +
+                "(4, 3, curdate(), now(), 'football','HRX', 2.4)," +
+                "(4, 3, curdate(), now(), 'football','HR2', 3.42)," +
+                "(4, 3, curdate(), now(), 'football','MG1', 2.33)," +
+                "(4, 3, curdate(), now(), 'football','MG0', 3.55)," + 
+                "(5, 1, curdate(), now(), 'football','MR1', 1.8)," +
+                "(5, 1, curdate(), now(), 'football','MRX', 2.24)," +
+                "(5, 1, curdate(), now(), 'football','MR2', 2.67)," +
+                "(5, 1, curdate(), now(), 'football','HU', 3.2)," +
+                "(5, 1, curdate(), now(), 'football','HO', 1.54)," +
+                "(5, 1, curdate(), now(), 'football','HR1', 2.48)," +
+                "(5, 1, curdate(), now(), 'football','HRX', 2.32)," +
+                "(5, 1, curdate(), now(), 'football','HR2', 2.21)," +
+                "(5, 1, curdate(), now(), 'football','MG1', 1.95)," +
+                "(5, 1, curdate(), now(), 'football','MG0', 2.89)," + 
+                "(6, 2, curdate(), now(), 'football','MR1', 1.33)," +
+                "(6, 2, curdate(), now(), 'football','MRX', 2.25)," +
+                "(6, 2, curdate(), now(), 'football','MR2', 3.42)," +
+                "(6, 2, curdate(), now(), 'football','HU', 4.2)," +
+                "(6, 2, curdate(), now(), 'football','HO', 1.43)," +
+                "(6, 2, curdate(), now(), 'football','HR1', 2.33)," +
+                "(6, 2, curdate(), now(), 'football','HRX', 4.5)," +
+                "(6, 2, curdate(), now(), 'football','HR2', 1.34)," +
+                "(6, 2, curdate(), now(), 'football','MG1', 4.56)," +
+                "(6, 2, curdate(), now(), 'football','MG0', 3.42)," +
+                "(7, 2, curdate(), now(), 'football','MR1', 1.33)," +
+                "(7, 2, curdate(), now(), 'football','MRX', 2.25)," +
+                "(7, 2, curdate(), now(), 'football','MR2', 3.42)," +
+                "(7, 2, curdate(), now(), 'football','HU', 4.2)," +
+                "(7, 2, curdate(), now(), 'football','HO', 1.43)," +
+                "(7, 2, curdate(), now(), 'football','HR1', 2.33)," +
+                "(7, 2, curdate(), now(), 'football','HRX', 4.5)," +
+                "(7, 2, curdate(), now(), 'football','HR2', 1.34)," +
+                "(7, 2, curdate(), now(), 'football','MG1', 4.56)," +
+                "(7, 2, curdate(), now(), 'football','MG0', 3.42)," + 
+                "(8, 3, curdate(), now(), 'football','MR1', 1.33)," +
+                "(8, 3, curdate(), now(), 'football','MRX', 2.25)," +
+                "(8, 3, curdate(), now(), 'football','MR2', 3.42)," +
+                "(8, 3, curdate(), now(), 'football','HU', 4.2)," +
+                "(8, 3, curdate(), now(), 'football','HO', 1.43)," +
+                "(8, 3, curdate(), now(), 'football','HR1', 2.33)," +
+                "(8, 3, curdate(), now(), 'football','HRX', 4.5)," +
+                "(8, 3, curdate(), now(), 'football','HR2', 1.34)," +
+                "(8, 3, curdate(), now(), 'football','MG1', 4.56)," +
+                "(8, 3, curdate(), now(), 'football','MG0', 3.42)," + 
+                "(9, 1, curdate(), now(), 'football','MR1', 1.33)," +
+                "(9, 1, curdate(), now(), 'football','MRX', 2.25)," +
+                "(9, 1, curdate(), now(), 'football','MR2', 3.42)," +
+                "(9, 1, curdate(), now(), 'football','HU', 4.2)," +
+                "(9, 1, curdate(), now(), 'football','HO', 1.43)," +
+                "(9, 1, curdate(), now(), 'football','HR1', 2.33)," +
+                "(9, 1, curdate(), now(), 'football','HRX', 4.5)," +
+                "(9, 1, curdate(), now(), 'football','HR2', 1.34)," +
+                "(9, 1, curdate(), now(), 'football','MG1', 4.56)," +
+                "(9, 1, curdate(), now(), 'football','MG0', 3.42)," + 
+                "(10, 1, curdate(), now(), 'football','MR1', 1.33)," +
+                "(10, 1, curdate(), now(), 'football','MRX', 2.25)," +
+                "(10, 1, curdate(), now(), 'football','MR2', 3.42)," +
+                "(10, 1, curdate(), now(), 'football','HU', 4.2)," +
+                "(10, 1, curdate(), now(), 'football','HO', 1.43)," +
+                "(10, 1, curdate(), now(), 'football','HR1', 2.33)," +
+                "(10, 1, curdate(), now(), 'football','HRX', 4.5)," +
+                "(10, 1, curdate(), now(), 'football','HR2', 1.34)," +
+                "(10, 1, curdate(), now(), 'football','MG1', 4.56)," +
+                "(10, 1, curdate(), now(), 'football','MG0', 3.42)";
+
         String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed)" +
                 "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false)," +
                 "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false)," +

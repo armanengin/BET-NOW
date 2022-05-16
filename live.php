@@ -241,7 +241,6 @@ session_start();
                         <input type="submit"style="width:100%;" class="btn btn-warning btn-lg active" value='Apply'> 
                     </div>
                     </form>
-
                 </div>
                   <!-- Match Table -->
                 <div class="col-8" style="border-style:solid;">
@@ -293,75 +292,71 @@ session_start();
                 </div>
             <!-- Betslip -->
                 <div class="col-2" style="border-style:solid; border-color:aqua;">
-                    <div class="row d-flex justify-content-center"  style="width:100%;">
-                        <label for="my-coupon" style="text-align:center; font-weigth:bold; color:white; font-family: Arial, Helvetica, sans-serif;">
-                            My Coupon
-                        </label>
-                        </div>
-                        <hr style="margin:0">
-                        <div class="row d-flex justify-content-center">
-                            <div class="btn-group" role="group" aria-label="button-group-betslip" >
-                                <button type="button btn-sm" class="btn btn-danger btn-sm" style="margin:2px;" id="delete-all-button">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                                    </svg>
-                                    Delete 
-                                </button>
+                    <label for="my-coupon" style="text-align:center; font-weigth:bold; color:white; font-family: Arial, Helvetica, sans-serif;">
+                        My Coupon
+                    </label>
+                    <hr style="margin:0">
+                    <div class="row d-flex justify-content-center">
+                        <div class="btn-group" role="group" aria-label="button-group-betslip" >
+                            <button type="button btn-sm" class="btn btn-danger btn-sm" style="margin:2px;" id="delete-all-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                </svg>
+                                Delete 
+                            </button>
 
-                                <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Share" id="share-all-bets">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
-                                    </svg>
-                                    Share 
-                                </button>
+                            <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Share" id="share-all-bets">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
+                                </svg>
+                                Share 
+                            </button>
 
-                                <button type="button" class="btn btn-success btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Save" id="save-all-bets">
+                            <button type="button" class="btn btn-success btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Save" id="save-all-bets">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
                                 <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
                                 </svg>
-                                    Save 
-                                </button>
-                            </div>
+                                Save 
+                            </button>
                         </div>
+                    </div>
 
-                        <div class="row" id="row-betslip">
-                            
-                        </div>
-                        <div class="row">
-                            <div class="card" style="width:100%; background-color:yellow; margin:3px;">
-                                    <div class="section">
-                                        <p style="text-align:left;">
-                                        <span style="float:right" id="odd-value"> 
+                    <div class="row" id="row-betslip">
+                        
+                    </div>
+                    <div class="row">
+                        <div class="card" style="width:100%; background-color:yellow; margin:3px;">
+                            <div class="section">
+                                <p style="text-align:left;">
+                                    <span style="float:right" id="odd-value"> 
 
-                                        <?php echo $totalOdd ?>     
-                                        </span>
-                                            Total Odd: 
-                                        </p>
+                                    <?php echo $totalOdd ?>     
+                                    </span>
+                                        Total Odd: 
+                                </p>
 
-                                        <hr style="margin:0">
-                                        <div class="form-group row">
-                                            <label for="deposit-amount-label" class="col-6 col-form-label" >Deposit:</label>
-                                            <div class="col-6">
-                                                <input type="number" class="form-control" id="deposit-amount"  value="3">
-                                            </div>
-                                            
-                                        </div>
-
-                                        <hr style="margin:0">
-                                        <p style="text-align:left;">
-                                        <span style="float:right" id="income-value"> 
-                                            0 TL
-                                        </span>
-                                            Total Income: 
-                                        </p>
-                                    </div>
+                                <hr style="margin:0">
+                                <div class="form-group row">
+                                    <label for="deposit-amount-label" class="col-6 col-form-label" >Deposit:</label>
+                                    <div class="col-6">
+                                        <input type="number" class="form-control" id="deposit-amount"  value="3">
+                                    </div>  
                                 </div>
-                                <button class="btn btn-success btn-lg active" role="button" id="make-bet"aria-pressed="true" style="width:100%;  margin:3px;">Make Bet</button>
+
+                                <hr style="margin:0">
+                                <p style="text-align:left;">
+                                <span style="float:right" id="income-value"> 
+                                    0 TL
+                                </span>
+                                    Total Income: 
+                                </p>
                             </div>
+                            <button class="btn btn-success btn-lg active" role="button" id="make-bet"aria-pressed="true" style="width:100%;  margin:3px;">Make Bet</button>
                         </div>
+                    </div>
                 </div>
-        </div>
+            </div>
         <!-- Modal Betslip (Share Button) -->
         <div class="modal fade" style="width:60%;" id="modal-Save" tabindex="-1" role="dialog" aria-labelledby="label-modal-Save" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -421,7 +416,7 @@ session_start();
     <style>
         .table-responsive{
             text-align:center;
-            font-size: 12px;
+            font-size: 13px;
         }
         body{
             background-color:#8fbc8f;

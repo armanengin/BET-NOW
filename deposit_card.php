@@ -55,5 +55,4 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             header("location: profile.php");
         }      
 }//end if   
-    
 ?>
