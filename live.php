@@ -1,16 +1,18 @@
 <?php 
 include('config.php');
 session_start();
-    $username = $_SESSION['login_user'];
+    if( isset($_SESSION['login_flag'])){
+        $username = $_SESSION['login_user'];
 
-    $sql_user = "SELECT user_id from user WHERE username = '$username'";
-    $result = $db->query($sql_user);
-    $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $user_id = $row_user['user_id'];
-    $balance_sql = "SELECT balance from user WHERE username = '$username'";
-    $result = $db->query($balance_sql);
-    $row_balance = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $user_balance = $row_balance['balance'];
+        $sql_user = "SELECT user_id from user WHERE username = '$username'";
+        $result = $db->query($sql_user);
+        $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $user_id = $row_user['user_id'];
+        $balance_sql = "SELECT balance from user WHERE username = '$username'";
+        $result = $db->query($balance_sql);
+        $row_balance = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $user_balance = $row_balance['balance'];
+    }
     if( isset($_SESSION['bets'])){
         $bets_query = $_SESSION['bets'];
         $match_ids = [];
@@ -156,7 +158,7 @@ session_start();
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0" action="login.php" method="post">
-                    <?php if ($_SESSION['login_flag']) { 
+                    <?php if (isset($_SESSION['login_flag'])) { 
                         include("my-account.php");    
                     ?>
                     <?php } else { ?>
