@@ -209,7 +209,6 @@
                 </div>
             </div>
         </div>
-        <?php $_SESSION["betslip_id"] = $betslip_id; ?>
         <form action="make_comment.php" method="post">
             <div class="row">
                     <div class="col-10">
@@ -219,6 +218,7 @@
                         </div>
                     </div>
                     <div class="col-2">
+                        <input type="number" style="display:none;", name="betslip_id", value= <?php echo $betslip_id ?> />
                         <button type="submit" class="btn btn-primary btn-sm btn-block">Apply</button>
                     </div>
             </div>

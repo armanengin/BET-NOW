@@ -11,7 +11,7 @@
         $user_id = $user_id_assoc['user_id'];
         echo $user_id;
         echo "<br>";
-        $betslip_id = $_SESSION['betslip_id'];
+        $betslip_id = $_POST['betslip_id'];
         echo $betslip_id;
         echo "<br>";
         $comment = $_POST["comment_betslip"];
@@ -33,5 +33,5 @@
             echo "unsucessful";
         }
     }
-    //header("location:social.php");
+    header("location:social.php");
 ?>
