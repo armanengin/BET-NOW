@@ -3,6 +3,14 @@ include('config.php');
 session_start();
     $username = $_SESSION['login_user'];
 
+    $sql_user = "SELECT user_id from user WHERE username = '$username'";
+    $result = $db->query($sql_user);
+    $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $user_id = $row_user['user_id'];
+    $balance_sql = "SELECT balance from user WHERE username = '$username'";
+    $result = $db->query($balance_sql);
+    $row_balance = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $user_balance = $row_balance['balance'];
     if( isset($_SESSION['bets'])){
         $bets_query = $_SESSION['bets'];
         $match_ids = [];
@@ -75,7 +83,16 @@ session_start();
     $betslip = [];
     $odd_arr = [];
     $totalOdd = 1;
+    $max_mbn = 1;
+    $modals = array('Save', 'Share');
+
+    $betslip_arr = [];
+    $odd_value = 1;
+    $income_value = 0;
 ?>
+<script>
+    var user_balance = <?php echo json_encode($user_balance)?>;
+</script>
 <!doctype html>
 <html lang="en">
   <head>
@@ -97,6 +114,7 @@ session_start();
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 
@@ -281,17 +299,9 @@ session_start();
                         </label>
                         </div>
                         <hr style="margin:0">
-<<<<<<< HEAD
-                        <div class="row">
-                            <div class="col-6 d-flex justify-content-center">
-                            <button type="button" class="btn btn-danger" id='delete-all-button'>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-=======
                         <div class="row d-flex justify-content-center">
-                            <div class="btn-group" role="group" aria-label="button-group-betslip">
-                                <button type="button btn-sm" class="btn btn-danger btn-sm" style="margin:2px;">
+                            <div class="btn-group" role="group" aria-label="button-group-betslip" >
+                                <button type="button btn-sm" class="btn btn-danger btn-sm" style="margin:2px;" id="delete-all-button">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12"  fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
@@ -299,17 +309,16 @@ session_start();
                                     Delete 
                                 </button>
 
-                                <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-betslip">
+                                <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Share" id="share-all-bets">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
                                     </svg>
                                     Share 
                                 </button>
 
-                                <button type="button" class="btn btn-success btn-sm" style="margin:2px;">
+                                <button type="button" class="btn btn-success btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Save" id="save-all-bets">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
                                 <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
->>>>>>> b43027ea49fb3635950e53d8a11280c42242b988
                                 </svg>
                                     Save 
                                 </button>
@@ -320,10 +329,11 @@ session_start();
                             
                         </div>
                         <div class="row">
-                            <div class="card" style="width:100%; background-color:yellow; margin:3px;" id='make-bet'>
+                            <div class="card" style="width:100%; background-color:yellow; margin:3px;">
                                     <div class="section">
                                         <p style="text-align:left;">
                                         <span style="float:right" id="odd-value"> 
+
                                         <?php echo $totalOdd ?>     
                                         </span>
                                         Total Odd: 
@@ -332,33 +342,36 @@ session_start();
                                         <hr style="margin:0">
 
                                         <div class="form-group row">
-                                        <label for="deposit-amount-label" class="col-6 col-form-label">Deposit:</label>
-                                        <div class="col-6">
-                                            <input type="text" class="form-control" id="id-deposit-amount" placeholder="TL">
-                                        </div>
+                                            <label for="deposit-amount-label" class="col-6 col-form-label" >Deposit:</label>
+                                            <div class="col-6">
+                                                <input type="number" class="form-control" id="deposit-amount"  value="3">
+                                            </div>
+                                            
                                         </div>
 
                                         <hr style="margin:0">
 
                                         <p style="text-align:left;">
-                                        <span style="float:right"> 
-                                        150 TL
+                                        <span style="float:right" id="income-value"> 
+                                            0 TL
                                         </span>
                                         Total Income: 
                                         </p>
                                     </div>
                                 </div>
-                                <a href="#" class="btn btn-success btn-lg active" role="button" aria-pressed="true" style="width:100%;  margin:3px;">Make Bet</a>
+                                <button class="btn btn-success btn-lg active" role="button" id="make-bet"aria-pressed="true" style="width:100%;  margin:3px;">Make Bet</button>
                             </div>
                         </div>
                 </div>
         </div>
         <!-- Modal Betslip (Share Button) -->
-        <div class="modal fade" id="modal-betslip" tabindex="-1" role="dialog" aria-labelledby="label-modal-betslip" aria-hidden="true">
+        <div class="modal fade" style="width:60%;" id="modal-Save" tabindex="-1" role="dialog" aria-labelledby="label-modal-Save" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="label-modal-betslip">Share Betslip</h5>
+                    <h5 class="modal-title" id="label-modal-Save">
+                                   Save Bets
+                    </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -378,16 +391,28 @@ session_start();
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>5</td>
-                                <td>22-05-14</td>
-                                <td>15:41:12</td>
-                                <td>Premier</td>
-                                <td>Liverpool - Real Madrid</td>
-                                <td>MR1</td>
-                                <td>1.50</td>
+                         
+                        <?php    if( isset($_SESSION['betslip'])){ ?>
+                            <?php         $betslip_arr = $_SESSION['betslip'] ?>
+                            <?php       $odd_value = $_SESSION['odd_value'] ?>
+                            <?php     $income_value = $_SESSION['income_value'] ?>
+                            <?php     } ?>
+                            <?php   for( $i = 0; $i < count($betslip_arr); $i++){   ?>  
+                        <tr id="bet-table">
+                                <th scope="col"><?php echo $bets[$betslip_arr[$i]]['bet_id']?></th>
+                                <td><?php echo $bets[$betslip_arr[$i]]['mbn']?></td>
+                                <td><?php echo $bets[$betslip_arr[$i]]['bet_date']?></td>
+                                <td><?php echo$bets[$betslip_arr[$i]]['bet_time'] ?></td>
+                                <td><?php echo $bets[$betslip_arr[$i]]['category'] ?></td>
+                                <td>
+                                <?php foreach($teams as $team){?>
+                                <?php if( $team['match_id'] == $bets[$betslip_arr[$i]]['match_id']){?>
+                                    <?php echo $team['team_name'] ?> <br>
+                                    <?php } ?>
+                                <?php } ?>
+                                </td>
                             </tr>
+                            <?php }  ?>
                         </tbody>
                     </table>
                 </div>
@@ -422,20 +447,27 @@ session_start();
         $button_delete_betslip_id = 0;
    ?>
    
+<script>
+    var betslip_arr = [];
+    var odd_value = 0;
+    var income_value = 0;
+    var max_mbn = 1;
+</script>
 <?php for($i = 0; $i < count($bets); $i++){?>
     <script>
-
         $(document).ready(function() {
                 $('#bet-button-<?php echo $bets[$i]['bet_id'] ?>').click(function(e){
                 e.preventDefault();
+                var temp_arr = [];
                 <?php for($j = floor($i / 10) * 10; $j < 10 * (floor($i / 10) + 1); $j++){?>
                     $('#bet-button-<?php echo $bets[$j]['bet_id'] ?>').removeClass("selected");
                     $("#card-betslip-<?php echo $bets[$j]['bet_id'] ?>").remove();
-                    <?php if($key = array_search( $j + 1, $betslip)){?>
-                        <?php unset($betslip[$key])?>
-                    <?php }?>
-                <?php }?>
 
+                    temp_arr.push(<?php echo $j ?> + 1);
+                
+                <?php }?>
+                    betslip_arr = betslip_arr.filter(id => !temp_arr.includes(id) );   
+                    betslip_arr.push(<?php echo $bets[$i]['bet_id'] ?>);
                 <?php $team_compete = [] ?>
                 <?php foreach($teams as $team){?>
                      <?php if( $team['match_id'] == floor($i / 10) + 1){?>
@@ -479,14 +511,37 @@ session_start();
                     $("#button-delete-betslip-<?php echo $bets[$i]['bet_id'] ?>").on("click",function(e){
                         $("#card-betslip-<?php echo $bets[$i]['bet_id'] ?>").remove();
                         $('#bet-button-<?php echo $bets[$i]['bet_id'] ?>').removeClass("selected");
+
+                        var bet_id = <?php echo json_encode($bets[$i]['bet_id']); ?>;
+                        for( let j = 0; j < betslip_arr; j++){
+                            if( bet_id == betslip_arr[j]){
+                                betslip_arr.splice(j, 1);
+                            }
+                        }
+
                     });
+                    
                  
                 });
 
-                <?php $betslip[] = ($bets[$i]['bet_id'])   ?>
-
-            });
-
+                var bet_arr = <?php echo json_encode($bets); ?>;
+                var totalOdd = 1;
+                for( let i = 0; i < betslip_arr.length; i++){
+                    var temp_id = betslip_arr[i] - 1;
+                    totalOdd = totalOdd * bet_arr[temp_id]['odd_value'];
+                }
+                odd_value = Math.round(totalOdd * 100) / 100;
+                 $('#odd-value').html(Math.round(totalOdd * 100) / 100);
+                $('#deposit-amount').change(function() {
+                    income_value = Math.round(totalOdd* parseInt(document.getElementById('deposit-amount').value)* 100)/100;
+                    $('#income-value').html( income_value + " TL");
+                });
+                income_value = Math.round(totalOdd* parseInt(document.getElementById('deposit-amount').value)* 100)/100;
+                    $('#income-value').html( income_value + " TL");
+                });
+                <?php if($bets[$i]['mbn'] > $max_mbn){?>
+                    <?php $max_mbn = $bets[$i]['mbn']?>
+                    <?php } ?>
             
         });
 
@@ -504,8 +559,54 @@ session_start();
                     $("#card-betslip-<?php echo $bets[$j]['bet_id'] ?>").remove();
             <?php }?>
         });
-    });
 
     
+    });
+
 </script>
 
+<script type="text/javascript">
+    $(document).ready( function(){
+        $('#make-bet').click( function(e){
+            e.preventDefault();
+            max_mbn = <?php echo json_encode($max_mbn)?>;
+            if( max_mbn > betslip_arr.length){
+                alert("Please add more bets to meet MBN rules");
+            }
+            else if( user_balance >= income_value / odd_value){
+            $.ajax({
+                type: "POST",
+                url: "make_bet.php",
+                data: {
+                betslip_arr: betslip_arr,
+                income_value: income_value,
+                odd_value: odd_value,
+                },
+                cache: false,
+                success: function(data) {
+                    alert("betslip made");
+
+                },
+                error: function(xhr, status, error) {
+                console.error(xhr);
+                }
+                });
+            }
+            else{
+                alert("Please deposit money to your card");
+            }
+                });
+            
+
+             });
+</script>
+
+<script type="text/javascript">
+   var res = 33333;
+</script>
+    <?php
+
+
+?>
+<script>
+</script>
