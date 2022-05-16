@@ -1,9 +1,13 @@
 <?php 
     include('config.php');
     session_start();
-
+    
     $sql = "SELECT editor_id, first_name, last_name, username, num_of_successful_betslip, ratio_of_success, editor_bio FROM editor";
     $editor_sql = mysqli_query($db, $sql);
+    $editor_arr = [];
+    while($row = mysqli_fetch_assoc($editor_sql)) {
+        $editor_arr[] = $row;
+    }
 
 ?>
 <!DOCTYPE html>
@@ -34,7 +38,10 @@
      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
- </body>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js%22%3E"></script>
+     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    </body>
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
@@ -125,7 +132,7 @@
     <div class="container" style="border-style:solid; border-color:red; width:70%;">
         <div class="row" style="border-style:solid; border-color:black;">
             <div class="col-12" style="border-style:solid; border-color:green;">
-                <table class="table  table-bordered">
+                <table id="table-editor" class="table  table-bordered">
                     <thead>
                         <tr>
                         <th scope="col">#</th>
@@ -140,13 +147,13 @@
                             <tr>
                                 <th scope="row"><?php echo $editor['editor_id'] ?></th>
                                 <td><?php echo $editor['first_name']." ".$editor['last_name'] ?></td>
-                                <td>146</td>
-                                <td><?php echo $editor['ratio_of_success'] ?></td>
+                                <td> </td>
+                                <td><?php echo $editor['ratio_of_success']?></td>
                                 <td>
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <a href="editor-profile.php" class="btn btn-primary" role="button">Profile</a>
-                                        <a href="editor-performance.php" class="btn btn-warning" role="button">Performance</a>
-                                        <a href="#" id="follow-button" class="btn btn-success " role="button">Follow</a>
+                                    <div class="btn-group" role="group" aria-label="btn-group-editor">
+                                        <button type="button" class="btn btn-primary" id="button-editor-profile-<?php echo $editor['editor_id']?>" onClick="profileFunction(<?php echo $editor['editor_id']?>)" >Profile</button>
+                                        <button type="button" class="btn btn-warning" id="button-editor-performance-<?php echo $editor['editor_id']?>">Performance </button>
+                                        <button type="button" class="btn btn-success" id="button-editor-follow-<?php echo $editor['editor_id']?>">Follow</button>
                                     </div>
                                 </td>  
                             </tr>
@@ -167,6 +174,31 @@
     }
 }
 </style>
+<script type="text/javascript">
+    function profileFunction(id){
+        $.ajax({
+                type: "POST",
+                url: "editor-profile-ajax.php",
+                data: {
+                    editor_id: id,
+                },
+                cache: false,
+                success: function(editor_id) {
+                    alert(editor_id);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr);
+                }
+        });
+        window.location.href = "editor-profile.php";
+    }
+</script>
+<?php 
+  
+?>
+
+
+
 
 
 

@@ -69,7 +69,9 @@ public class javaDB{
                 "num_of_successful_betslip int," +
                 "ratio_of_success decimal(3,2), "+
                 "editor_bio varchar(1000)," +
-                "PRIMARY KEY(editor_id)) ENGINE=INNODB";
+                "PRIMARY KEY (editor_id), " +
+                "FOREIGN KEY (username) REFERENCES  user(username) ON UPDATE CASCADE ON DELETE CASCADE"+
+                ") ENGINE=INNODB";
 
         String debitCardTable = "CREATE TABLE debit_card(" +
                 "card_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
@@ -97,8 +99,8 @@ public class javaDB{
                 "FOREIGN KEY (admin_id) REFERENCES admin(admin_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String transactionTable = "CREATE TABLE transaction(" +
-                "transaction_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
-                "betslip_id mediumint, " +
+                " transaction_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
+                " betslip_id mediumint, " +
                 " lottery_id mediumint," +
                 " amount_of_cost int," +
                 " transaction_date date,"+
@@ -177,6 +179,7 @@ public class javaDB{
                 "editor_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
                 "comment varchar(256) , " +
+                " date date, " +
                 " PRIMARY KEY(editor_id, betslip_id), " +
                 "FOREIGN KEY (editor_id) REFERENCES editor(editor_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -185,6 +188,8 @@ public class javaDB{
                 "user_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
                 "comment varchar(256) , " +
+                " share_date date, " +
+                " share_time time, " +
                 " PRIMARY KEY(user_id, betslip_id), " +
                 "FOREIGN KEY (user_id) REFERENCES editor(editor_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -200,6 +205,7 @@ public class javaDB{
                 "user_id MEDIUMINT NOT NULL," +
                 "match_id mediumint NOT NULL, " +
                 "comment varchar(256) , " +
+                " date date, " +
                 " PRIMARY KEY(user_id, match_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (match_id) REFERENCES matchs(match_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -208,6 +214,7 @@ public class javaDB{
                 "user_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
                 "comment varchar(256) , " +
+                " date date, " +
                 " PRIMARY KEY(user_id, betslip_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -231,7 +238,17 @@ public class javaDB{
                 "VALUES ('Liverpool')," +
                 "('Real Madrid')," +
                 "('Barcelona')," +
-                "('Ankaragücü')";
+                "('Ankaragucu')," + 
+                "('Manchester City')," +
+                "('Manchester United')," +
+                "('Galatasaray')," +
+                "('Fenerbahce')," + 
+                "('Besiktas')," +
+                "('Juventus')," +
+                "('Inter')," + 
+                "('Bayern Munchen')," +
+                "('Borussia Dortmund')";
+
         String addMatch = "INSERT INTO matchs(match_date, match_time, match_category, league)" +
                 "VALUES (curdate(), now(), 'football', 'premier')," +
                 "(curdate(), now(), 'football', 'premier')";
@@ -261,7 +278,17 @@ public class javaDB{
                 "(2, 5, curdate(), now(), 'football','HR2', 4.0)," +
                 "(2, 5, curdate(), now(), 'football','MG1', 5.0)," +
                 "(2, 5, curdate(), now(), 'football','MG0', 6.0)";
+        String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed)" +
+                "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false)," +
+                "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false)," +
+                "(curdate(), now(), 'betslip3', 1, NULL, 1, true, false, false)";
+        String addUser = "INSERT INTO user(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance)" +
+                "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
+                "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
 
+        String addUserShares = "INSERT INTO user_shares(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance)" +
+                "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
+                "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')";
         try{
             stmt = conn.createStatement();
             stmt.executeUpdate("DROP TABLE IF EXISTS contains");
@@ -374,11 +401,13 @@ public class javaDB{
             stmt = conn.createStatement();
             stmt.executeUpdate(containsTable);
             System.out.println("Contains Table created");
+            stmt.executeUpdate(addUser);
             stmt.executeUpdate(addTeam);
             System.out.println("added odds");
             stmt.executeUpdate(addMatch);
             stmt.executeUpdate(addContains);
             stmt.executeUpdate(addBet);
+            stmt.executeUpdate(addBetslip);
 
 
         } catch (Exception e){
