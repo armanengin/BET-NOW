@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class javaApp{
+public class javaDB{
     public static void main(String[] args) {
         Connection conn = null;
         try{
@@ -482,8 +482,7 @@ public class javaApp{
                     "user_id MEDIUMINT NOT NULL," +
                     "betslip_id mediumint NOT NULL, " +
                     "comment varchar(256) , " +
-                    " comment_date date, " +
-                    " comment_time time, " +
+                    " date date, " +
                     " PRIMARY KEY(user_id, betslip_id), " +
                     "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                     "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
