@@ -1,16 +1,32 @@
 <?php 
 include('config.php');
 session_start();
-    $username = $_SESSION['login_user'];
+    
+    $admin_page_display = 'display:none';
 
-    $sql_user = "SELECT user_id from user WHERE username = '$username'";
-    $result = $db->query($sql_user);
-    $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $user_id = $row_user['user_id'];
-    $balance_sql = "SELECT balance from user WHERE username = '$username'";
-    $result = $db->query($balance_sql);
-    $row_balance = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $user_balance = $row_balance['balance'];
+    if( isset($_SESSION['login_flag']) && $_SESSION['login_flag']){
+        $username = $_SESSION['login_user'];
+
+        $sql_user = "SELECT user_id from user WHERE username = '$username'";
+        $result = $db->query($sql_user);
+        $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $user_id = $row_user['user_id'];
+        $balance_sql = "SELECT balance from user WHERE username = '$username'";
+        $result = $db->query($balance_sql);
+        $row_balance = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $user_balance = $row_balance['balance'];
+
+        $sql_user = "SELECT admin_id from admin WHERE username = '$username'";
+        $result = $db->query($sql_user);
+        $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
+       
+        if( isset($row_user['admin_id']) && isset($_SESSION['admin_id']) && $_SESSION['admin_id']){
+            $admin_id = $row_user['admin_id'];
+            if( $admin_id > 0){
+                $admin_page_display = 'display:block';
+            }
+        }
+    }
     if( isset($_SESSION['bets'])){
         $bets_query = $_SESSION['bets'];
         $match_ids = [];
@@ -46,7 +62,7 @@ session_start();
     else{
 
         $sql = "SELECT bet_id, match_id, mbn, bet_date, bet_time, category, odd_type, odd_value from bet";
-        $match_sql = "SELECT match_id, match_date, match_time, match_category, league from matchs";
+        $match_sql = "SELECT match_id, match_date, match_time, match_category, league, mbn from matchs natural join bet group by matchs.match_id";
         $contains_sql = "SELECT team_id, match_id from contains";
         $team_sql = "SELECT match_id, team_name from team NATURAL JOIN contains WHERE contains.team_id = team.team_id";
         $leagues_sql = "SELECT DISTINCT league from matchs";
@@ -153,10 +169,13 @@ session_start();
                     <li class="nav-item">
                         <a class="nav-link" href="social.php">Social</a>
                     </li>
+                    <li class="nav-item" style='<?php echo $admin_page_display ?>' id="admin-page">
+                        <a class="nav-link" href="admin-index.php">Admin Page</a>
+                    </li>
                 </ul>
 
                 <form class="form-inline my-2 my-lg-0" action="login.php" method="post">
-                    <?php if ($_SESSION['login_flag']) { 
+                    <?php if (isset($_SESSION['login_flag'])) { 
                         include("my-account.php");    
                     ?>
                     <?php } else { ?>
@@ -272,7 +291,7 @@ session_start();
                             <?php foreach($matchs as $match){?>
                             <tr id="bet-table">
                                 <th scope="row"><?php echo $match['match_id'] ?></th>
-                                <td><?php echo $filter_mbn[0] ?></td>
+                                <td><?php echo $match['mbn'] ?></td>
                                 <td><?php echo $match['match_date'] ?></td>
                                 <td><?php echo $match['match_time'] ?></td>
                                 <td><?php echo $match['league'] ?></td>
@@ -309,12 +328,21 @@ session_start();
                                     Delete 
                                 </button>
 
+<<<<<<< HEAD
                                 <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Share" id="share-all-bets">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
                                     </svg>
                                     Share 
                                 </button>
+=======
+                            <button type="button btn-sm" class="btn btn-primary btn-sm" style="margin:2px;" id="share-all-bets">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-arrow-90deg-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z"/>
+                                </svg>
+                                Share 
+                            </button>
+>>>>>>> a27774361db812988dcdb240cea243943f2230c2
 
                                 <button type="button" class="btn btn-success btn-sm" style="margin:2px;" data-toggle="modal" data-target="#modal-Save" id="save-all-bets">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
@@ -363,7 +391,11 @@ session_start();
                 </div>
         </div>
         <!-- Modal Betslip (Share Button) -->
+<<<<<<< HEAD
         <div class="modal fade" style="width:60%;" id="modal-Share" tabindex="-1" role="dialog" aria-labelledby="label-modal-Save" aria-hidden="true">
+=======
+        <div class="modal fade" style="width:60%;" id="modal-Share" tabindex="-1" role="dialog" aria-labelledby="label-modal-Share" aria-hidden="true">
+>>>>>>> a27774361db812988dcdb240cea243943f2230c2
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -374,10 +406,7 @@ session_start();
                     </div>
                     <div class="modal-body">
                         
-                        <div class="form-group" style="width:100%;">
-                            <label for="textarea-share-betslip">You can mention about your betslip</label>
-                            <textarea class="form-control" id="textarea-share-betslip" rows="3"></textarea>
-                        </div>
+                      
                     
                         <table class="table table-dark table-responsive" id="table-share-betslip">
                             <thead>
@@ -393,23 +422,55 @@ session_start();
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if(isset($_SESSION['betslip_arr']) && $_SESSION['betslip_arr']){?>
+                                <?php $betslip_share_arr = $_SESSION['betslip_arr']?>
+                                <?php foreach($betslip_share_arr as $bet_share){?>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>5</td>
-                                    <td>22-05-14</td>
-                                    <td>15:41:12</td>
-                                    <td>Premier</td>
-                                    <td>Liverpool - Real Madrid</td>
-                                    <td>MR1</td>
-                                    <td>1.50</td>
+                                        <th scope='row'><?php echo $bets[$bet_share]['bet_id']?></th>
+                                        <td><?php echo $bets[$bet_share]['mbn']?></td>
+                                        <td><?php echo $bets[$bet_share]['bet_date']?></td>
+                                        <td><?php echo $bets[$bet_share]['bet_time']?></td>
+                                        <td>
+                                         <?php foreach($matchs as $match){?>
+                                            <?php if( $match['match_id'] == $bets[$bet_share]['match_id']){?>
+                                               <?php echo $match['league']?>
+                                            <?php }?>
+                                           <?php } ?>
+                                        </td>
+                                        <td>
+                                         <?php foreach($teams as $team){?>
+                                            <?php if( $team['match_id'] == $bets[$bet_share]['match_id']){?>
+                                               <?php echo $team['team_name']?>
+                                                <?php }?>
+                                           <?php } ?>
+                                        </td>
+                                        <td><?php echo $bets[$bet_share]['odd_type']?></td>
+                                        <td><?php echo $bets[$bet_share]['odd_value']?></td>
                                 </tr>
+                                    <?php }?>
+                            <?php }?>
                             </tbody>
+                               
+                                
+                                
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <h5>Total Odd: 1.5</h5>
+                    <?php if(isset($_SESSION['odd_value'])){?>
+                        <?php $odd_share = $_SESSION['odd_value']?>
+                        <h5>Total Odd: <?php echo $odd_share ?></h5>
+
+                        <?php }?>
+                        <form action="share_betslip.php" method="post">
+                        <div class="form-group" style="width:100%;">
+                            <label for="textarea-share-betslip">You can mention about your betslip</label>
+                            <textarea class="form-control" name="textarea-share-betslip" rows="3"></textarea>
+                        </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Share Bet</button>
+                             
+                            <button type="submit" class="btn btn-primary">Share Bet</button>
+
+                        </form>
                     </div>
                 </div>
             </div>
@@ -509,6 +570,7 @@ session_start();
                                 betslip_arr.splice(j, 1);
                             }
                         }
+                     
 
                     });
                     
@@ -530,9 +592,7 @@ session_start();
                 income_value = Math.round(totalOdd* parseInt(document.getElementById('deposit-amount').value)* 100)/100;
                     $('#income-value').html( income_value + " TL");
                 });
-                <?php if($bets[$i]['mbn'] > $max_mbn){?>
-                    <?php $max_mbn = $bets[$i]['mbn']?>
-                    <?php } ?>
+                
             
         });
 
@@ -549,6 +609,11 @@ session_start();
                     $('#bet-button-<?php echo $bets[$j]['bet_id'] ?>').removeClass("selected");
                     $("#card-betslip-<?php echo $bets[$j]['bet_id'] ?>").remove();
             <?php }?>
+            odd_value = 1;
+            income_value = 0;
+            $('#odd-value').html(1);
+            $('#income-value').html(3);
+
         });
 
     
@@ -560,9 +625,19 @@ session_start();
     $(document).ready( function(){
         $('#make-bet').click( function(e){
             e.preventDefault();
-            max_mbn = <?php echo json_encode($max_mbn)?>;
+            var bet_arr = <?php echo json_encode($bets); ?>;
+            for( let i = 0; i < bet_arr.length; i++){
+               for( let ind = 0; ind < betslip_arr.length; ind++){
+                   if( betslip_arr[ind] == bet_arr[i]['bet_id']){
+                       if( max_mbn < bet_arr[i]['mbn'] )
+                            max_mbn =  bet_arr[i]['mbn'];
+                   }
+               }
+                
+            }
+            
             if( max_mbn > betslip_arr.length){
-                alert("Please add more bets to meet MBN rules");
+                alert("Please satisfy MBN Rules and Add " + (max_mbn - betslip_arr.length) + " bets");
             }
             else if( user_balance >= income_value / odd_value){
             $.ajax({
@@ -592,12 +667,27 @@ session_start();
              });
 </script>
 
-<script type="text/javascript">
-   var res = 33333;
-</script>
-    <?php
-
-
-?>
 <script>
+    $(document).ready( function(){
+        $('#share-all-bets').click( function(e){
+            e.preventDefault();
+            <?php $_SESSION['betslip_arr'] = null ?>
+            $.ajax({
+                type: "POST",
+                url: "betslip_storage.php",
+                data: {
+                betslip_arr: betslip_arr,
+                income_value: income_value,
+                odd_value: odd_value,
+                },
+                cache: false,
+                success: function(data) {
+                },
+                error: function(xhr, status, error) {
+                console.error(xhr);
+                }
+                });
+            $('#modal-Share').modal('toggle');
+        })
+    })
 </script>

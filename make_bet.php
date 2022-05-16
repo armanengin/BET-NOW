@@ -14,8 +14,8 @@
     $arr_length = count($betslip_arr);
     $deposit_val = $income_value / $odd_value;
 
-        $betslip_sql = "INSERT INTO betslip(betslip_date, betslip_time, no_of_bets, user_id)
-        VALUES (curdate(), now(), '$arr_length', '$user_id')";
+        $betslip_sql = "INSERT INTO betslip(betslip_date, betslip_time, no_of_bets, user_id, isSaved, isPlayed, totalOdd)
+        VALUES (curdate(), now(), '$arr_length', '$user_id', true, true, '$odd_value')";
         $betslip_query = mysqli_query($db, $betslip_sql);
     
         $latest_betslip_sql = "SELECT max(betslip_id) as betslip_id from betslip WHERE user_id = '$user_id'";
@@ -42,4 +42,5 @@
         $_SESSION['betslip'] = $betslip_arr;
         $_SESSION['odd_value'] = $odd_value;
         $_SESSION['income_value'] = $income_value;
+
 ?>

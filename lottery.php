@@ -1,3 +1,20 @@
+<?php
+    include('config.php');
+    session_start();
+        if( isset($_SESSION['login_flag'])){
+            $username = $_SESSION['login_user'];
+    
+            $sql_user = "SELECT user_id from user WHERE username = '$username'";
+            $result = $db->query($sql_user);
+            $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
+            $user_id = $row_user['user_id'];
+            $balance_sql = "SELECT balance from user WHERE username = '$username'";
+            $result = $db->query($balance_sql);
+            $row_balance = mysqli_fetch_array($result,MYSQLI_ASSOC);
+            $user_balance = $row_balance['balance'];
+        }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -138,33 +155,7 @@
                     </div>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
-                    <div class="card-header" style="text-align:center;">Ticket Number</div>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align:center;">65784</h5>
-                        <p class="card-text" style="text-align:center;">10$</p>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-                    <div class="card-header" style="text-align:center;">Ticket Number</div>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align:center;">34789</h5>
-                        <p class="card-text" style="text-align:center;">20$</p>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-                    <div class="card-header" style="text-align:center;">Ticket Number</div>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align:center;">42355</h5>
-                        <p class="card-text" style="text-align:center;">5$</p>
-                    </div>
-                    </div>
-                </div>
+                
             </div>
 
 
@@ -179,33 +170,7 @@
                     </div>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
-                    <div class="card-header" style="text-align:center;">Ticket Number</div>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align:center;">65784</h5>
-                        <p class="card-text" style="text-align:center;">10$</p>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-                    <div class="card-header" style="text-align:center;">Ticket Number</div>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align:center;">34789</h5>
-                        <p class="card-text" style="text-align:center;">20$</p>
-                    </div>
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-                    <div class="card-header" style="text-align:center;">Ticket Number</div>
-                    <div class="card-body">
-                        <h5 class="card-title" style="text-align:center;">42355</h5>
-                        <p class="card-text" style="text-align:center;">5$</p>
-                    </div>
-                    </div>
-                </div>
+                
             </div>
         </div>    
     </main>
