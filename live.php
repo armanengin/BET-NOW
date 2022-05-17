@@ -203,7 +203,7 @@ session_start();
                             <?php foreach($filter_leagues as $league){?>
                             <a class="dropdown-item">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="default-league-<?php echo $league['league']?>" name="default-league-<?php echo $league['league']?>">
+                                    <input class="form-check-input" type="checkbox" value='true' id='<?php echo $league['league']?>' name='<?php echo $league['league']?>'>
                                     <label class="form-check-label" for="default-check-turkey">
                                         <?php echo $league['league'] ?>
                                     </label>
