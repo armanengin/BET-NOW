@@ -43,13 +43,13 @@ $filter_mbns = [];
 $filter_date;
 if( $_SERVER['REQUEST_METHOD'] == 'POST'){
     foreach( $leagues as $league){
-        $name = "default-league-{$league['league']}";
+        $name = $league['league'];
         if( isset($_POST[$name])){
             $filter_leagues[] = $league['league'];
         }
     }
     foreach( $sports as $sport){
-        $name = "default-sports-{$sport['match_category']}";
+        $name = "default-sports-".$sport['match_category'];
         if( isset($_POST[$name])){
             $filter_sports[] = $sport['match_category'];
         }
@@ -65,8 +65,8 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST'){
     $filter_mbns = implode(",", $filter_mbns);
     $filter_sports = implode("','", $filter_sports);
     $filter_leagues = implode("','", $filter_leagues);
-    $bets_sql = "SELECT bet_id, match_id, mbn, bet_date, bet_time, match_category, odd_type, odd_value, league from bet 
-        NATURAL JOIN matchs WHERE mbn IN (".$filter_mbns.") AND match_category IN ('".$filter_sports."') AND league IN ('".$filter_leagues."')";
+    $bets_sql = "SELECT bet_id, match_id, mbn, bet_date, bet_time, match_category, odd_type, odd_value, league FROM bet 
+        NATURAL JOIN matchs WHERE league IN ('".$filter_leagues."')";
     $bets_query = mysqli_query($db, $bets_sql);
 }
 if($bets_query->num_rows == 0){
@@ -78,5 +78,5 @@ foreach( $bets_query as $bet){
     $bets[] = $bet;
 }
 $_SESSION['bets'] = $bets;
-    //header('location: live.php');
+    header('location: live.php');
     ?>

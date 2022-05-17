@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class javaDB{
+public class javaApp{
     public static void main(String[] args) {
         Connection conn = null;
         try{
@@ -215,12 +215,13 @@ public class javaDB{
                 "FOREIGN KEY (match_id) REFERENCES matchs(match_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
         String commentsBetslipTable = "CREATE TABLE comments_betslip(" +
+                "comments_match_id MEDIUMINT NOT NULL AUTO_INCREMENT," +
                 "user_id MEDIUMINT NOT NULL," +
                 "betslip_id mediumint NOT NULL, " +
                 "comment varchar(256) , " +
                 " comment_date date, " +
                 " comment_time time, " +
-                " PRIMARY KEY(user_id, betslip_id), " +
+                " PRIMARY KEY(comments_match_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (betslip_id) REFERENCES betslip(betslip_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
@@ -238,6 +239,15 @@ public class javaDB{
                 "FOREIGN KEY (team_id) REFERENCES team(team_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (match_id) REFERENCES matchs(match_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
                 ") ENGINE=INNODB";
+        String triggerForBalance = "DELIMITER // " +
+                "CREATE TRIGGER after_insert_update_balance " +
+                "AFTER INSERT ON transaction " +
+                "FOR EACH ROW " +
+                "BEGIN " +
+                "IF NEW.betslip_id != NULL THEN " +
+                "UPDATE user SET balance = balance - NEW.amount_of_cost; " +
+                "END;// " +
+                "DELIMITER ;";
 
         String addTeam = "INSERT INTO team(team_name)" +
                 "VALUES ('Liverpool')," +
@@ -263,16 +273,16 @@ public class javaDB{
                 "('FC Porto')";
 
         String addMatch = "INSERT INTO matchs(match_date, match_time, match_category, league)" +
-                "VALUES (curdate(), now(), 'football', 'Premier League')," +
-                "(curdate(), now(), 'football', 'Premier League')," +
-                "(curdate(), now(), 'football', 'Premier League')," +
-                "(curdate(), now(), 'football', 'Turkish Super League')," +
-                "(curdate(), now(), 'football', 'Serie A')," +
+                "VALUES (curdate(), now(), 'football', 'PremierLeague')," +
+                "(curdate(), now(), 'football', 'PremierLeague')," +
+                "(curdate(), now(), 'football', 'PremierLeague')," +
+                "(curdate(), now(), 'football', 'TurkishSuperLeague')," +
+                "(curdate(), now(), 'football', 'SerieA')," +
                 "(curdate(), now(), 'football', 'Bundesliga')," +
-                "(curdate(), now(), 'football', 'Ukrainian Premier League')," +
-                "(curdate(), now(), 'football', 'Ligue 1')," +
+                "(curdate(), now(), 'football', 'UkrainianPremierLeague')," +
+                "(curdate(), now(), 'football', 'Ligue1')," +
                 "(curdate(), now(), 'football', 'Eredivisie')," +
-                "(curdate(), now(), 'football', 'Liga Portugal')";
+                "(curdate(), now(), 'football', 'LigaPortugal')";
 
         String addContains = "INSERT INTO contains(team_id, match_id)" +
                 "VALUES (1, 1)," +
@@ -409,17 +419,17 @@ public class javaDB{
                 "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0','Hi I am Taha')";
 
         String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed, isSuccess_betslip, totalOdd)" +
-                "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false, NULL, 3.4)," +
-                "(curdate(), now(), 'betslip2', 1, NULL, 1, false, false, false, NULL, 2.6)," +
-                "(curdate(), now(), 'betslip3', 1, NULL, 1, false, false, false, NULL, 2.4)," +
-                "(curdate(), now(), 'betslip4', 1, NULL, 1, false, false, false, NULL, 5.6)," +
-                "(curdate(), now(), 'betslip5', 3, NULL, 3, false, false, false, true, 4.3)," +
-                "(curdate(), now(), 'betslip6', 2, NULL, 3, false, false, false, true, 6.8)," +
-                "(curdate(), now(), 'betslip7', 2, NULL, 3, false, false, false, false, 4.5)," +
-                "(curdate(), now(), 'betslip8', 3, NULL, 3, false, false, false, NULL, 3.2)," +
-                "(curdate(), now(), 'betslip9', 2, NULL, 4, false, false, false, true, 2.2)," +
-                "(curdate(), now(), 'betslip10', 2, NULL, 4, false, false, false, false, 4.5)," +
-                "(curdate(), now(), 'betslip11', 3, NULL, 4, false, false, false, NULL, 6.7)";
+                "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false, NULL, )," +
+                "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip3', 1, NULL, 1, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip4', 1, NULL, 1, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip5', 3, NULL, 3, true, false, false, true)," +
+                "(curdate(), now(), 'betslip6', 2, NULL, 3, true, false, false, true)," +
+                "(curdate(), now(), 'betslip7', 2, NULL, 3, true, false, false, false)," +
+                "(curdate(), now(), 'betslip8', 3, NULL, 3, true, false, false, NULL)," +
+                "(curdate(), now(), 'betslip9', 2, NULL, 4, true, false, false, true)," +
+                "(curdate(), now(), 'betslip10', 2, NULL, 4, true, false, false, false)," +
+                "(curdate(), now(), 'betslip11', 3, NULL, 4, true, false, false, NULL)";
 
         String addUserShares = "INSERT INTO user_shares(user_id, betslip_id, comment, share_date, share_time)" +
                 "VALUES (1, 1, 'This is the best cupon!!', curdate(), now())," +
@@ -607,11 +617,7 @@ public class javaDB{
             stmt.executeUpdate(addMatch);
             stmt.executeUpdate(addContains);
             stmt.executeUpdate(addBet);
-            stmt.executeUpdate(addBetslip);
-            stmt.executeUpdate(addUserShares);
-            stmt.executeUpdate(addHas);
             stmt.executeUpdate(addEditor);
-
 
         } catch (Exception e){
             e.printStackTrace();
