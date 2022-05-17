@@ -1,3 +1,11 @@
+<?php 
+    include('config.php');
+    session_start();
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $user_array = $db->query("SELECT user_id, username, first_name, last_name, email  FROM user WHERE first_name LIKE '%{$_REQUEST['input_friends_search']}%' OR last_name LIKE '%{$_REQUEST['input_friends_search']}%' OR username LIKE '%{$_REQUEST['input_friends_search']}%'");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +27,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     </body>
 
     <!-- Navbar -->
@@ -89,11 +98,31 @@
       </div>
     </nav>
 
+    <div class="container" style="width:60%;">
+        <div class="row">
+            <div class="col-4 d-flex justify-content-start" style="padding:0;">
+                <a href="see_friends.php" class="btn btn-success btn-lg active" role="button" aria-pressed="true">See Friends</a>
+            </div>
+            <div class="col-8 d-flex justify-content-end" style="padding:0;">
+                <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>" style="margin-top:4px;">
+                    <div class="input-group" style="width:100%;">
+                            <span class="input-group-text" id="input-friends">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"></path>
+                                </svg>
+                            </span>
+                            <input type="text" class="form-control" name = "input_friends_search" placeholder="Search a Friend" aria-label="input_friends_search" aria-describedby="input_friends_search"/>
+                            <input type="submit" name="search-friends" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="container" style="width:60%; border-style:solid;">
         <div class="row">
             <div class="col-12">
-                <h1 style="text-align:center; color:white;">Friends</h1>
-                <table class="table table-dark">
+                <h1 style="text-align:center; color:white;">Search a User</h1>
+                <table class="table table-dark ">
                     <thead>
                         <tr>
                         <th scope="col">#</th>
@@ -105,48 +134,48 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>@remo</td>
-                        <td>Remzi</td>
-                        <td>Tepe</td>
-                        <td>remo@gmail.com</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary">Profile</button>
-                            <button type="button" class="btn btn-danger">Remove</button>
-                            </div>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>@deno</td>
-                        <td>Deniz</td>
-                        <td>Özal</td>
-                        <td>deno@gmail.com</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary">Profile</button>
-                                <button type="button" class="btn btn-danger">Remove</button>
-                            </div>
-                        </td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>@armo</td>
-                        <td>Arman Engin</td>
-                        <td>Sucu</td>
-                        <td>armo@gmail.com</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-primary">Profile</button>
-                                <button type="button" class="btn btn-danger">Remove</button>
-                            </div>
-                        </td>
-                        </tr>
+                        <?php foreach($user_array as $user){?>
+                            <tr>
+                                <?php if (isset($_REQUEST['search-friends'])) {?>
+                                    <th scope="row"> </th>
+                                        <td><?php echo $user['username']?></td>
+                                        <td><?php echo $user['first_name']?></td>
+                                        <td><?php echo $user['last_name']?></td>
+                                        <td><?php echo $user['email']?></td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" id="button-add-friend-<?php echo $user['user_id'] ?>" onClick="addFriend(<?php echo $user['user_id']?>)" >Add Friend</button>
+                                        </td>
+                                <?php }?>   
+                            </tr>
+                        <?php }?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </html>
+<style>
+    .table{
+        text-align:center;
+    }
+</style>
+<script>
+    function addFriend(id){
+        alert(id);
+        $.ajax({
+                type: "POST",
+                url: "add-friend-ajax.php",
+                data: {
+                    friend_id: id,
+                },
+                cache: false,
+                success: function(friend_id) {
+                    alert(friend_id);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr);
+                }
+        });
+        window.location.href = "see-friends.php";
+    }
+</script>
