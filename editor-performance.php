@@ -1,3 +1,12 @@
+<?php 
+    include("config.php");
+    session_start();
+
+    // Fetch User_id and Editor_id
+    $performance_sql = "SELECT editor_id, first_name, last_name,num_of_successful_betslip, num_of_unsuccessful_betslip, ratio_of_success, total_income_editor, total_odd_editor FROM editor WHERE editor_id = '{$_SESSION["editor-performance"]}'";
+    $performance_sql = mysqli_query($db,$performance_sql);
+    $editor_performance = mysqli_fetch_array($performance_sql,MYSQLI_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,20 +108,28 @@
     <!-- Performance -->
     <div class="container" style="width:100%; border-style:solid;">
         <div class="row justify-content-center">
-            <h1 style="color:white;">Remzi Tepe</h1>
+            <h1 style="color:white;"><?php echo $editor_performance['first_name']." ".$editor_performance['last_name']?></h1>
         </div>
         <div class="row">
-            <div class="col-4">
+            <div class="col-2">
                 <h5 style="width:100%; text-align:center;">Total Income Made</h4>
-                <h4 style="width:100%; text-align:center;">15467$</h2>
+                <h4 style="width:100%; text-align:center;"><?php echo $editor_performance['total_income_editor']?></h2>
             </div>
-            <div class="col-4">
+            <div class="col-2">
                 <h5 style="width:100%; text-align:center;">Single Bet Prediction (Ratio)</h4>
-                <h4 style="width:100%; text-align:center;">60% (6/10)</h2>
+                <h4 style="width:100%; text-align:center;"><?php echo $editor_performance['ratio_of_success']?></h2>
+            </div>
+            <div class="col-2">
+                <h5 style="width:100%; text-align:center;">Total Odd Made</h4>
+                <h4 style="width:100%; text-align:center;"><?php echo $editor_performance['total_odd_editor']?></h2>
+            </div>
+            <div class="col-2">
+                <h5 style="width:100%; text-align:center;">No of Successful Betslips</h4>
+                <h4 style="width:100%; text-align:center;"><?php echo $editor_performance['num_of_successful_betslip']?></h2>
             </div>
             <div class="col-4">
-                <h5 style="width:100%; text-align:center;">Total Odd Made</h4>
-                <h4 style="width:100%; text-align:center;">5672.82</h2>
+                <h5 style="width:100%; text-align:center;">No of Unsuccessful Betslips</h4>
+                <h4 style="width:100%; text-align:center;"><?php echo $editor_performance['num_of_unsuccessful_betslip']?></h2>
             </div>
         </div>
 

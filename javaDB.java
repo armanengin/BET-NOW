@@ -67,8 +67,11 @@ public class javaDB{
                 "password VARCHAR(50)," +
                 "balance varchar(50)," +
                 "num_of_successful_betslip int," +
-                "ratio_of_success decimal(3,2), "+
+                "num_of_unsuccessful_betslip int," + 
+                "ratio_of_success decimal(10,2), "+
                 "editor_bio varchar(1000)," +
+                "total_income_editor int," +
+                "total_odd_editor decimal(10,2)," +
                 "PRIMARY KEY (editor_id), " +
                 "FOREIGN KEY (username) REFERENCES  user(username) ON UPDATE CASCADE ON DELETE CASCADE"+
                 ") ENGINE=INNODB";
@@ -95,7 +98,7 @@ public class javaDB{
                 " isSaved boolean,"+
                 " isPlayed boolean,"+
                 " isSuccess_betslip boolean,"+
-                " totalOdd decimal(10,5),"+
+                " totalOdd decimal(10,2),"+
                 " PRIMARY KEY(betslip_id), " +
                 "FOREIGN KEY (user_id) REFERENCES user(user_id) ON UPDATE CASCADE ON DELETE RESTRICT, " +
                 "FOREIGN KEY (admin_id) REFERENCES admin(admin_id) ON UPDATE CASCADE ON DELETE RESTRICT " +
@@ -402,11 +405,13 @@ public class javaDB{
                 "VALUES ('Arman Engin', 'Sucu', 'armanengin', '12345', '1999-12-28', 'a.enginsucu@gmail.com', NULL, 'arman123', '0')," +
                 "('Deniz Semih', 'Ozal', 'denizozal', '12346', '1999-12-28', 'deniz@gmail.com', NULL, 'deniz123', '0')," +
                 "('Remzi', 'Tepe', 'remzitepe', '12345', '1999-12-28', 'remzitepe@gmail.com', NULL, 'remzi123', '0')," +
-                "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0')";
+                "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'arda123', '0')," +
+                "('Arda', 'Altan', 'ardaaltan', '12345', '1999-12-28', 'arda@gmail.com', NULL, 'arda123', '0')," +
+                "('Ilker', 'Egilmez', 'ilkeregilmez', '12346', '1999-12-28', 'ilker@gmail.com', NULL, 'ilker123', '0')";
 
-        String addEditor = "INSERT INTO editor(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance,editor_bio)" +
-                "VALUES ('Remzi', 'Tepe', 'remzitepe', '12345', '1999-12-28', 'remzitepe@gmail.com', NULL, 'remzi123', '0','Hi I am Remzi')," +
-                "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0','Hi I am Taha')";
+        String addEditor = "INSERT INTO editor(first_name, last_name, username, identification_num, birthday, email, phone_num, password, balance, num_of_successful_betslip, num_of_unsuccessful_betslip, ratio_of_success, editor_bio, total_income_editor, total_odd_editor)" +
+                "VALUES ('Remzi', 'Tepe', 'remzitepe', '12345', '1999-12-28', 'remzitepe@gmail.com', NULL, 'remzi123', '0','232','147', '61.21', 'Hi I am Remzi','13456','345.43')," +
+                "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0', '133','43', '75.56', 'Hi I am Taha','3456','247.38')";
 
         String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed, isSuccess_betslip, totalOdd)" +
                 "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false, NULL, 3.4)," +

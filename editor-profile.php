@@ -7,6 +7,7 @@
 
     $editor_sql_id = "SELECT editor_id, first_name, last_name, username, num_of_successful_betslip, ratio_of_success, editor_bio FROM editor WHERE editor_id = {$_SESSION["editor-profile"]}";
     $editor_sql_id = mysqli_query($db, $editor_sql_id);
+    $editor_id = mysqli_fetch_array($editor_sql_id,MYSQLI_ASSOC);
     $num_editor_sql_id = mysqli_num_rows($editor_sql_id); 
    
     // Select User since editor is a user
@@ -153,7 +154,7 @@
                                 }
                             ?>
                         </p>
-                        <a href="editor-performance.php" class="btn btn-primary">Performance</a>
+                        <a class="btn btn-primary" id="button-editor-performance" onClick="performanceFunction(<?php echo $editor_id['editor_id']?>)">Performance</a>
                     </div>
                 </div>
             </div>
@@ -427,4 +428,24 @@
     </style>
 
 </html>
+<script>
+ function performanceFunction(id){
+        $.ajax({
+                type: "POST",
+                url: "editor-performance-ajax.php",
+                data: {
+                    editor_id: id,
+                },
+                cache: false,
+                success: function(editor_id) {
+                    alert(editor_id);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr);
+                }
+        });
+        window.location.href = "editor-performance.php";
+        
+    }
+</script>
                   
