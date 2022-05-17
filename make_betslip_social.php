@@ -1,4 +1,7 @@
 <?php
+$_SESSION['is_in_mkb'] = true;
+    ini_set('display_errors', 1);
+    error_reporting(~0);
     include('config.php');
     session_start();
     $username = $_SESSION['login_user'];
@@ -7,13 +10,18 @@
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
     $user_id = $row['user_id'];
 
-    
     $betslip_arr = ($_POST['betslip_arr']);
-    $odd_value = $_POST['odd_value'];
-    $income_value = $_POST['income_value'];
+    $odd_value = intval($_POST['odd_value']);
+    $income_value = intval(intval($_POST['income_value'])*$odd_value*100)/100;
     $arr_length = count($betslip_arr);
     $deposit_val = $income_value / $odd_value;
 
+    $balance_sql = "SELECT balance from user WHERE username = '$username'";
+    $result = $db->query($balance_sql);
+    $row_balance = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $user_balance = $row_balance['balance'];
+
+    if($user_balance >= $deposit_val){
         $betslip_sql = "INSERT INTO betslip(betslip_date, betslip_time, no_of_bets, user_id, isSaved, isPlayed, totalOdd)
         VALUES (curdate(), now(), '$arr_length', '$user_id', true, true, '$odd_value')";
         $betslip_query = mysqli_query($db, $betslip_sql);
@@ -39,4 +47,9 @@
                         WHERE user_id = '$user_id'";
         $balance_query = mysqli_query($db, $balance_sql);   
 
-?>
+        $_SESSION['betslip'] = $betslip_arr;
+        $_SESSION['odd_value'] = $odd_value;
+        $_SESSION['income_value'] = $income_value;
+    }
+        header("location:social.php");
+    ?>
