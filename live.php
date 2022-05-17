@@ -58,6 +58,7 @@ session_start();
         while($row = mysqli_fetch_assoc($teams_query)) {
             $teams[] = $row;
         }
+        unset($_SESSION['bets']);
     }
     else{
 

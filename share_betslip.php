@@ -10,6 +10,7 @@
      
     $betslip_arr = $_SESSION['betslip_arr'];
     $no_of_bets = count($betslip_arr);
+    $odd_value = $_SESSION['odd_value'];
     $betslip_sql = "INSERT INTO betslip(betslip_date, betslip_time, no_of_bets, user_id, isShared, totalOdd)
          VALUES (curdate(), now(), '$no_of_bets', '$user_id', true, '$odd_value')";
          $betslip_query = mysqli_query($db, $betslip_sql);

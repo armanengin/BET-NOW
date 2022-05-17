@@ -164,31 +164,7 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-            <div class="col-2">
-                <?php
-                    $sql_for_bet_ids2 = "SELECT bet_id FROM betslip NATURAL JOIN has WHERE betslip.betslip_id = '$betslip_id'";
-                    $bet_ids2 = mysqli_query($db, $sql_for_bet_ids2); 
-
-                    $sql_for_totalOdd = "SELECT totalOdd FROM betslip WHERE betslip_id = '$betslip_id'";
-                    $totalOdd = mysqli_fetch_assoc(mysqli_query($db, $sql));
-                    $income_value;
-                ?> 
-                <form action="make_bet.php"> 
-                <?php
-                    while($row = mysqli_fetch_assoc($bet_ids2)){
-                        $bet_id = $row['bet_id'];
-                        echo '<input type="hidden" name="bet_ids[]" value="' .$bet_id. '">';
-                    }
-                ?>
-                <input type="number" style="display:none;", name="betslip_id", value= <?php echo $betslip_id ?> />
-                <button type="submit" style="margin-top:15px;" class="btn btn-primary">Play Betslip</button>
-=======
             <div class="col-2 justify-content-center">
-                <?php 
-                   $sql = "SELECT totalOdd "
-                ?> 
-                <form action="make_bet.php"> 
                     <input type="number" style="display:none;", name="betslip_id", value= <?php echo $betslip_id ?> />
                     <button type="button" style="width:100%; margin-top:10%;" class="btn btn-primary" data-toggle="modal" data-target="#modal-betslip-play">Play Betslip</button>
                     <!-- Modal -->
@@ -201,23 +177,39 @@
                                     <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="form-group row">
-                                        <label for="label-deposit-amount-social" class="col-6 col-form-label" >Deposit:</label>
-                                        <div class="col-6">
-                                            <input type="number" class="form-control" id="deposit-amount-social" placeholder="TL">
+                                <?php
+                                    $sql_for_bet_ids2 = "SELECT bet_id FROM betslip NATURAL JOIN has WHERE betslip.betslip_id = '$betslip_id'";
+                                    $bet_ids2 = mysqli_query($db, $sql_for_bet_ids2); 
+
+                                    $sql_for_totalOdd = "SELECT totalOdd FROM betslip WHERE betslip_id = '$betslip_id'";
+                                    $totalOdd_query= mysqli_query($db, $sql_for_totalOdd);
+                                    $totalOdd_assoc = mysqli_fetch_assoc($totalOdd_query);
+                                    $totalOdd = intval($totalOdd_assoc['totalOdd']);
+                                ?> 
+                                <form action="make_betslip_social.php" method="post"> 
+                                    <?php
+                                        while($row = mysqli_fetch_assoc($bet_ids2)){
+                                            $bet_id = $row['bet_id'];
+                                            echo '<input type="hidden" name="betslip_arr[]" value="' .$bet_id. '">';
+                                        }
+                                    ?>
+                                    <input type="number" style="display:none;", name="odd_value", value=<?php echo $totalOdd ?> />
+                                    <div class="modal-body">
+                                        <div class="form-group row">
+                                            <label for="label-deposit-amount-social" class="col-6 col-form-label" >Deposit:</label>
+                                            <div class="col-6">
+                                                <input type="number" class="form-control" name="income_value" id="deposit-amount-social" placeholder="TL">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Play Bet</button>
-                                </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Play Bet</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
->>>>>>> 558c6bcd8a9b4fc541c4cd3cf520d47e31c108d6
-                </form>
             </div>
         </div>
         <div class="row">
