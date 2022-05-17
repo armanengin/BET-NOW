@@ -408,18 +408,18 @@ public class javaDB{
                 "VALUES ('Remzi', 'Tepe', 'remzitepe', '12345', '1999-12-28', 'remzitepe@gmail.com', NULL, 'remzi123', '0','Hi I am Remzi')," +
                 "('Taha', 'Duymaz', 'tahaduymaz', '12346', '1999-12-28', 'taha@gmail.com', NULL, 'taha123', '0','Hi I am Taha')";
 
-        String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed, isSuccess_betslip)" +
-                "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false, NULL)," +
-                "(curdate(), now(), 'betslip2', 1, NULL, 1, true, false, false, NULL)," +
-                "(curdate(), now(), 'betslip3', 1, NULL, 1, true, false, false, NULL)," +
-                "(curdate(), now(), 'betslip4', 1, NULL, 1, true, false, false, NULL)," +
-                "(curdate(), now(), 'betslip5', 3, NULL, 3, true, false, false, true)," +
-                "(curdate(), now(), 'betslip6', 2, NULL, 3, true, false, false, true)," +
-                "(curdate(), now(), 'betslip7', 2, NULL, 3, true, false, false, false)," +
-                "(curdate(), now(), 'betslip8', 3, NULL, 3, true, false, false, NULL)," +
-                "(curdate(), now(), 'betslip9', 2, NULL, 4, true, false, false, true)," +
-                "(curdate(), now(), 'betslip10', 2, NULL, 4, true, false, false, false)," +
-                "(curdate(), now(), 'betslip11', 3, NULL, 4, true, false, false, NULL)";
+        String addBetslip = "INSERT INTO betslip(betslip_date, betslip_time, name, no_of_bets, admin_id, user_id, isShared, isSaved, isPlayed, isSuccess_betslip, totalOdd)" +
+                "VALUES (curdate(), now(), 'betslip1', 2, NULL, 1, true, false, false, NULL, 3.4)," +
+                "(curdate(), now(), 'betslip2', 1, NULL, 1, false, false, false, NULL, 2.6)," +
+                "(curdate(), now(), 'betslip3', 1, NULL, 1, false, false, false, NULL, 2.4)," +
+                "(curdate(), now(), 'betslip4', 1, NULL, 1, false, false, false, NULL, 5.6)," +
+                "(curdate(), now(), 'betslip5', 3, NULL, 3, false, false, false, true, 4.3)," +
+                "(curdate(), now(), 'betslip6', 2, NULL, 3, false, false, false, true, 6.8)," +
+                "(curdate(), now(), 'betslip7', 2, NULL, 3, false, false, false, false, 4.5)," +
+                "(curdate(), now(), 'betslip8', 3, NULL, 3, false, false, false, NULL, 3.2)," +
+                "(curdate(), now(), 'betslip9', 2, NULL, 4, false, false, false, true, 2.2)," +
+                "(curdate(), now(), 'betslip10', 2, NULL, 4, false, false, false, false, 4.5)," +
+                "(curdate(), now(), 'betslip11', 3, NULL, 4, false, false, false, NULL, 6.7)";
 
         String addUserShares = "INSERT INTO user_shares(user_id, betslip_id, comment, share_date, share_time)" +
                 "VALUES (1, 1, 'This is the best cupon!!', curdate(), now())," +

@@ -149,24 +149,36 @@
                             <tr>
                                 <th scope="row"><?php echo $editor['editor_id'] ?></th>
                                 <td><?php echo $editor['first_name']." ".$editor['last_name'] ?></td>
-                                <td> </td>
+                                <td>   
+                                    <?php
+                                        $follower_number = "SELECT COUNT(*) as follower_number FROM follows WHERE editor_id = '{$editor['editor_id']}' GROUP BY editor_id";
+                                        $result = mysqli_query($db,$follower_number);
+                                        $count_row = mysqli_num_rows($result);
+                                        $follower_number = mysqli_fetch_array($result,MYSQLI_ASSOC);
+                                        if($count_row > 0){
+                                            echo $follower_number['follower_number'];
+                                        }else{
+                                            echo "0";
+                                        }
+                                       
+                                    ?>
+                                </td>
                                 <td><?php echo $editor['ratio_of_success']?></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="btn-group-editor">
                                         <button type="button" class="btn btn-primary" id="button-editor-profile-<?php echo $editor['editor_id']?>" onClick="profileFunction(<?php echo $editor['editor_id']?>)" >Profile</button>
                                         <button type="button" class="btn btn-warning" id="button-editor-performance-<?php echo $editor['editor_id']?>" onClick="performanceFunction(<?php echo $editor['editor_id']?>)">Performance </button>
                                         <button type="button" class="btn btn-success" id="button-editor-follow-<?php echo $editor['editor_id']?>" onClick="followFunction(<?php echo $editor['editor_id']?>)">
-                                            <script>
-                                                if(sessionStorage.getItem('follow-button') == NULL){
-                                                    alert("selam");
-                                                    document.write("Follow");
+                                            <?php
+                                                $exists_editor = "SELECT editor_id FROM follows WHERE EXISTS (SELECT editor_id FROM follows WHERE editor_id = '{$editor['editor_id']}' and user_id = '{$_SESSION['login_user_id']}')";
+                                                $exists_editor = mysqli_query($db,$exists_editor);
+                                                $exists_editor = mysqli_num_rows($exists_editor);
+                                                if($exists_editor > 0){
+                                                    echo "Unfollow";
+                                                }else{
+                                                    echo "Follow";
                                                 }
-                                                else{
-                                                    alert("selam1");
-                                                    document.write(localStorage.getItem('follow-button'));
-                                                }
-                                            </script>    
-                                        Follow
+                                            ?>
                                         </button>
                                     </div>
                                 </td>  
@@ -222,30 +234,28 @@
                 }
         });
         window.location.href = "editor-performance.php";
+        
     }
 
     function followFunction(id){
-        var button_id = $("#button-editor-follow-" + id).attr('id');
-        var button_text = document.getElementById(button_id);;
-        if(button_text.innerText == "Follow"){
-            sessionStorage.setItem('follow-button', 'Unfollow');
-            button_text.innerText =  sessionStorage.getItem('follow-button');
-        }
-        else if(button_text.innerText == "Unfollow"){
-            sessionStorage.setItem('follow-button', 'Follow');
-            button_text.innerText =  sessionStorage.getItem('follow-button');
-        }
-       
+        <?php $_SESSION["editor-profile-follow"] = NULL?>
+        $.ajax({
+                type: "POST",
+                url: "editor-follow-ajax.php",
+                data: {
+                    editor_follow_id: id,
+                },
+                cache: false,
+                success: function(editor_follow_id) {
+                    alert(editor_follow_id);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr);
+                }
+        });
+        window.location.href = "editors.php";
     }
 </script>
-<style>
-    .red{
-        background-color:red;
-    }
-    .green{
-        background-color:green;
-    }
-</style>
 
 
 
