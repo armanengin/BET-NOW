@@ -8,9 +8,9 @@
       $myusername = mysqli_real_escape_string($db,$_POST['username']);
       $mypassword = mysqli_real_escape_string($db,$_POST['password']); 
 
-      $sql = "SELECT username FROM user WHERE username = '$myusername' and password = '$mypassword'";
+      $sql = "SELECT username, user_id FROM user WHERE username = '$myusername' and password = '$mypassword'";
       $result = mysqli_query($db,$sql);
-      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      $row_user = mysqli_fetch_array($result,MYSQLI_ASSOC);
       $count_user = mysqli_num_rows($result);
 
       $sql = "SELECT username from admin where username = '$myusername' and password = '$mypassword'";
@@ -30,6 +30,7 @@
         else if($count_user == 1){
             $_SESSION['login_user'] = $myusername;
             $_SESSION['login_pass'] = $mypassword;
+            $_SESSION['login_user_id'] = $row_user['user_id'];
             $_SESSION['login_flag'] = true;
             header("location: live.php");
 
