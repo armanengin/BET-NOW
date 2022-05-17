@@ -1,6 +1,6 @@
 import java.sql.*;
 
-public class javaApp{
+public class javaDB{
     public static void main(String[] args) {
         Connection conn = null;
         try{
